@@ -44,6 +44,11 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<ISecurityService, SecurityService>();
+builder.Services.AddScoped<ISettingsService, SettingsService>();
+builder.Services.AddScoped<IHelpSupportService, HelpSupportService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 

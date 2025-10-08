@@ -18,6 +18,15 @@ namespace EcommerceBackend.Infrastructure.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<LoginHistory> LoginHistories { get; set; }
+        public DbSet<UserSettings> UserSettings { get; set; }
+        public DbSet<PrivacySettings> PrivacySettings { get; set; }
+        public DbSet<HelpArticle> HelpArticles { get; set; }
+        public DbSet<SupportTicket> SupportTickets { get; set; }
+        public DbSet<SupportMessage> SupportMessages { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -229,6 +238,217 @@ namespace EcommerceBackend.Infrastructure.Data
                     .WithMany()
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // PaymentMethod configuration
+            modelBuilder.Entity<PaymentMethod>(entity =>
+            {
+                entity.ToTable("payment_methods"); // Explicitly set table name
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Type).IsRequired().HasMaxLength(50).HasColumnName("type");
+                entity.Property(e => e.CardHolderName).IsRequired().HasMaxLength(100).HasColumnName("card_holder_name");
+                entity.Property(e => e.CardNumber).IsRequired().HasMaxLength(20).HasColumnName("card_number");
+                entity.Property(e => e.ExpiryMonth).IsRequired().HasColumnName("expiry_month");
+                entity.Property(e => e.ExpiryYear).IsRequired().HasColumnName("expiry_year");
+                entity.Property(e => e.Cvv).HasMaxLength(10).HasColumnName("cvv");
+                entity.Property(e => e.BankName).HasMaxLength(100).HasColumnName("bank_name");
+                entity.Property(e => e.AccountNumber).HasMaxLength(50).HasColumnName("account_number");
+                entity.Property(e => e.AccountHolderName).HasMaxLength(100).HasColumnName("account_holder_name");
+                entity.Property(e => e.IsDefault).HasDefaultValue(false).HasColumnName("is_default");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // Notification configuration
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("notifications"); // Explicitly set table name
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Title).IsRequired().HasMaxLength(200).HasColumnName("title");
+                entity.Property(e => e.Message).IsRequired().HasMaxLength(1000).HasColumnName("message");
+                entity.Property(e => e.Type).IsRequired().HasMaxLength(50).HasColumnName("type");
+                entity.Property(e => e.ActionUrl).HasMaxLength(100).HasColumnName("action_url");
+                entity.Property(e => e.IsRead).HasDefaultValue(false).HasColumnName("is_read");
+                entity.Property(e => e.ReadAt).HasColumnName("read_at");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // LoginHistory configuration
+            modelBuilder.Entity<LoginHistory>(entity =>
+            {
+                entity.ToTable("login_histories"); // Explicitly set table name
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.LoginAt).HasColumnName("login_at");
+                entity.Property(e => e.IpAddress).HasMaxLength(45).HasColumnName("ip_address");
+                entity.Property(e => e.UserAgent).HasMaxLength(500).HasColumnName("user_agent");
+                entity.Property(e => e.Location).HasMaxLength(100).HasColumnName("location");
+                entity.Property(e => e.IsSuccessful).HasDefaultValue(true).HasColumnName("is_successful");
+                entity.Property(e => e.FailureReason).HasMaxLength(200).HasColumnName("failure_reason");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // UserSettings configuration
+            modelBuilder.Entity<UserSettings>(entity =>
+            {
+                entity.ToTable("user_settings"); // Explicitly set table name
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Language).HasMaxLength(10).HasColumnName("language");
+                entity.Property(e => e.Timezone).HasMaxLength(50).HasColumnName("timezone");
+                entity.Property(e => e.Currency).HasMaxLength(10).HasColumnName("currency");
+                entity.Property(e => e.EmailNotifications).HasDefaultValue(true).HasColumnName("email_notifications");
+                entity.Property(e => e.SmsNotifications).HasDefaultValue(false).HasColumnName("sms_notifications");
+                entity.Property(e => e.PushNotifications).HasDefaultValue(true).HasColumnName("push_notifications");
+                entity.Property(e => e.MarketingEmails).HasDefaultValue(false).HasColumnName("marketing_emails");
+                entity.Property(e => e.OrderUpdates).HasDefaultValue(true).HasColumnName("order_updates");
+                entity.Property(e => e.PriceAlerts).HasDefaultValue(true).HasColumnName("price_alerts");
+                entity.Property(e => e.StockNotifications).HasDefaultValue(true).HasColumnName("stock_notifications");
+                entity.Property(e => e.Theme).HasMaxLength(20).HasColumnName("theme");
+                entity.Property(e => e.ItemsPerPage).HasDefaultValue(20).HasColumnName("items_per_page");
+                entity.Property(e => e.AutoSaveCart).HasDefaultValue(true).HasColumnName("auto_save_cart");
+                entity.Property(e => e.ShowProductRecommendations).HasDefaultValue(true).HasColumnName("show_product_recommendations");
+                entity.Property(e => e.EnableLocationServices).HasDefaultValue(false).HasColumnName("enable_location_services");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // PrivacySettings configuration
+            modelBuilder.Entity<PrivacySettings>(entity =>
+            {
+                entity.ToTable("privacy_settings"); // Explicitly set table name
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.ProfileVisibility).HasDefaultValue(true).HasColumnName("profile_visibility");
+                entity.Property(e => e.ShowEmail).HasDefaultValue(false).HasColumnName("show_email");
+                entity.Property(e => e.ShowPhone).HasDefaultValue(false).HasColumnName("show_phone");
+                entity.Property(e => e.AllowDataCollection).HasDefaultValue(true).HasColumnName("allow_data_collection");
+                entity.Property(e => e.AllowAnalytics).HasDefaultValue(true).HasColumnName("allow_analytics");
+                entity.Property(e => e.AllowCookies).HasDefaultValue(true).HasColumnName("allow_cookies");
+                entity.Property(e => e.AllowMarketing).HasDefaultValue(false).HasColumnName("allow_marketing");
+                entity.Property(e => e.DataSharing).HasDefaultValue(false).HasColumnName("data_sharing");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // HelpArticle configuration
+            modelBuilder.Entity<HelpArticle>(entity =>
+            {
+                entity.ToTable("help_articles");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Title).IsRequired().HasMaxLength(200).HasColumnName("title");
+                entity.Property(e => e.Content).IsRequired().HasColumnName("content");
+                entity.Property(e => e.Category).IsRequired().HasMaxLength(50).HasColumnName("category");
+                entity.Property(e => e.Tags).HasColumnName("tags");
+                entity.Property(e => e.ViewCount).HasDefaultValue(0).HasColumnName("view_count");
+                entity.Property(e => e.IsPublished).HasDefaultValue(true).HasColumnName("is_published");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+            });
+            
+            // SupportTicket configuration
+            modelBuilder.Entity<SupportTicket>(entity =>
+            {
+                entity.ToTable("support_tickets");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Subject).IsRequired().HasMaxLength(200).HasColumnName("subject");
+                entity.Property(e => e.Description).IsRequired().HasMaxLength(2000).HasColumnName("description");
+                entity.Property(e => e.Category).IsRequired().HasMaxLength(50).HasColumnName("category");
+                entity.Property(e => e.Priority).HasMaxLength(20).HasColumnName("priority");
+                entity.Property(e => e.Status).HasMaxLength(20).HasColumnName("status");
+                entity.Property(e => e.AssignedTo).HasMaxLength(100).HasColumnName("assigned_to");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // SupportMessage configuration
+            modelBuilder.Entity<SupportMessage>(entity =>
+            {
+                entity.ToTable("support_messages");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.TicketId).HasColumnName("ticket_id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.Message).IsRequired().HasMaxLength(1000).HasColumnName("message");
+                entity.Property(e => e.IsFromSupport).HasDefaultValue(false).HasColumnName("is_from_support");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
+                
+                entity.HasOne(e => e.Ticket)
+                    .WithMany(t => t.Messages)
+                    .HasForeignKey(e => e.TicketId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                    
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            // Faq configuration
+            modelBuilder.Entity<Faq>(entity =>
+            {
+                entity.ToTable("faqs");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Question).IsRequired().HasMaxLength(500).HasColumnName("question");
+                entity.Property(e => e.Answer).IsRequired().HasColumnName("answer");
+                entity.Property(e => e.Category).IsRequired().HasMaxLength(50).HasColumnName("category");
+                entity.Property(e => e.ViewCount).HasDefaultValue(0).HasColumnName("view_count");
+                entity.Property(e => e.IsPublished).HasDefaultValue(true).HasColumnName("is_published");
+                entity.Property(e => e.IsActive).HasDefaultValue(true).HasColumnName("is_active");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("created_at");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP").HasColumnName("updated_at");
             });
         }
     }
