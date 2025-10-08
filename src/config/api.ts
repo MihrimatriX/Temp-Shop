@@ -1,7 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
   // Backend type: 'spring' | 'dotnet' | 'mock'
-  BACKEND_TYPE: process.env.NEXT_PUBLIC_BACKEND_TYPE || 'dotnet',
+  BACKEND_TYPE: process.env.NEXT_PUBLIC_BACKEND_TYPE || 'spring',
   
   // API URLs
   SPRING_API_URL: process.env.NEXT_PUBLIC_SPRING_API_URL || 'http://localhost:8080/api',

@@ -17,14 +17,14 @@ public abstract class BaseEntity {
     
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdAt;
     
     @LastModifiedDate
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    protected LocalDateTime updatedAt;
     
     @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
+    protected Boolean isActive = true;
     
     // Constructors
     public BaseEntity() {}

@@ -36,7 +36,7 @@ public class ReviewService {
                     .collect(Collectors.toList());
 
             log.info("Found {} reviews for product ID: {}", reviewDtos.size(), productId);
-            return BaseResponseDto.success(reviewDtos, "Reviews retrieved successfully");
+            return BaseResponseDto.success("Reviews retrieved successfully", reviewDtos);
         } catch (Exception e) {
             log.error("Error retrieving reviews for product ID: {}", productId, e);
             return BaseResponseDto.error("Error retrieving reviews: " + e.getMessage());
@@ -70,7 +70,7 @@ public class ReviewService {
 
             log.info("Review summary for product ID {}: {} reviews, {} average rating", 
                     productId, totalReviews, averageRating);
-            return BaseResponseDto.success(summary, "Review summary retrieved successfully");
+            return BaseResponseDto.success("Review summary retrieved successfully", summary);
         } catch (Exception e) {
             log.error("Error retrieving review summary for product ID: {}", productId, e);
             return BaseResponseDto.error("Error retrieving review summary: " + e.getMessage());
@@ -91,7 +91,7 @@ public class ReviewService {
 
             ReviewDto reviewDto = convertToDto(review);
             log.info("Review found with ID: {}", reviewId);
-            return BaseResponseDto.success(reviewDto, "Review retrieved successfully");
+            return BaseResponseDto.success("Review retrieved successfully", reviewDto);
         } catch (Exception e) {
             log.error("Error retrieving review with ID: {}", reviewId, e);
             return BaseResponseDto.error("Error retrieving review: " + e.getMessage());
@@ -131,7 +131,7 @@ public class ReviewService {
             ReviewDto reviewDto = convertToDto(savedReview);
 
             log.info("Review created successfully with ID: {}", savedReview.getId());
-            return BaseResponseDto.success(reviewDto, "Review created successfully");
+            return BaseResponseDto.success("Review created successfully", reviewDto);
         } catch (Exception e) {
             log.error("Error creating review", e);
             return BaseResponseDto.error("Error creating review: " + e.getMessage());
@@ -163,7 +163,7 @@ public class ReviewService {
             ReviewDto reviewDto = convertToDto(updatedReview);
 
             log.info("Review updated successfully with ID: {}", reviewId);
-            return BaseResponseDto.success(reviewDto, "Review updated successfully");
+            return BaseResponseDto.success("Review updated successfully", reviewDto);
         } catch (Exception e) {
             log.error("Error updating review with ID: {}", reviewId, e);
             return BaseResponseDto.error("Error updating review: " + e.getMessage());
@@ -186,7 +186,7 @@ public class ReviewService {
             reviewRepository.save(review);
 
             log.info("Review deleted successfully with ID: {}", reviewId);
-            return BaseResponseDto.success("Review deleted successfully", "Review deleted successfully");
+            return BaseResponseDto.success("Review deleted successfully");
         } catch (Exception e) {
             log.error("Error deleting review with ID: {}", reviewId, e);
             return BaseResponseDto.error("Error deleting review: " + e.getMessage());

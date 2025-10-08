@@ -58,11 +58,14 @@ public class Review extends BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        super.onCreate();
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        super.onUpdate();
+        updatedAt = LocalDateTime.now();
     }
 }

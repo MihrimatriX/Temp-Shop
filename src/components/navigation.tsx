@@ -45,6 +45,8 @@ export function Navigation() {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-6">
               <Link href="/orders" className="hover:text-primary">Siparişlerim</Link>
+              <Link href="/addresses" className="hover:text-primary">Adreslerim</Link>
+              <Link href="/payment-methods" className="hover:text-primary">Ödeme Yöntemlerim</Link>
               <Link href="/campaigns" className="hover:text-primary">Süper Fiyat, Süper Teklif</Link>
               <Link href="/international" className="hover:text-primary">Yurt Dışından</Link>
               <Link href="/campaigns" className="hover:text-primary">Kampanyalar</Link>

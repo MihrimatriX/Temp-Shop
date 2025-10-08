@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -58,11 +59,14 @@ public class Order extends BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        super.onCreate();
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        super.onUpdate();
+        updatedAt = LocalDateTime.now();
     }
 }
