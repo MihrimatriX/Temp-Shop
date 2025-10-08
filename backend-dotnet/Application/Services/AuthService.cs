@@ -104,15 +104,20 @@ namespace EcommerceBackend.Application.Services
 
         private string HashPassword(string password)
         {
-            using var sha256 = SHA256.Create();
-            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(hashedBytes);
+            return BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(10));
         }
 
         private bool VerifyPassword(string password, string hashedPassword)
         {
-            var hashedInput = HashPassword(password);
-            return hashedInput == hashedPassword;
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Password verification error: {ex.Message}");
+                return false;
+            }
         }
     }
 }

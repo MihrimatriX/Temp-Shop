@@ -1,3 +1,4 @@
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\bin\Debug\net9.0\appsettings.json
 C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\bin\Debug\net9.0\EcommerceBackend.staticwebassets.endpoints.json
 C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\bin\Debug\net9.0\EcommerceBackend.exe
 C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\bin\Debug\net9.0\EcommerceBackend.deps.json
@@ -143,4 +144,4 @@ C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\obj\Debug\net9.0\refint\Ec
 C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\obj\Debug\net9.0\EcommerceBackend.pdb
 C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\obj\Debug\net9.0\EcommerceBackend.genruntimeconfig.cache
 C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\obj\Debug\net9.0\ref\EcommerceBackend.dll
-C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\bin\Debug\net9.0\appsettings.json
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-dotnet\bin\Debug\net9.0\BCrypt.Net-Next.dll

@@ -64,10 +64,10 @@ export const API_ENDPOINTS = {
   USER_ORDERS: '/users/orders',
   
   // Auth
-  LOGIN: '/auth/login',
-  REGISTER: '/auth/register',
-  LOGOUT: '/auth/logout',
-  REFRESH_TOKEN: '/auth/refresh',
+  LOGIN: '/Auth/login',
+  REGISTER: '/Auth/register',
+  LOGOUT: '/Auth/logout',
+  REFRESH_TOKEN: '/Auth/refresh',
   
   // Campaigns
   CAMPAIGNS: '/campaigns',

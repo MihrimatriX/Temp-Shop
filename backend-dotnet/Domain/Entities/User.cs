@@ -32,7 +32,7 @@ namespace EcommerceBackend.Domain.Entities
         
         public bool IsEmailVerified { get; set; } = false;
         
-        public DateTime? LastLoginAt { get; set; }
+        // public DateTime? LastLoginAt { get; set; } // Column doesn't exist in database
         
         // Navigation properties
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();

@@ -80,7 +80,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         set({ isLoading: true, error: null })
         
         try {
-          const response = await fetch(`${API_URL}/auth/login`, {
+          const response = await fetch(`${API_URL}/Auth/login`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         set({ isLoading: true, error: null })
         
         try {
-          const response = await fetch(`${API_URL}/auth/register`, {
+          const response = await fetch(`${API_URL}/Auth/register`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
