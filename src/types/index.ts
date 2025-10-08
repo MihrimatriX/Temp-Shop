@@ -242,3 +242,43 @@ export interface FilterSidebarProps {
   categories: Category[];
   loading?: boolean;
 }
+
+// Review Types
+export interface Review {
+  id: number;
+  userId: number;
+  productId: number;
+  rating: number;
+  title?: string;
+  comment?: string;
+  isVerified: boolean;
+  isHelpful: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userName?: string;
+  productName?: string;
+}
+
+export interface ProductReviewSummary {
+  productId: number;
+  averageRating: number;
+  totalReviews: number;
+  rating1Count: number;
+  rating2Count: number;
+  rating3Count: number;
+  rating4Count: number;
+  rating5Count: number;
+}
+
+export interface CreateReview {
+  productId: number;
+  rating: number;
+  title?: string;
+  comment?: string;
+}
+
+export interface UpdateReview {
+  rating?: number;
+  title?: string;
+  comment?: string;
+}

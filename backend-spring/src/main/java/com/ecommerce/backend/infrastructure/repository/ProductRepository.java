@@ -30,8 +30,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                   @Param("searchTerm") String searchTerm,
                                   Pageable pageable);
     
-    @Query("SELECT p FROM Product p WHERE p.isActive = true AND " +
-           "(p.discount > 20 OR p.createdAt > CURRENT_DATE - 7)")
+    @Query("SELECT p FROM Product p WHERE p.isActive = true AND p.discount > 20")
     List<Product> findFeaturedProducts();
     
     @Query("SELECT p FROM Product p WHERE p.isActive = true AND p.discount > 0")

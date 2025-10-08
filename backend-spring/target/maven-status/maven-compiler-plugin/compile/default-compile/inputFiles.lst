@@ -1,0 +1,17 @@
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\application\dto\BaseResponseDto.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\application\dto\CategoryDto.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\application\dto\ProductDto.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\application\dto\ProductFilterDto.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\application\service\ProductService.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\domain\entity\BaseEntity.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\domain\entity\Campaign.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\domain\entity\Category.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\domain\entity\Product.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\EcommerceBackendApplication.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\config\SwaggerConfig.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\data\DataSeeder.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\repository\CampaignRepository.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\repository\CategoryRepository.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\repository\ProductRepository.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\web\controller\ProductController.java
+C:\Users\AFU\Desktop\DEV\GIT\Temp-Shop\backend-spring\src\main\java\com\ecommerce\backend\infrastructure\web\exception\GlobalExceptionHandler.java

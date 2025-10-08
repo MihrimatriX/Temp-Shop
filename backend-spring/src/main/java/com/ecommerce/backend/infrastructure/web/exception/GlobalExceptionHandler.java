@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         
-        BaseResponseDto<Map<String, String>> response = BaseResponseDto.error("Validation failed", errors);
+        BaseResponseDto<Map<String, String>> response = BaseResponseDto.error("Validation failed");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
     

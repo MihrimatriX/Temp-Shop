@@ -1,0 +1,17 @@
+com\ecommerce\backend\application\dto\ProductFilterDto.class
+com\ecommerce\backend\infrastructure\config\SwaggerConfig.class
+com\ecommerce\backend\infrastructure\web\controller\ProductController.class
+com\ecommerce\backend\domain\entity\BaseEntity.class
+com\ecommerce\backend\EcommerceBackendApplication.class
+com\ecommerce\backend\infrastructure\data\DataSeeder.class
+com\ecommerce\backend\application\dto\BaseResponseDto.class
+com\ecommerce\backend\application\service\ProductService.class
+com\ecommerce\backend\domain\entity\Category.class
+com\ecommerce\backend\infrastructure\repository\ProductRepository.class
+com\ecommerce\backend\application\dto\CategoryDto.class
+com\ecommerce\backend\domain\entity\Campaign.class
+com\ecommerce\backend\infrastructure\repository\CategoryRepository.class
+com\ecommerce\backend\infrastructure\web\exception\GlobalExceptionHandler.class
+com\ecommerce\backend\domain\entity\Product.class
+com\ecommerce\backend\infrastructure\repository\CampaignRepository.class
+com\ecommerce\backend\application\dto\ProductDto.class

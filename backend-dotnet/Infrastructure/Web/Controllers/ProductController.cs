@@ -46,7 +46,7 @@ namespace EcommerceBackend.Infrastructure.Web.Controllers
         public async Task<ActionResult<BaseResponseDto<ProductDto>>> GetProduct(int id)
         {
             var result = await _productService.GetProductByIdAsync(id);
-            
+
             if (!result.Success)
             {
                 return NotFound(result);
@@ -92,7 +92,7 @@ namespace EcommerceBackend.Infrastructure.Web.Controllers
             }
 
             var result = await _productService.CreateProductAsync(productDto);
-            
+
             if (!result.Success)
             {
                 return BadRequest(result);
@@ -110,7 +110,7 @@ namespace EcommerceBackend.Infrastructure.Web.Controllers
             }
 
             var result = await _productService.UpdateProductAsync(id, productDto);
-            
+
             if (!result.Success)
             {
                 return BadRequest(result);
@@ -123,7 +123,7 @@ namespace EcommerceBackend.Infrastructure.Web.Controllers
         public async Task<ActionResult<BaseResponseDto<string>>> DeleteProduct(int id)
         {
             var result = await _productService.DeleteProductAsync(id);
-            
+
             if (!result.Success)
             {
                 return NotFound(result);

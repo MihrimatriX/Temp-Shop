@@ -10,14 +10,15 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(EcommerceBackend.Infrastructure.Web.Controllers.ProductController).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "E-Commerce API",
-        Version = "v1",
+        Version = "v1.0.0",
         Description = "Modern E-Commerce Backend API with .NET Core",
         Contact = new Microsoft.OpenApi.Models.OpenApiContact
         {
@@ -25,26 +26,11 @@ builder.Services.AddSwaggerGen(c =>
             Email = "afu@example.com"
         }
     });
-    
-    // Include XML comments if available
-    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
-    if (System.IO.File.Exists(xmlPath))
-    {
-        c.IncludeXmlComments(xmlPath);
-    }
 });
 
-// Database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? $"Host={Environment.GetEnvironmentVariable("POSTGRES_HOST") ?? "localhost"};" +
-       $"Port={Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432"};" +
-       $"Database={Environment.GetEnvironmentVariable("POSTGRES_DB") ?? "ecommerce_db"};" +
-       $"Username={Environment.GetEnvironmentVariable("POSTGRES_USER") ?? "ecommerce_user"};" +
-       $"Password={Environment.GetEnvironmentVariable("POSTGRES_PASSWORD") ?? "ecommerce_password"};";
-
+// Database - Use InMemory for development
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseInMemoryDatabase("EcommerceDb"));
 
 // Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -52,6 +38,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Services
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 
 // CORS
@@ -102,13 +89,19 @@ app.UseValidationMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Map controllers
 app.MapControllers();
+
+// Add a simple health check endpoint
+app.MapGet("/", () => "E-Commerce API is running!");
+app.MapGet("/health", () => "OK");
 
 // Seed data
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
+    context.Database.EnsureCreated();
     
     var seeder = new DataSeeder(context);
     await seeder.SeedAsync();

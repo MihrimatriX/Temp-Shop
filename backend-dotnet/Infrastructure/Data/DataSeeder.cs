@@ -30,6 +30,16 @@ namespace EcommerceBackend.Infrastructure.Data
             {
                 await SeedCampaignsAsync();
             }
+
+            if (!await _context.Users.AnyAsync())
+            {
+                await SeedUsersAsync();
+            }
+
+            if (!await _context.Reviews.AnyAsync())
+            {
+                await SeedReviewsAsync();
+            }
         }
 
         private async Task SeedCategoriesAsync()
@@ -256,6 +266,142 @@ namespace EcommerceBackend.Infrastructure.Data
         private decimal GenerateRandomPrice()
         {
             return Math.Round((decimal)(10 + _random.NextDouble() * 990), 2);
+        }
+
+        private async Task SeedUsersAsync()
+        {
+            var users = new List<User>
+            {
+                new() 
+                { 
+                    Email = "admin@example.com", 
+                    Password = "admin123", 
+                    FirstName = "Admin", 
+                    LastName = "User",
+                    PhoneNumber = "+90 555 123 4567",
+                    Address = "Admin Adresi",
+                    City = "İstanbul",
+                    PostalCode = "34000",
+                    IsEmailVerified = true,
+                    IsActive = true
+                },
+                new() 
+                { 
+                    Email = "user1@example.com", 
+                    Password = "user123", 
+                    FirstName = "Ahmet", 
+                    LastName = "Yılmaz",
+                    PhoneNumber = "+90 555 234 5678",
+                    Address = "Kullanıcı Adresi 1",
+                    City = "Ankara",
+                    PostalCode = "06000",
+                    IsEmailVerified = true,
+                    IsActive = true
+                },
+                new() 
+                { 
+                    Email = "user2@example.com", 
+                    Password = "user123", 
+                    FirstName = "Ayşe", 
+                    LastName = "Demir",
+                    PhoneNumber = "+90 555 345 6789",
+                    Address = "Kullanıcı Adresi 2",
+                    City = "İzmir",
+                    PostalCode = "35000",
+                    IsEmailVerified = true,
+                    IsActive = true
+                },
+                new() 
+                { 
+                    Email = "user3@example.com", 
+                    Password = "user123", 
+                    FirstName = "Mehmet", 
+                    LastName = "Kaya",
+                    PhoneNumber = "+90 555 456 7890",
+                    Address = "Kullanıcı Adresi 3",
+                    City = "Bursa",
+                    PostalCode = "16000",
+                    IsEmailVerified = false,
+                    IsActive = true
+                },
+                new() 
+                { 
+                    Email = "user4@example.com", 
+                    Password = "user123", 
+                    FirstName = "Fatma", 
+                    LastName = "Özkan",
+                    PhoneNumber = "+90 555 567 8901",
+                    Address = "Kullanıcı Adresi 4",
+                    City = "Antalya",
+                    PostalCode = "07000",
+                    IsEmailVerified = true,
+                    IsActive = true
+                }
+            };
+
+            await _context.Users.AddRangeAsync(users);
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task SeedReviewsAsync()
+        {
+            var products = await _context.Products.Take(20).ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            var reviews = new List<Review>();
+
+            var reviewTitles = new[]
+            {
+                "Harika ürün!", "Çok memnun kaldım", "Beklentilerimi aştı", "Kaliteli ve dayanıklı",
+                "Hızlı teslimat", "Fiyat performans mükemmel", "Tavsiye ederim", "Çok iyi",
+                "Biraz pahalı ama değer", "Orta kalite", "İdare eder", "Beklediğim gibi değil",
+                "Kargo sorunu yaşadım", "Ürün hasarlı geldi", "İade ettim", "Tekrar alırım",
+                "Ailem çok beğendi", "Arkadaşlarıma tavsiye ettim", "Uzun süre kullandım", "Çok pratik"
+            };
+
+            var reviewComments = new[]
+            {
+                "Ürün gerçekten çok kaliteli. Beklentilerimi aştı. Hızlı kargo ve güvenli paketleme.",
+                "Fiyatına göre çok iyi bir ürün. Kalitesi beklediğimden daha iyi çıktı.",
+                "Kullanımı çok kolay. Ailem de çok beğendi. Tavsiye ederim.",
+                "Ürün güzel ama biraz pahalı. Yine de kaliteli olduğu için memnunum.",
+                "Orta kalite bir ürün. Fiyatına göre idare eder. Daha iyisi de var tabii.",
+                "Beklediğim gibi değil. Kalitesi düşük geldi. İade etmeyi düşünüyorum.",
+                "Kargo sürecinde sorun yaşadım ama ürün güzel. Satıcı ile iletişim iyiydi.",
+                "Ürün hasarlı geldi. Müşteri hizmetleri hızlı çözüm sağladı.",
+                "Çok memnun kaldım. Tekrar alacağım. Arkadaşlarıma da tavsiye ettim.",
+                "Uzun süre kullandım. Dayanıklı ve pratik. Fiyatına değer."
+            };
+
+            foreach (var product in products)
+            {
+                // Her ürün için 3-8 arası yorum ekle
+                var reviewCount = _random.Next(3, 9);
+                
+                for (int i = 0; i < reviewCount; i++)
+                {
+                    var user = users[_random.Next(users.Count)];
+                    var rating = _random.Next(1, 6); // 1-5 arası puan
+                    var title = reviewTitles[_random.Next(reviewTitles.Length)];
+                    var comment = reviewComments[_random.Next(reviewComments.Length)];
+
+                    reviews.Add(new Review
+                    {
+                        UserId = user.Id,
+                        ProductId = product.Id,
+                        Rating = rating,
+                        Title = title,
+                        Comment = comment,
+                        IsVerified = _random.Next(2) == 1, // %50 doğrulanmış
+                        IsHelpful = _random.Next(2) == 1, // %50 faydalı
+                        IsActive = true,
+                        CreatedAt = DateTime.UtcNow.AddDays(-_random.Next(1, 365)), // Son 1 yıl içinde
+                        UpdatedAt = DateTime.UtcNow.AddDays(-_random.Next(1, 365))
+                    });
+                }
+            }
+
+            await _context.Reviews.AddRangeAsync(reviews);
+            await _context.SaveChangesAsync();
         }
 
         private string GenerateDescription(string productName)

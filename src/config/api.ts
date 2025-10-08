@@ -1,7 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
   // Backend type: 'spring' | 'dotnet' | 'mock'
-  BACKEND_TYPE: process.env.NEXT_PUBLIC_BACKEND_TYPE || 'mock',
+  BACKEND_TYPE: process.env.NEXT_PUBLIC_BACKEND_TYPE || 'dotnet',
   
   // API URLs
   SPRING_API_URL: process.env.NEXT_PUBLIC_SPRING_API_URL || 'http://localhost:8080/api',
@@ -27,21 +27,27 @@ export const getApiUrl = (): string => {
 // API Endpoints
 export const API_ENDPOINTS = {
   // Products
-  PRODUCTS: '/products',
-  PRODUCT_BY_ID: (id: number) => `/products/${id}`,
-  PRODUCTS_BY_CATEGORY: (categoryId: number) => `/products/category/${categoryId}`,
-  SEARCH_PRODUCTS: '/products/search',
-  FEATURED_PRODUCTS: '/products/featured',
-  DISCOUNTED_PRODUCTS: '/products/discounted',
+  PRODUCTS: '/Product',
+  PRODUCT_BY_ID: (id: number) => `/Product/${id}`,
+  PRODUCTS_BY_CATEGORY: (categoryId: number) => `/Product/category/${categoryId}`,
+  SEARCH_PRODUCTS: '/Product/search',
+  FEATURED_PRODUCTS: '/Product/featured',
+  DISCOUNTED_PRODUCTS: '/Product/discounted',
   
   // Categories
-  CATEGORIES: '/categories',
-  CATEGORY_BY_ID: (id: number) => `/categories/${id}`,
+  CATEGORIES: '/Category',
+  CATEGORY_BY_ID: (id: number) => `/Category/${id}`,
   
   // Cart
   CART: '/cart',
   CART_ITEMS: '/cart/items',
   ADD_TO_CART: '/cart/add',
+
+  // Reviews
+  REVIEWS: '/Review',
+  REVIEW_BY_ID: (id: number) => `/Review/${id}`,
+  PRODUCT_REVIEWS: (productId: number) => `/Review/product/${productId}`,
+  PRODUCT_REVIEW_SUMMARY: (productId: number) => `/Review/product/${productId}/summary`,
   REMOVE_FROM_CART: '/cart/remove',
   UPDATE_CART_ITEM: '/cart/update',
   CLEAR_CART: '/cart/clear',

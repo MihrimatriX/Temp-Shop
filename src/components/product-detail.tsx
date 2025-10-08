@@ -10,6 +10,7 @@ import { ShoppingCart, Heart, Share2, Minus, Plus, ArrowLeft } from 'lucide-reac
 import { formatPrice } from '@/lib/utils'
 import { useCartStore } from '@/store/cart-store'
 import { Product } from '@/types'
+import { ReviewList } from '@/components/review-list'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 
@@ -180,6 +181,14 @@ export function ProductDetail({ product }: ProductDetailProps) {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      {/* Reviews Section */}
+      <div className="mt-12">
+        <ReviewList 
+          productId={product.id} 
+          productName={product.productName}
+        />
       </div>
     </div>
   )

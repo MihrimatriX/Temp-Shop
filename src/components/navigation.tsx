@@ -48,6 +48,7 @@ export function Navigation() {
               <Link href="/campaigns" className="hover:text-primary">Süper Fiyat, Süper Teklif</Link>
               <Link href="/international" className="hover:text-primary">Yurt Dışından</Link>
               <Link href="/campaigns" className="hover:text-primary">Kampanyalar</Link>
+              <Link href="/api-test" className="hover:text-primary">API Test</Link>
               <Link href="/entrepreneur-women" className="hover:text-primary">Girişimci Kadınlar</Link>
               <Link href="/customer-service" className="hover:text-primary">Müşteri Hizmetleri</Link>
             </div>

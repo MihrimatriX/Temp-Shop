@@ -6,15 +6,15 @@ spring:
     name: ecommerce-backend
   
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:ecommerce_db}
-    driver-class-name: org.postgresql.Driver
-    username: ${POSTGRES_USER:ecommerce_user}
-    password: ${POSTGRES_PASSWORD:ecommerce_password}
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
   
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -22,10 +22,10 @@ spring:
         jdbc:
           time_zone: UTC
   
-  # H2 for development (optional)
+  # H2 for development
   h2:
     console:
-      enabled: false
+      enabled: true
   
   security:
     user:

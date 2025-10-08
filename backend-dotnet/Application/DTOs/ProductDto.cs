@@ -36,5 +36,11 @@ namespace EcommerceBackend.Application.DTOs
         public int Discount { get; set; } = 0;
         
         public bool IsActive { get; set; } = true;
+        
+        // Review information
+        public double? AverageRating { get; set; }
+        public int? TotalReviews { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }
