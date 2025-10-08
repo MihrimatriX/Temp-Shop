@@ -4,29 +4,29 @@ server:
 spring:
   application:
     name: ecommerce-backend
-  
+
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: 
-  
+    url: jdbc:postgresql://localhost:5432/ecommerce_db
+    driver-class-name: org.postgresql.Driver
+    username: ecommerce_user
+    password: ecommerce_password
+
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         jdbc:
           time_zone: UTC
-  
-  # H2 for development
-  h2:
-    console:
-      enabled: true
-  
+
+  # JWT Configuration
+  jwt:
+    secret: mySecretKey
+    expiration: 86400000 # 24 hours
+
   security:
     user:
       name: admin

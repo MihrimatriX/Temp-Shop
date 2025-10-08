@@ -28,17 +28,20 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Database - Use InMemory for development
+// Database - Use PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("EcommerceDb"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Services
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 
 // CORS
@@ -97,14 +100,11 @@ app.MapControllers();
 app.MapGet("/", () => "E-Commerce API is running!");
 app.MapGet("/health", () => "OK");
 
-// Seed data
+// Ensure database is migrated (data is already in PostgreSQL)
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
-    
-    var seeder = new DataSeeder(context);
-    await seeder.SeedAsync();
+    context.Database.Migrate();
 }
 
 app.Run();

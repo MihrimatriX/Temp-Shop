@@ -90,9 +90,10 @@ export function ReviewForm({ productId, productName, onReviewSubmitted, classNam
   }
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="text-lg">
+    <Card className={`${className} border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50`}>
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <span className="text-purple-600">✍️</span>
           {productName ? `${productName} için yorum yazın` : 'Yorum Yazın'}
         </CardTitle>
       </CardHeader>
@@ -160,7 +161,7 @@ export function ReviewForm({ productId, productName, onReviewSubmitted, classNam
           <Button
             type="submit"
             disabled={isSubmitting || rating === 0}
-            className="w-full"
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
           >
             {isSubmitting ? (
               <>
@@ -168,7 +169,10 @@ export function ReviewForm({ productId, productName, onReviewSubmitted, classNam
                 Gönderiliyor...
               </>
             ) : (
-              'Yorumu Gönder'
+              <>
+                <span className="mr-2">📝</span>
+                Yorumu Gönder
+              </>
             )}
           </Button>
         </form>

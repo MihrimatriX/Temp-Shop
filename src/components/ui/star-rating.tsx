@@ -68,6 +68,7 @@ export function StarRating({
             <button
               key={index}
               type="button"
+              title={`${starValue} yıldız`}
               className={cn(
                 'transition-colors duration-150',
                 interactive && 'cursor-pointer hover:scale-110',

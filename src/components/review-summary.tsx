@@ -28,20 +28,23 @@ export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
   }
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="text-lg">Değerlendirmeler</CardTitle>
+    <Card className={`${className} bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200`}>
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <span className="text-purple-600">⭐</span>
+          Değerlendirmeler
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Overall Rating */}
-        <div className="text-center">
+        <div className="text-center bg-white rounded-lg p-4 shadow-sm">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="text-3xl font-bold text-gray-900">
+            <span className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               {summary.averageRating.toFixed(1)}
             </span>
             <StarRating rating={summary.averageRating} size="lg" />
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 font-medium">
             {summary.totalReviews} değerlendirme
           </p>
         </div>

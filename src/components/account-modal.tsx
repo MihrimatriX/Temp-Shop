@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { AuthForm } from '@/components/auth-form'
+import { useAuthStore } from '@/store/auth-store'
 import { 
   User, 
   Package, 
@@ -23,128 +23,21 @@ import Link from 'next/link'
 interface AccountModalProps {
   isOpen: boolean
   onClose: () => void
-  isLoggedIn?: boolean
-  userName?: string
 }
 
-export function AccountModal({ isOpen, onClose, isLoggedIn = false, userName = 'Kullanıcı' }: AccountModalProps) {
-  const [isLoginMode, setIsLoginMode] = useState(true)
+export function AccountModal({ isOpen, onClose }: AccountModalProps) {
+  const { isAuthenticated, user, logout } = useAuthStore()
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Login logic here
+  const handleLogout = () => {
+    logout()
     onClose()
   }
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Register logic here
-    onClose()
-  }
-
-  if (!isLoggedIn) {
+  if (!isAuthenticated) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-center">
-              {isLoginMode ? 'Giriş Yap' : 'Üye Ol'}
-            </DialogTitle>
-          </DialogHeader>
-
-          <div className="space-y-6">
-            {/* Login/Register Toggle */}
-            <div className="flex bg-muted rounded-lg p-1">
-              <Button
-                variant={isLoginMode ? 'default' : 'ghost'}
-                className="flex-1"
-                onClick={() => setIsLoginMode(true)}
-              >
-                Giriş Yap
-              </Button>
-              <Button
-                variant={!isLoginMode ? 'default' : 'ghost'}
-                className="flex-1"
-                onClick={() => setIsLoginMode(false)}
-              >
-                Üye Ol
-              </Button>
-            </div>
-
-            {/* Login Form */}
-            {isLoginMode ? (
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="E-posta adresiniz"
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="password"
-                    placeholder="Şifreniz"
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full">
-                  Giriş Yap
-                </Button>
-                <div className="text-center">
-                  <Button variant="link" className="text-sm">
-                    Şifremi Unuttum
-                  </Button>
-                </div>
-              </form>
-            ) : (
-              <form onSubmit={handleRegister} className="space-y-4">
-                <div>
-                  <Input
-                    type="text"
-                    placeholder="Ad Soyad"
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="E-posta adresiniz"
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="password"
-                    placeholder="Şifreniz"
-                    required
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="password"
-                    placeholder="Şifre Tekrar"
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full">
-                  Üye Ol
-                </Button>
-              </form>
-            )}
-
-            <Separator />
-
-            {/* Social Login */}
-            <div className="space-y-3">
-              <Button variant="outline" className="w-full">
-                Google ile Giriş Yap
-              </Button>
-              <Button variant="outline" className="w-full">
-                Facebook ile Giriş Yap
-              </Button>
-            </div>
-          </div>
+          <AuthForm onSuccess={onClose} />
         </DialogContent>
       </Dialog>
     )
@@ -169,8 +62,8 @@ export function AccountModal({ isOpen, onClose, isLoggedIn = false, userName = '
                   <User className="w-6 h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">{userName}</h3>
-                  <p className="text-sm text-muted-foreground">Premium Üye</p>
+                  <h3 className="font-semibold">{user?.firstName} {user?.lastName}</h3>
+                  <p className="text-sm text-muted-foreground">{user?.email}</p>
                 </div>
               </div>
             </CardContent>
@@ -237,7 +130,7 @@ export function AccountModal({ isOpen, onClose, isLoggedIn = false, userName = '
 
           <Separator />
 
-          <Button variant="destructive" className="w-full">
+          <Button variant="destructive" className="w-full" onClick={handleLogout}>
             <LogOut className="w-4 h-4 mr-2" />
             Çıkış Yap
           </Button>

@@ -34,19 +34,27 @@ export function ReviewCard({ review, showProductName = false, className }: Revie
   }
 
   return (
-    <Card className={className}>
-      <CardContent className="p-4">
-        <div className="space-y-3">
+    <Card className={`${className} hover:shadow-md transition-shadow duration-200 border-l-4 border-l-purple-100`}>
+      <CardContent className="p-5">
+        <div className="space-y-4">
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <h4 className="font-medium text-gray-900">
-                  {review.userName || 'Anonim Kullanıcı'}
-                </h4>
-                {review.isVerified && (
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                )}
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                  {(review.userName || 'A').charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm">
+                    {review.userName || 'Anonim Kullanıcı'}
+                  </h4>
+                  {review.isVerified && (
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 text-green-500" />
+                      <span className="text-xs text-green-600">Doğrulanmış Alışveriş</span>
+                    </div>
+                  )}
+                </div>
               </div>
               
               {showProductName && review.productName && (
@@ -55,9 +63,9 @@ export function ReviewCard({ review, showProductName = false, className }: Revie
                 </p>
               )}
               
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <StarRating rating={review.rating} size="sm" />
-                <span className="text-sm text-gray-500">
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                   {formatDate(review.createdAt)}
                 </span>
               </div>
@@ -73,14 +81,14 @@ export function ReviewCard({ review, showProductName = false, className }: Revie
 
           {/* Title */}
           {review.title && (
-            <h5 className="font-medium text-gray-900">
+            <h5 className="font-semibold text-gray-900 text-base">
               {review.title}
             </h5>
           )}
 
           {/* Comment */}
           {review.comment && (
-            <p className="text-gray-700 text-sm leading-relaxed">
+            <p className="text-gray-700 text-sm leading-relaxed bg-gray-50 p-3 rounded-lg border-l-2 border-purple-200">
               {review.comment}
             </p>
           )}

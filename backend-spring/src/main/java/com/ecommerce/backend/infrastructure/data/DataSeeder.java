@@ -3,11 +3,16 @@ package com.ecommerce.backend.infrastructure.data;
 import com.ecommerce.backend.domain.entity.Category;
 import com.ecommerce.backend.domain.entity.Product;
 import com.ecommerce.backend.domain.entity.Campaign;
+import com.ecommerce.backend.domain.entity.User;
+import com.ecommerce.backend.domain.entity.Review;
 import com.ecommerce.backend.infrastructure.repository.CategoryRepository;
 import com.ecommerce.backend.infrastructure.repository.ProductRepository;
 import com.ecommerce.backend.infrastructure.repository.CampaignRepository;
+import com.ecommerce.backend.infrastructure.repository.UserRepository;
+import com.ecommerce.backend.infrastructure.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -16,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-@Component
+// @Component // Disabled - data is already in PostgreSQL
 public class DataSeeder implements CommandLineRunner {
     
     @Autowired
@@ -27,6 +32,15 @@ public class DataSeeder implements CommandLineRunner {
     
     @Autowired
     private CampaignRepository campaignRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private ReviewRepository reviewRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     private final Random random = new Random();
     
@@ -40,6 +54,12 @@ public class DataSeeder implements CommandLineRunner {
         }
         if (campaignRepository.count() == 0) {
             seedCampaigns();
+        }
+        if (userRepository.count() == 0) {
+            seedUsers();
+        }
+        if (reviewRepository.count() == 0) {
+            seedReviews();
         }
     }
     
@@ -254,5 +274,82 @@ public class DataSeeder implements CommandLineRunner {
         );
         
         return descriptions.get(random.nextInt(descriptions.size())) + " " + productName.toLowerCase() + ".";
+    }
+    
+    private void seedUsers() {
+        List<User> users = Arrays.asList(
+            new User("admin@example.com", passwordEncoder.encode("admin123"), "Admin", "User", "+90 555 123 4567", 
+                    "Admin Adresi", "İstanbul", "34000", true, true),
+            new User("user1@example.com", passwordEncoder.encode("user123"), "Ahmet", "Yılmaz", "+90 555 234 5678", 
+                    "Kadıköy Mahallesi", "İstanbul", "34710", true, true),
+            new User("user2@example.com", passwordEncoder.encode("user123"), "Ayşe", "Demir", "+90 555 345 6789", 
+                    "Beşiktaş Mahallesi", "İstanbul", "34353", true, true),
+            new User("user3@example.com", passwordEncoder.encode("user123"), "Mehmet", "Kaya", "+90 555 456 7890", 
+                    "Şişli Mahallesi", "İstanbul", "34360", false, true),
+            new User("user4@example.com", passwordEncoder.encode("user123"), "Fatma", "Özkan", "+90 555 567 8901", 
+                    "Beyoğlu Mahallesi", "İstanbul", "34420", true, true),
+            new User("user5@example.com", passwordEncoder.encode("user123"), "Ali", "Çelik", "+90 555 678 9012", 
+                    "Üsküdar Mahallesi", "İstanbul", "34664", true, true),
+            new User("user6@example.com", passwordEncoder.encode("user123"), "Zeynep", "Arslan", "+90 555 789 0123", 
+                    "Maltepe Mahallesi", "İstanbul", "34844", false, true),
+            new User("user7@example.com", passwordEncoder.encode("user123"), "Mustafa", "Yıldız", "+90 555 890 1234", 
+                    "Kartal Mahallesi", "İstanbul", "34870", true, true),
+            new User("user8@example.com", passwordEncoder.encode("user123"), "Elif", "Şahin", "+90 555 901 2345", 
+                    "Pendik Mahallesi", "İstanbul", "34899", true, true),
+            new User("user9@example.com", passwordEncoder.encode("user123"), "Emre", "Koç", "+90 555 012 3456", 
+                    "Tuzla Mahallesi", "İstanbul", "34940", false, true)
+        );
+        
+        userRepository.saveAll(users);
+    }
+    
+    private void seedReviews() {
+        List<Product> products = productRepository.findAll();
+        List<User> users = userRepository.findAll();
+        
+        String[] reviewTitles = {
+            "Harika ürün!", "Çok memnun kaldım", "Beklentilerimi aştı", "Kaliteli ve dayanıklı",
+            "Hızlı teslimat", "Fiyat performans mükemmel", "Tavsiye ederim", "Çok iyi",
+            "Biraz pahalı ama değer", "Orta kalite", "İdare eder", "Beklediğim gibi değil",
+            "Kargo sorunu yaşadım", "Ürün hasarlı geldi", "İade ettim", "Tekrar alırım",
+            "Ailem çok beğendi", "Arkadaşlarıma tavsiye ettim", "Uzun süre kullandım", "Çok pratik"
+        };
+        
+        String[] reviewComments = {
+            "Ürün gerçekten çok kaliteli. Beklentilerimi aştı. Hızlı kargo ve güvenli paketleme.",
+            "Fiyatına göre çok iyi bir ürün. Kalitesi beklediğimden daha iyi çıktı.",
+            "Kullanımı çok kolay. Ailem de çok beğendi. Tavsiye ederim.",
+            "Ürün güzel ama biraz pahalı. Yine de kaliteli olduğu için memnunum.",
+            "Orta kalite bir ürün. Fiyatına göre idare eder. Daha iyisi de var tabii.",
+            "Beklediğim gibi değil. Kalitesi düşük geldi. İade etmeyi düşünüyorum.",
+            "Kargo sürecinde sorun yaşadım ama ürün güzel. Satıcı ile iletişim iyiydi.",
+            "Ürün hasarlı geldi. Müşteri hizmetleri hızlı çözüm sağladı.",
+            "Çok memnun kaldım. Tekrar alacağım. Arkadaşlarıma da tavsiye ettim.",
+            "Uzun süre kullandım. Dayanıklı ve pratik. Fiyatına değer."
+        };
+        
+        // Her ürün için 3-8 arası yorum ekle
+        for (Product product : products) {
+            int reviewCount = random.nextInt(6) + 3; // 3-8 arası
+            
+            for (int i = 0; i < reviewCount; i++) {
+                User user = users.get(random.nextInt(users.size()));
+                int rating = random.nextInt(5) + 1; // 1-5 arası puan
+                String title = reviewTitles[random.nextInt(reviewTitles.length)];
+                String comment = reviewComments[random.nextInt(reviewComments.length)];
+                
+                Review review = new Review();
+                review.setRating(rating);
+                review.setTitle(title);
+                review.setComment(comment);
+                review.setUserId(user.getId());
+                review.setProductId(product.getId());
+                review.setIsVerified(random.nextBoolean()); // %50 doğrulanmış
+                review.setIsHelpful(random.nextBoolean()); // %50 faydalı
+                review.setIsActive(true);
+                
+                reviewRepository.save(review);
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useCartStore } from '@/store/cart-store'
+import { useAuthStore } from '@/store/auth-store'
 import { CartModal } from '@/components/cart-modal'
 import { AccountModal } from '@/components/account-modal'
 import { 
@@ -19,10 +20,9 @@ import {
 
 export function Navigation() {
   const { totalItems } = useCartStore()
+  const { isAuthenticated, user } = useAuthStore()
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isAccountOpen, setIsAccountOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userName, setUserName] = useState('Ahmet Faruk')
 
   const categories = [
     { name: 'Elektronik', href: '/categories/elektronik' },
@@ -102,7 +102,7 @@ export function Navigation() {
               >
                 <User className="w-4 h-4" />
                 <span className="hidden md:inline">
-                  {isLoggedIn ? `Hesabım ${userName}` : 'Hesabım'}
+                  {isAuthenticated ? `Hesabım ${user?.firstName}` : 'Hesabım'}
                 </span>
                 <ChevronDown className="w-3 h-3" />
               </Button>
@@ -153,8 +153,6 @@ export function Navigation() {
       <AccountModal 
         isOpen={isAccountOpen} 
         onClose={() => setIsAccountOpen(false)}
-        isLoggedIn={isLoggedIn}
-        userName={userName}
       />
     </>
   )
