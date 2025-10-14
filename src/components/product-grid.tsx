@@ -1,34 +1,30 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { ProductCard } from '@/components/product-card'
-import { LoadingSpinner } from '@/components/ui/loading-spinner'
-import { useProductStore } from '@/store/product-store'
-import { ProductService } from '@/services/product-service'
+import { useEffect } from "react";
+import { ProductCard } from "@/components/product-card";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { useProductStore } from "@/store/product-store";
 
 interface ProductGridProps {
-  categoryId?: number
+  categoryId?: number;
 }
 
-export function ProductGrid({ categoryId }: ProductGridProps) {
-  const { 
-    products, 
-    categories,
-    loading, 
-    setProducts, 
+export function ProductGrid({ }: ProductGridProps) {
+  const {
+    loading,
+    setProducts,
     setCategories,
-    setLoading, 
+    setLoading,
     setError,
-    getFilteredProducts 
-  } = useProductStore()
+    getFilteredProducts,
+  } = useProductStore();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true)
-        setError(null)
-        
-        // Mock data for now - replace with actual API call
+        setLoading(true);
+        setError(null);
+
         const mockProducts = [
           {
             id: 1,
@@ -114,34 +110,32 @@ export function ProductGrid({ categoryId }: ProductGridProps) {
             createdAt: new Date(),
             updatedAt: new Date(),
           },
-        ]
-        
-        setProducts(mockProducts)
-        
-        // Set categories
+        ];
+        setProducts(mockProducts);
+
         const mockCategories = [
           { id: 1, categoryName: "Elektronik", isActive: true },
           { id: 2, categoryName: "Spor", isActive: true },
           { id: 3, categoryName: "Ev & Yaşam", isActive: true },
           { id: 4, categoryName: "Giyim", isActive: true },
-          { id: 5, categoryName: "Kitap", isActive: true }
+          { id: 5, categoryName: "Kitap", isActive: true },
         ];
         setCategories(mockCategories);
       } catch (error) {
-        setError('Ürünler yüklenirken hata oluştu')
-        console.error('Error fetching products:', error)
+        setError("Ürünler yüklenirken hata oluştu");
+        console.error("Error fetching products:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchProducts()
-  }, [setProducts, setCategories, setLoading, setError])
+    fetchProducts();
+  }, [setProducts, setCategories, setLoading, setError]);
 
-  const filteredProducts = getFilteredProducts()
+  const filteredProducts = getFilteredProducts();
 
   if (loading) {
-    return <LoadingSpinner size="lg" />
+    return <LoadingSpinner size="lg" />;
   }
 
   if (filteredProducts.length === 0) {
@@ -154,7 +148,7 @@ export function ProductGrid({ categoryId }: ProductGridProps) {
           Arama kriterlerinizi değiştirerek tekrar deneyin.
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -164,12 +158,12 @@ export function ProductGrid({ categoryId }: ProductGridProps) {
           Ürünler ({filteredProducts.length})
         </h2>
       </div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>
-  )
+  );
 }

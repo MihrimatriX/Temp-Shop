@@ -1,41 +1,40 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { useCartStore } from '@/store/cart-store'
-import { useAuthStore } from '@/store/auth-store'
-import { CartModal } from '@/components/cart-modal'
-import { AccountModal } from '@/components/account-modal'
-import { 
-  ShoppingCart, 
-  Search, 
-  User, 
-  Heart, 
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useCartStore } from "@/store/cart-store";
+import { useAuthStore } from "@/store/auth-store";
+import { CartModal } from "@/components/cart-modal";
+import { AccountModal } from "@/components/account-modal";
+import {
+  ShoppingCart,
+  Search,
+  User,
   Menu,
   ChevronDown,
-  MapPin
-} from 'lucide-react'
+  MapPin,
+} from "lucide-react";
 
 export function Navigation() {
-  const { totalItems } = useCartStore()
-  const { isAuthenticated, user } = useAuthStore()
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [isAccountOpen, setIsAccountOpen] = useState(false)
+  const { totalItems } = useCartStore();
+  const { isAuthenticated, user } = useAuthStore();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   const categories = [
-    { name: 'Elektronik', href: '/categories/elektronik' },
-    { name: 'Moda', href: '/categories/moda' },
-    { name: 'Ev & Yaşam', href: '/categories/ev-yasam' },
-    { name: 'Spor & Outdoor', href: '/categories/spor' },
-    { name: 'Anne & Bebek', href: '/categories/anne-bebek' },
-    { name: 'Kozmetik & Bakım', href: '/categories/kozmetik' },
-    { name: 'Süpermarket', href: '/categories/süpermarket' },
-    { name: 'Kitap & Müzik', href: '/categories/kitap' },
-    { name: 'Oto & Bahçe', href: '/categories/oto' },
-    { name: 'Kırtasiye & Ofis', href: '/categories/kirtasiye' }
-  ]
+    { name: "Elektronik", href: "/categories/elektronik" },
+    { name: "Moda", href: "/categories/moda" },
+    { name: "Ev & Yaşam", href: "/categories/ev-yasam" },
+    { name: "Spor & Outdoor", href: "/categories/spor" },
+    { name: "Anne & Bebek", href: "/categories/anne-bebek" },
+    { name: "Kozmetik & Bakım", href: "/categories/kozmetik" },
+    { name: "Süpermarket", href: "/categories/süpermarket" },
+    { name: "Kitap & Müzik", href: "/categories/kitap" },
+    { name: "Oto & Bahçe", href: "/categories/oto" },
+    { name: "Kırtasiye & Ofis", href: "/categories/kirtasiye" },
+  ];
 
   return (
     <>
@@ -44,19 +43,41 @@ export function Navigation() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-6">
-              <Link href="/orders" className="hover:text-primary">Siparişlerim</Link>
-              <Link href="/addresses" className="hover:text-primary">Adreslerim</Link>
-              <Link href="/payment-methods" className="hover:text-primary">Ödeme Yöntemlerim</Link>
-              <Link href="/campaigns" className="hover:text-primary">Süper Fiyat, Süper Teklif</Link>
-              <Link href="/international" className="hover:text-primary">Yurt Dışından</Link>
-              <Link href="/campaigns" className="hover:text-primary">Kampanyalar</Link>
-              <Link href="/api-test" className="hover:text-primary">API Test</Link>
-              <Link href="/entrepreneur-women" className="hover:text-primary">Girişimci Kadınlar</Link>
-              <Link href="/customer-service" className="hover:text-primary">Müşteri Hizmetleri</Link>
+              <Link href="/orders" className="hover:text-primary">
+                Siparişlerim
+              </Link>
+              <Link href="/addresses" className="hover:text-primary">
+                Adreslerim
+              </Link>
+              <Link href="/payment-methods" className="hover:text-primary">
+                Ödeme Yöntemlerim
+              </Link>
+              <Link href="/campaigns" className="hover:text-primary">
+                Süper Fiyat, Süper Teklif
+              </Link>
+              <Link href="/international" className="hover:text-primary">
+                Yurt Dışından
+              </Link>
+              <Link href="/campaigns" className="hover:text-primary">
+                Kampanyalar
+              </Link>
+              <Link href="/api-test" className="hover:text-primary">
+                API Test
+              </Link>
+              <Link href="/entrepreneur-women" className="hover:text-primary">
+                Girişimci Kadınlar
+              </Link>
+              <Link href="/customer-service" className="hover:text-primary">
+                Müşteri Hizmetleri
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/premium" className="hover:text-primary">Hepsiburada Premium</Link>
-              <Link href="/seller" className="hover:text-primary">Hepsiburada'da Satıcı Ol</Link>
+              <Link href="/premium" className="hover:text-primary">
+                Hepsiburada Premium
+              </Link>
+              <Link href="/seller" className="hover:text-primary">
+                Hepsiburada'da Satıcı Ol
+              </Link>
             </div>
           </div>
         </div>
@@ -72,8 +93,12 @@ export function Navigation() {
                 <span className="text-white font-bold text-sm">E</span>
               </div>
               <div>
-                <span className="font-bold text-xl text-purple-600">E-Ticaret</span>
-                <div className="text-xs text-muted-foreground">Premium'u keşfet</div>
+                <span className="font-bold text-xl text-purple-600">
+                  E-Ticaret
+                </span>
+                <div className="text-xs text-muted-foreground">
+                  Premium'u keşfet
+                </div>
               </div>
             </Link>
 
@@ -96,29 +121,29 @@ export function Navigation() {
                 <span className="hidden md:inline">Konum</span>
                 <ChevronDown className="w-3 h-3" />
               </Button>
-              
-              <Button 
-                variant="ghost" 
+
+              <Button
+                variant="ghost"
                 className="flex items-center gap-2"
                 onClick={() => setIsAccountOpen(true)}
               >
                 <User className="w-4 h-4" />
                 <span className="hidden md:inline">
-                  {isAuthenticated ? `Hesabım ${user?.firstName}` : 'Hesabım'}
+                  {isAuthenticated ? `Hesabım ${user?.firstName}` : "Hesabım"}
                 </span>
                 <ChevronDown className="w-3 h-3" />
               </Button>
-              
-              <Button 
-                variant="ghost" 
-                size="icon" 
+
+              <Button
+                variant="ghost"
+                size="icon"
                 className="relative"
                 onClick={() => setIsCartOpen(true)}
               >
                 <ShoppingCart className="w-5 h-5" />
                 {totalItems > 0 && (
-                  <Badge 
-                    variant="destructive" 
+                  <Badge
+                    variant="destructive"
                     className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center p-0 text-xs"
                   >
                     {totalItems}
@@ -134,11 +159,14 @@ export function Navigation() {
       <nav className="bg-white border-b">
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 py-3 overflow-x-auto scrollbar-hide">
-            <Button variant="ghost" className="flex items-center gap-2 whitespace-nowrap">
+            <Button
+              variant="ghost"
+              className="flex items-center gap-2 whitespace-nowrap"
+            >
               <Menu className="w-4 h-4" />
               <span>Kategoriler</span>
             </Button>
-            
+
             {categories.map((category) => (
               <Link key={category.name} href={category.href}>
                 <Button variant="ghost" className="text-sm whitespace-nowrap">
@@ -152,10 +180,10 @@ export function Navigation() {
 
       {/* Modals */}
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      <AccountModal 
-        isOpen={isAccountOpen} 
+      <AccountModal
+        isOpen={isAccountOpen}
         onClose={() => setIsAccountOpen(false)}
       />
     </>
-  )
+  );
 }

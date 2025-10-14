@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Home, Search, ArrowLeft, ShoppingBag } from 'lucide-react';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Home, Search, ArrowLeft, ShoppingBag } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -20,8 +20,8 @@ export default function NotFound() {
             Sayfa Bulunamadı
           </h1>
           <p className="text-gray-600 mb-6">
-            Aradığınız sayfa mevcut değil veya taşınmış olabilir. 
-            Lütfen URL'yi kontrol edin veya ana sayfaya dönün.
+            Aradığınız sayfa mevcut değil veya taşınmış olabilir. Lütfen URL'yi
+            kontrol edin veya ana sayfaya dönün.
           </p>
         </div>
 
@@ -34,9 +34,9 @@ export default function NotFound() {
                 Ana Sayfaya Dön
               </Button>
             </Link>
-            
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               className="w-full sm:w-auto"
               onClick={() => window.history.back()}
             >
@@ -52,12 +52,14 @@ export default function NotFound() {
                 Ürünleri Görüntüle
               </Button>
             </Link>
-            
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               className="w-full sm:w-auto"
               onClick={() => {
-                const searchInput = document.querySelector('input[placeholder*="ara"]') as HTMLInputElement;
+                const searchInput = document.querySelector(
+                  'input[placeholder*="ara"]'
+                ) as HTMLInputElement;
                 if (searchInput) {
                   searchInput.focus();
                 }
@@ -75,22 +77,40 @@ export default function NotFound() {
             Popüler Sayfalar
           </h3>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <Link href="/categories" className="text-purple-600 hover:text-purple-700">
+            <Link
+              href="/categories"
+              className="text-purple-600 hover:text-purple-700"
+            >
               Kategoriler
             </Link>
-            <Link href="/campaigns" className="text-purple-600 hover:text-purple-700">
+            <Link
+              href="/campaigns"
+              className="text-purple-600 hover:text-purple-700"
+            >
               Kampanyalar
             </Link>
-            <Link href="/orders" className="text-purple-600 hover:text-purple-700">
+            <Link
+              href="/orders"
+              className="text-purple-600 hover:text-purple-700"
+            >
               Siparişlerim
             </Link>
-            <Link href="/favorites" className="text-purple-600 hover:text-purple-700">
+            <Link
+              href="/favorites"
+              className="text-purple-600 hover:text-purple-700"
+            >
               Favorilerim
             </Link>
-            <Link href="/addresses" className="text-purple-600 hover:text-purple-700">
+            <Link
+              href="/addresses"
+              className="text-purple-600 hover:text-purple-700"
+            >
               Adreslerim
             </Link>
-            <Link href="/payment-methods" className="text-purple-600 hover:text-purple-700">
+            <Link
+              href="/payment-methods"
+              className="text-purple-600 hover:text-purple-700"
+            >
               Ödeme Yöntemlerim
             </Link>
           </div>
@@ -102,10 +122,15 @@ export default function NotFound() {
             Yardıma mı ihtiyacınız var?
           </h4>
           <p className="text-sm text-purple-700 mb-3">
-            Sorunuzun cevabını bulamadıysanız müşteri hizmetlerimizle iletişime geçin.
+            Sorunuzun cevabını bulamadıysanız müşteri hizmetlerimizle iletişime
+            geçin.
           </p>
           <Link href="/customer-service">
-            <Button variant="outline" size="sm" className="text-purple-700 border-purple-300 hover:bg-purple-100">
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-purple-700 border-purple-300 hover:bg-purple-100"
+            >
               Müşteri Hizmetleri
             </Button>
           </Link>

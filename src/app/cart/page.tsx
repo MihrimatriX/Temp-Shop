@@ -1,32 +1,39 @@
-'use client'
+"use client";
 
-import { useCartStore } from '@/store/cart-store'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge'
-import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft } from 'lucide-react'
-import { formatPrice } from '@/lib/utils'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useCartStore } from "@/store/cart-store";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { ShoppingCart, Trash2, Minus, Plus, ArrowLeft } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
-  const router = useRouter()
-  const { items, totalItems, totalPrice, updateQuantity, removeItem, clearCart } = useCartStore()
+  const router = useRouter();
+  const {
+    items,
+    totalItems,
+    totalPrice,
+    updateQuantity,
+    removeItem,
+    clearCart,
+  } = useCartStore();
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity <= 0) {
-      removeItem(productId)
+      removeItem(productId);
     } else {
-      updateQuantity(productId, newQuantity)
+      updateQuantity(productId, newQuantity);
     }
-  }
+  };
 
   const handleCheckout = () => {
-    if (items.length === 0) return
-    router.push('/checkout')
-  }
+    if (items.length === 0) return;
+    router.push("/checkout");
+  };
 
   if (items.length === 0) {
     return (
@@ -49,16 +56,14 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Sepetim</h1>
-        <p className="text-muted-foreground">
-          {totalItems} ürün sepetinizde
-        </p>
+        <p className="text-muted-foreground">{totalItems} ürün sepetinizde</p>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
@@ -70,17 +75,19 @@ export default function CartPage() {
                 <div className="flex gap-4">
                   <div className="relative w-20 h-20 flex-shrink-0">
                     <Image
-                      src={item.product.imageUrl || '/placeholder-product.jpg'}
+                      src={item.product.imageUrl || "/placeholder-product.jpg"}
                       alt={item.product.productName}
                       fill
                       className="object-cover rounded-md"
                     />
                   </div>
-                  
+
                   <div className="flex-1 space-y-2">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="font-semibold">{item.product.productName}</h3>
+                        <h3 className="font-semibold">
+                          {item.product.productName}
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                           {item.product.category?.categoryName}
                         </p>
@@ -99,34 +106,47 @@ export default function CartPage() {
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="icon"
-                          onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
+                          onClick={() =>
+                            handleQuantityChange(
+                              item.product.id,
+                              item.quantity - 1
+                            )
+                          }
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
-                        <span className="w-12 text-center">{item.quantity}</span>
+                        <span className="w-12 text-center">
+                          {item.quantity}
+                        </span>
                         <Button
                           variant="outline"
                           size="icon"
-                          onClick={() => handleQuantityChange(item.product.id, item.quantity + 1)}
+                          onClick={() =>
+                            handleQuantityChange(
+                              item.product.id,
+                              item.quantity + 1
+                            )
+                          }
                           disabled={item.quantity >= item.product.unitInStock}
                         >
                           <Plus className="h-4 w-4" />
                         </Button>
                       </div>
-                      
+
                       <div className="text-right">
                         <div className="font-semibold">
                           {formatPrice(item.product.unitPrice * item.quantity)}
                         </div>
                         {item.quantity > 1 && (
                           <div className="text-sm text-muted-foreground">
-                            {formatPrice(item.product.unitPrice)} × {item.quantity}
+                            {formatPrice(item.product.unitPrice)} ×{" "}
+                            {item.quantity}
                           </div>
                         )}
                       </div>
@@ -136,7 +156,7 @@ export default function CartPage() {
               </CardContent>
             </Card>
           ))}
-          
+
           <div className="flex justify-between items-center pt-4">
             <Button variant="outline" onClick={clearCart}>
               Sepeti Temizle
@@ -172,15 +192,11 @@ export default function CartPage() {
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
               </div>
-              
-              <Button 
-                onClick={handleCheckout}
-                className="w-full"
-                size="lg"
-              >
+
+              <Button onClick={handleCheckout} className="w-full" size="lg">
                 Ödemeye Geç
               </Button>
-              
+
               <p className="text-xs text-muted-foreground text-center">
                 Güvenli ödeme ile korunuyorsunuz
               </p>
@@ -189,5 +205,5 @@ export default function CartPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,20 +1,19 @@
-'use client'
+"use client";
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { ShoppingBag, Truck, Shield, Star } from 'lucide-react'
-import Link from 'next/link'
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ShoppingBag, Truck, Shield, Star } from "lucide-react";
+import Link from "next/link";
 
 interface HeroSectionProps {
-  title?: string
-  subtitle?: string
-  showSearch?: boolean
+  title?: string;
+  subtitle?: string;
+  showSearch?: boolean;
 }
 
-export function HeroSection({ 
-  title = "Modern E-Ticaret Deneyimi", 
+export function HeroSection({
+  title = "Modern E-Ticaret Deneyimi",
   subtitle = "En kaliteli ürünleri en uygun fiyatlarla keşfedin. Hızlı teslimat, güvenli ödeme ve mükemmel müşteri hizmetleri.",
-  showSearch = false 
 }: HeroSectionProps) {
   return (
     <div className="relative bg-gradient-to-r from-primary/10 to-secondary/10 py-16">
@@ -30,7 +29,7 @@ export function HeroSection({
                 {subtitle}
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="text-lg px-8">
                 <Link href="/products">
@@ -55,7 +54,7 @@ export function HeroSection({
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card className="p-6">
               <CardContent className="p-0">
                 <Shield className="h-8 w-8 text-primary mb-4" />
@@ -65,17 +64,15 @@ export function HeroSection({
                 </p>
               </CardContent>
             </Card>
-            
+
             <Card className="p-6">
               <CardContent className="p-0">
                 <Star className="h-8 w-8 text-primary mb-4" />
                 <h3 className="font-semibold mb-2">Kaliteli Ürünler</h3>
-                <p className="text-sm text-muted-foreground">
-                  Seçkin markalar
-                </p>
+                <p className="text-sm text-muted-foreground">Seçkin markalar</p>
               </CardContent>
             </Card>
-            
+
             <Card className="p-6">
               <CardContent className="p-0">
                 <ShoppingBag className="h-8 w-8 text-primary mb-4" />
@@ -89,5 +86,5 @@ export function HeroSection({
         </div>
       </div>
     </div>
-  )
+  );
 }

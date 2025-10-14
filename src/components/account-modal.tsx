@@ -1,37 +1,42 @@
-'use client'
+"use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { AuthForm } from '@/components/auth-form'
-import { useAuthStore } from '@/store/auth-store'
-import { 
-  User, 
-  Package, 
-  Heart, 
-  Settings, 
-  LogOut, 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { AuthForm } from "@/components/auth-form";
+import { useAuthStore } from "@/store/auth-store";
+import {
+  User,
+  Package,
+  Heart,
+  Settings,
+  LogOut,
   CreditCard,
   MapPin,
   Bell,
   Shield,
-  HelpCircle
-} from 'lucide-react'
-import Link from 'next/link'
+  HelpCircle,
+} from "lucide-react";
+import Link from "next/link";
 
 interface AccountModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export function AccountModal({ isOpen, onClose }: AccountModalProps) {
-  const { isAuthenticated, user, logout } = useAuthStore()
+  const { isAuthenticated, user, logout } = useAuthStore();
 
   const handleLogout = () => {
-    logout()
-    onClose()
-  }
+    logout();
+    onClose();
+  };
 
   if (!isAuthenticated) {
     return (
@@ -40,7 +45,7 @@ export function AccountModal({ isOpen, onClose }: AccountModalProps) {
           <AuthForm onSuccess={onClose} />
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 
   return (
@@ -62,7 +67,9 @@ export function AccountModal({ isOpen, onClose }: AccountModalProps) {
                   <User className="w-6 h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">{user?.firstName} {user?.lastName}</h3>
+                  <h3 className="font-semibold">
+                    {user?.firstName} {user?.lastName}
+                  </h3>
                   <p className="text-sm text-muted-foreground">{user?.email}</p>
                 </div>
               </div>
@@ -77,49 +84,49 @@ export function AccountModal({ isOpen, onClose }: AccountModalProps) {
                 Siparişlerim
               </Button>
             </Link>
-            
+
             <Link href="/favorites" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <Heart className="w-4 h-4 mr-3" />
                 Favorilerim
               </Button>
             </Link>
-            
+
             <Link href="/addresses" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <MapPin className="w-4 h-4 mr-3" />
                 Adreslerim
               </Button>
             </Link>
-            
+
             <Link href="/payment-methods" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <CreditCard className="w-4 h-4 mr-3" />
                 Ödeme Yöntemlerim
               </Button>
             </Link>
-            
+
             <Link href="/notifications" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <Bell className="w-4 h-4 mr-3" />
                 Bildirimler
               </Button>
             </Link>
-            
+
             <Link href="/security" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <Shield className="w-4 h-4 mr-3" />
                 Güvenlik
               </Button>
             </Link>
-            
+
             <Link href="/settings" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <Settings className="w-4 h-4 mr-3" />
                 Ayarlar
               </Button>
             </Link>
-            
+
             <Link href="/help" onClick={onClose}>
               <Button variant="ghost" className="w-full justify-start">
                 <HelpCircle className="w-4 h-4 mr-3" />
@@ -130,12 +137,16 @@ export function AccountModal({ isOpen, onClose }: AccountModalProps) {
 
           <Separator />
 
-          <Button variant="destructive" className="w-full" onClick={handleLogout}>
+          <Button
+            variant="destructive"
+            className="w-full"
+            onClick={handleLogout}
+          >
             <LogOut className="w-4 h-4 mr-2" />
             Çıkış Yap
           </Button>
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

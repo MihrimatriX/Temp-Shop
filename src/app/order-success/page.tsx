@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import { useSearchParams } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle, Package, Truck, ArrowLeft } from 'lucide-react'
-import Link from 'next/link'
-import { Suspense } from 'react'
+import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, Package, Truck, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
 
 function OrderSuccessContent() {
-  const searchParams = useSearchParams()
-  const orderNumber = searchParams.get('orderNumber')
+  const searchParams = useSearchParams();
+  const orderNumber = searchParams.get("orderNumber");
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -21,13 +21,16 @@ function OrderSuccessContent() {
 
         {/* Success Message */}
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold text-green-600">Siparişiniz Alındı!</h1>
+          <h1 className="text-3xl font-bold text-green-600">
+            Siparişiniz Alındı!
+          </h1>
           <p className="text-lg text-muted-foreground">
             Siparişiniz başarıyla oluşturuldu ve işleme alındı.
           </p>
           {orderNumber && (
             <p className="text-sm text-muted-foreground">
-              Sipariş Numarası: <span className="font-mono font-semibold">{orderNumber}</span>
+              Sipariş Numarası:{" "}
+              <span className="font-mono font-semibold">{orderNumber}</span>
             </p>
           )}
         </div>
@@ -48,27 +51,35 @@ function OrderSuccessContent() {
                 </div>
                 <div className="text-left">
                   <p className="font-medium">Sipariş Onaylandı</p>
-                  <p className="text-sm text-muted-foreground">Siparişiniz alındı ve işleme alındı</p>
+                  <p className="text-sm text-muted-foreground">
+                    Siparişiniz alındı ve işleme alındı
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                   <Package className="h-4 w-4 text-white" />
                 </div>
                 <div className="text-left">
                   <p className="font-medium">Hazırlanıyor</p>
-                  <p className="text-sm text-muted-foreground">Ürünleriniz hazırlanıyor</p>
+                  <p className="text-sm text-muted-foreground">
+                    Ürünleriniz hazırlanıyor
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
                   <Truck className="h-4 w-4 text-gray-600" />
                 </div>
                 <div className="text-left">
-                  <p className="font-medium text-muted-foreground">Kargoya Verildi</p>
-                  <p className="text-sm text-muted-foreground">Kargo bilgileri e-posta ile gönderilecek</p>
+                  <p className="font-medium text-muted-foreground">
+                    Kargoya Verildi
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Kargo bilgileri e-posta ile gönderilecek
+                  </p>
                 </div>
               </div>
             </div>
@@ -82,7 +93,10 @@ function OrderSuccessContent() {
             <p>• Sipariş detayları e-posta adresinize gönderildi</p>
             <p>• Ürünleriniz 1-2 iş günü içinde hazırlanacak</p>
             <p>• Kargo bilgileri hazırlık tamamlandığında gönderilecek</p>
-            <p>• Siparişinizi takip etmek için sipariş numaranızı kullanabilirsiniz</p>
+            <p>
+              • Siparişinizi takip etmek için sipariş numaranızı
+              kullanabilirsiniz
+            </p>
           </div>
         </div>
 
@@ -95,25 +109,23 @@ function OrderSuccessContent() {
             </Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="/">
-              Ana Sayfaya Dön
-            </Link>
+            <Link href="/">Ana Sayfaya Dön</Link>
           </Button>
         </div>
 
         {/* Support */}
         <div className="pt-8 border-t">
           <p className="text-sm text-muted-foreground">
-            Sorularınız için{' '}
+            Sorularınız için{" "}
             <Link href="/contact" className="text-primary hover:underline">
               müşteri hizmetlerimiz
-            </Link>
-            {' '}ile iletişime geçebilirsiniz.
+            </Link>{" "}
+            ile iletişime geçebilirsiniz.
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function OrderSuccessPage() {
@@ -121,5 +133,5 @@ export default function OrderSuccessPage() {
     <Suspense fallback={<div>Loading...</div>}>
       <OrderSuccessContent />
     </Suspense>
-  )
+  );
 }

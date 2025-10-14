@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useAuthStore } from '@/store/auth-store';
-import { useCartStore } from '@/store/cart-store';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Heart, ShoppingCart, Trash2, Star } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useAuthStore } from "@/store/auth-store";
+import { useCartStore } from "@/store/cart-store";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Heart, ShoppingCart, Trash2, Star } from "lucide-react";
 
 interface FavoriteProduct {
   id: number;
@@ -23,10 +23,10 @@ interface FavoriteProduct {
 
 export default function FavoritesPage() {
   const { user } = useAuthStore();
-  const { addToCart } = useCartStore();
+  const { addItem } = useCartStore();
   const [favorites, setFavorites] = useState<FavoriteProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState<'date' | 'price' | 'name'>('date');
+  const [sortBy, setSortBy] = useState<"date" | "price" | "name">("date");
 
   useEffect(() => {
     if (user) {
@@ -37,93 +37,104 @@ export default function FavoritesPage() {
   const fetchFavorites = async () => {
     try {
       setLoading(true);
-      // Mock data for now
       const mockFavorites: FavoriteProduct[] = [
         {
           id: 1,
-          name: 'Wireless Bluetooth Headphones',
+          name: "Wireless Bluetooth Headphones",
           price: 299.99,
           originalPrice: 399.99,
           discount: 25,
-          imageUrl: '/placeholder-product.jpg',
+          imageUrl: "/placeholder-product.jpg",
           rating: 4.5,
           reviewCount: 128,
           inStock: true,
-          category: 'Elektronik',
-          addedAt: '2024-10-01T10:30:00Z'
+          category: "Elektronik",
+          addedAt: "2024-10-01T10:30:00Z",
         },
         {
           id: 2,
-          name: 'Smart Watch Series 8',
+          name: "Smart Watch Series 8",
           price: 1299.99,
           originalPrice: 1499.99,
           discount: 13,
-          imageUrl: '/placeholder-product.jpg',
+          imageUrl: "/placeholder-product.jpg",
           rating: 4.8,
           reviewCount: 256,
           inStock: true,
-          category: 'Elektronik',
-          addedAt: '2024-10-02T14:20:00Z'
+          category: "Elektronik",
+          addedAt: "2024-10-02T14:20:00Z",
         },
         {
           id: 3,
-          name: 'Ergonomic Office Chair',
+          name: "Ergonomic Office Chair",
           price: 899.99,
-          imageUrl: '/placeholder-product.jpg',
+          imageUrl: "/placeholder-product.jpg",
           rating: 4.2,
           reviewCount: 89,
           inStock: false,
-          category: 'Ev & Yaşam',
-          addedAt: '2024-10-03T09:15:00Z'
+          category: "Ev & Yaşam",
+          addedAt: "2024-10-03T09:15:00Z",
         },
         {
           id: 4,
-          name: 'Running Shoes - Nike Air Max',
+          name: "Running Shoes - Nike Air Max",
           price: 599.99,
           originalPrice: 699.99,
           discount: 14,
-          imageUrl: '/placeholder-product.jpg',
+          imageUrl: "/placeholder-product.jpg",
           rating: 4.6,
           reviewCount: 342,
           inStock: true,
-          category: 'Spor & Outdoor',
-          addedAt: '2024-10-04T16:45:00Z'
-        }
+          category: "Spor & Outdoor",
+          addedAt: "2024-10-04T16:45:00Z",
+        },
       ];
-      
+
       setFavorites(mockFavorites);
     } catch (error) {
-      console.error('Error fetching favorites:', error);
+      console.error("Error fetching favorites:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleRemoveFavorite = async (productId: number) => {
-    if (window.confirm('Bu ürünü favorilerden çıkarmak istediğinizden emin misiniz?')) {
-      setFavorites(favorites.filter(fav => fav.id !== productId));
+    if (
+      window.confirm(
+        "Bu ürünü favorilerden çıkarmak istediğinizden emin misiniz?"
+      )
+    ) {
+      setFavorites(favorites.filter((fav) => fav.id !== productId));
     }
   };
 
   const handleAddToCart = (product: FavoriteProduct) => {
-    addToCart({
+    // Convert FavoriteProduct to Product format
+    const productToAdd = {
       id: product.id,
-      name: product.name,
-      price: product.price,
+      productName: product.name,
+      unitPrice: product.price,
+      unitInStock: product.inStock ? 100 : 0,
+      quantityPerUnit: '1 adet',
+      description: '',
       imageUrl: product.imageUrl,
-      quantity: 1
-    });
+      discount: product.discount || 0,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    addItem(productToAdd, 1);
   };
 
-  const handleSort = (sortType: 'date' | 'price' | 'name') => {
+  const handleSort = (sortType: "date" | "price" | "name") => {
     setSortBy(sortType);
     const sorted = [...favorites].sort((a, b) => {
       switch (sortType) {
-        case 'date':
+        case "date":
           return new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime();
-        case 'price':
+        case "price":
           return a.price - b.price;
-        case 'name':
+        case "name":
           return a.name.localeCompare(b.name);
         default:
           return 0;
@@ -137,7 +148,9 @@ export default function FavoritesPage() {
       <Star
         key={i}
         className={`w-4 h-4 ${
-          i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'
+          i < Math.floor(rating)
+            ? "text-yellow-400 fill-current"
+            : "text-gray-300"
         }`}
       />
     ));
@@ -151,7 +164,9 @@ export default function FavoritesPage() {
             <Heart className="mx-auto h-24 w-24" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Giriş Yapın</h2>
-          <p className="text-gray-600 mb-6">Favori ürünlerinizi görüntülemek için giriş yapmanız gerekiyor.</p>
+          <p className="text-gray-600 mb-6">
+            Favori ürünlerinizi görüntülemek için giriş yapmanız gerekiyor.
+          </p>
           <button className="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">
             Giriş Yap
           </button>
@@ -165,7 +180,9 @@ export default function FavoritesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Favorilerim</h1>
-          <p className="text-gray-600 mt-2">Beğendiğiniz ürünleri buradan takip edebilirsiniz.</p>
+          <p className="text-gray-600 mt-2">
+            Beğendiğiniz ürünleri buradan takip edebilirsiniz.
+          </p>
         </div>
 
         {loading ? (
@@ -177,8 +194,13 @@ export default function FavoritesPage() {
             <div className="text-gray-400 mb-4">
               <Heart className="mx-auto h-24 w-24" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz favori ürününüz yok</h3>
-            <p className="text-gray-600 mb-6">Beğendiğiniz ürünleri favorilere ekleyerek buradan takip edebilirsiniz!</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Henüz favori ürününüz yok
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Beğendiğiniz ürünleri favorilere ekleyerek buradan takip
+              edebilirsiniz!
+            </p>
             <button className="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">
               Alışverişe Başla
             </button>
@@ -191,23 +213,23 @@ export default function FavoritesPage() {
                 <span className="text-sm text-gray-600">Sırala:</span>
                 <div className="flex space-x-2">
                   <Button
-                    variant={sortBy === 'date' ? 'default' : 'outline'}
+                    variant={sortBy === "date" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => handleSort('date')}
+                    onClick={() => handleSort("date")}
                   >
                     Tarihe Göre
                   </Button>
                   <Button
-                    variant={sortBy === 'price' ? 'default' : 'outline'}
+                    variant={sortBy === "price" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => handleSort('price')}
+                    onClick={() => handleSort("price")}
                   >
                     Fiyata Göre
                   </Button>
                   <Button
-                    variant={sortBy === 'name' ? 'default' : 'outline'}
+                    variant={sortBy === "name" ? "default" : "outline"}
                     size="sm"
-                    onClick={() => handleSort('name')}
+                    onClick={() => handleSort("name")}
                   >
                     İsme Göre
                   </Button>
@@ -221,7 +243,10 @@ export default function FavoritesPage() {
             {/* Favorites Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {favorites.map((product) => (
-                <div key={product.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+                >
                   <div className="relative">
                     <img
                       src={product.imageUrl}
@@ -235,7 +260,9 @@ export default function FavoritesPage() {
                     )}
                     {!product.inStock && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <span className="text-white font-semibold">Stokta Yok</span>
+                        <span className="text-white font-semibold">
+                          Stokta Yok
+                        </span>
                       </div>
                     )}
                     <button
@@ -254,7 +281,7 @@ export default function FavoritesPage() {
                         {product.category}
                       </span>
                     </div>
-                    
+
                     <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
                       {product.name}
                     </h3>
@@ -301,7 +328,8 @@ export default function FavoritesPage() {
                     </div>
 
                     <div className="mt-3 text-xs text-gray-500">
-                      Favorilere eklendi: {new Date(product.addedAt).toLocaleDateString('tr-TR')}
+                      Favorilere eklendi:{" "}
+                      {new Date(product.addedAt).toLocaleDateString("tr-TR")}
                     </div>
                   </div>
                 </div>
@@ -314,7 +342,10 @@ export default function FavoritesPage() {
                 <Button variant="outline" className="mr-4">
                   Tümünü Sepete Ekle
                 </Button>
-                <Button variant="outline" className="text-red-600 hover:text-red-700">
+                <Button
+                  variant="outline"
+                  className="text-red-600 hover:text-red-700"
+                >
                   Tümünü Temizle
                 </Button>
               </div>

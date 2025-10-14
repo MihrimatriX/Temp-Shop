@@ -1,39 +1,49 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { useCartStore, CartItem } from '@/store/cart-store'
-import { formatPrice } from '@/lib/utils'
-import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useCartStore, CartItem } from "@/store/cart-store";
+import { formatPrice } from "@/lib/utils";
+import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface CartModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export function CartModal({ isOpen, onClose }: CartModalProps) {
-  const { items, removeItem, updateQuantity, clearCart, totalAmount, totalItems } = useCartStore()
+  const {
+    items,
+    removeItem,
+    updateQuantity,
+    clearCart,
+    totalAmount,
+    totalItems,
+  } = useCartStore();
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity <= 0) {
-      removeItem(productId)
+      removeItem(productId);
     } else {
-      updateQuantity(productId, newQuantity)
+      updateQuantity(productId, newQuantity);
     }
-  }
+  };
 
   const handleRemoveItem = (productId: number) => {
-    removeItem(productId)
-  }
+    removeItem(productId);
+  };
 
   const handleClearCart = () => {
-    clearCart()
-  }
+    clearCart();
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -64,16 +74,21 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               {/* Cart Items */}
               <div className="flex-1 overflow-y-auto space-y-4 pr-2">
                 {items.map((item) => (
-                  <div key={item.product.id} className="flex gap-4 p-4 border rounded-lg">
+                  <div
+                    key={item.product.id}
+                    className="flex gap-4 p-4 border rounded-lg"
+                  >
                     <div className="relative w-20 h-20 flex-shrink-0">
                       <Image
-                        src={item.product.imageUrl || '/placeholder-product.jpg'}
+                        src={
+                          item.product.imageUrl || "/placeholder-product.jpg"
+                        }
                         alt={item.product.productName}
                         fill
                         className="object-cover rounded-md"
                       />
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-sm mb-1 line-clamp-2">
                         {item.product.productName}
@@ -81,14 +96,19 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                       <p className="text-sm text-muted-foreground mb-2">
                         {item.product.quantityPerUnit}
                       </p>
-                      
+
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Button
                             variant="outline"
                             size="icon"
                             className="w-8 h-8"
-                            onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.product.id,
+                                item.quantity - 1
+                              )
+                            }
                           >
                             <Minus className="w-3 h-3" />
                           </Button>
@@ -99,25 +119,37 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                             variant="outline"
                             size="icon"
                             className="w-8 h-8"
-                            onClick={() => handleQuantityChange(item.product.id, item.quantity + 1)}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.product.id,
+                                item.quantity + 1
+                              )
+                            }
                           >
                             <Plus className="w-3 h-3" />
                           </Button>
                         </div>
-                        
+
                         <div className="text-right">
                           <div className="font-semibold text-sm">
-                            {formatPrice(item.product.unitPrice * item.quantity)}
+                            {formatPrice(
+                              item.product.unitPrice * item.quantity
+                            )}
                           </div>
-                          {item.product.discount && item.product.discount > 0 && (
-                            <div className="text-xs text-muted-foreground line-through">
-                              {formatPrice(item.product.unitPrice * (1 + item.product.discount / 100) * item.quantity)}
-                            </div>
-                          )}
+                          {item.product.discount &&
+                            item.product.discount > 0 && (
+                              <div className="text-xs text-muted-foreground line-through">
+                                {formatPrice(
+                                  item.product.unitPrice *
+                                    (1 + item.product.discount / 100) *
+                                    item.quantity
+                                )}
+                              </div>
+                            )}
                         </div>
                       </div>
                     </div>
-                    
+
                     <Button
                       variant="ghost"
                       size="icon"
@@ -175,5 +207,5 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useAuthStore } from '@/store/auth-store';
+import { useState, useEffect } from "react";
+import { useAuthStore } from "@/store/auth-store";
 
 interface Address {
   id: number;
@@ -22,13 +22,13 @@ export default function AddressesPage() {
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
 
   const [formData, setFormData] = useState({
-    title: '',
-    fullAddress: '',
-    city: '',
-    district: '',
-    postalCode: '',
-    phoneNumber: '',
-    isDefault: false
+    title: "",
+    fullAddress: "",
+    city: "",
+    district: "",
+    postalCode: "",
+    phoneNumber: "",
+    isDefault: false,
   });
 
   useEffect(() => {
@@ -44,29 +44,29 @@ export default function AddressesPage() {
       const mockAddresses: Address[] = [
         {
           id: 1,
-          title: 'Ev',
-          fullAddress: 'Atatürk Mahallesi, Cumhuriyet Caddesi No:123 Daire:5',
-          city: 'İstanbul',
-          district: 'Kadıköy',
-          postalCode: '34710',
-          phoneNumber: '0555 123 45 67',
-          isDefault: true
+          title: "Ev",
+          fullAddress: "Atatürk Mahallesi, Cumhuriyet Caddesi No:123 Daire:5",
+          city: "İstanbul",
+          district: "Kadıköy",
+          postalCode: "34710",
+          phoneNumber: "0555 123 45 67",
+          isDefault: true,
         },
         {
           id: 2,
-          title: 'İş',
-          fullAddress: 'Levent Mahallesi, Büyükdere Caddesi No:456 Kat:12',
-          city: 'İstanbul',
-          district: 'Şişli',
-          postalCode: '34330',
-          phoneNumber: '0212 555 12 34',
-          isDefault: false
-        }
+          title: "İş",
+          fullAddress: "Levent Mahallesi, Büyükdere Caddesi No:456 Kat:12",
+          city: "İstanbul",
+          district: "Şişli",
+          postalCode: "34330",
+          phoneNumber: "0212 555 12 34",
+          isDefault: false,
+        },
       ];
-      
+
       setAddresses(mockAddresses);
     } catch (error) {
-      console.error('Error fetching addresses:', error);
+      console.error("Error fetching addresses:", error);
     } finally {
       setLoading(false);
     }
@@ -77,11 +77,13 @@ export default function AddressesPage() {
     try {
       if (editingAddress) {
         // Update existing address
-        setAddresses(addresses.map(addr => 
-          addr.id === editingAddress.id 
-            ? { ...formData, id: editingAddress.id }
-            : addr
-        ));
+        setAddresses(
+          addresses.map((addr) =>
+            addr.id === editingAddress.id
+              ? { ...formData, id: editingAddress.id }
+              : addr
+          )
+        );
       } else {
         // Add new address
         const newAddress: Address = {
@@ -90,20 +92,20 @@ export default function AddressesPage() {
         };
         setAddresses([...addresses, newAddress]);
       }
-      
+
       setShowAddForm(false);
       setEditingAddress(null);
       setFormData({
-        title: '',
-        fullAddress: '',
-        city: '',
-        district: '',
-        postalCode: '',
-        phoneNumber: '',
-        isDefault: false
+        title: "",
+        fullAddress: "",
+        city: "",
+        district: "",
+        postalCode: "",
+        phoneNumber: "",
+        isDefault: false,
       });
     } catch (error) {
-      console.error('Error saving address:', error);
+      console.error("Error saving address:", error);
     }
   };
 
@@ -115,23 +117,25 @@ export default function AddressesPage() {
       city: address.city,
       district: address.district,
       postalCode: address.postalCode,
-      phoneNumber: address.phoneNumber || '',
-      isDefault: address.isDefault
+      phoneNumber: address.phoneNumber || "",
+      isDefault: address.isDefault,
     });
     setShowAddForm(true);
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm('Bu adresi silmek istediğinizden emin misiniz?')) {
-      setAddresses(addresses.filter(addr => addr.id !== id));
+    if (window.confirm("Bu adresi silmek istediğinizden emin misiniz?")) {
+      setAddresses(addresses.filter((addr) => addr.id !== id));
     }
   };
 
   const handleSetDefault = async (id: number) => {
-    setAddresses(addresses.map(addr => ({
-      ...addr,
-      isDefault: addr.id === id
-    })));
+    setAddresses(
+      addresses.map((addr) => ({
+        ...addr,
+        isDefault: addr.id === id,
+      }))
+    );
   };
 
   if (!user) {
@@ -139,7 +143,9 @@ export default function AddressesPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Giriş Yapın</h2>
-          <p className="text-gray-600 mb-6">Adreslerinizi yönetmek için giriş yapmanız gerekiyor.</p>
+          <p className="text-gray-600 mb-6">
+            Adreslerinizi yönetmek için giriş yapmanız gerekiyor.
+          </p>
           <button className="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">
             Giriş Yap
           </button>
@@ -153,7 +159,9 @@ export default function AddressesPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Adreslerim</h1>
-          <p className="text-gray-600 mt-2">Teslimat adreslerinizi buradan yönetebilirsiniz.</p>
+          <p className="text-gray-600 mt-2">
+            Teslimat adreslerinizi buradan yönetebilirsiniz.
+          </p>
         </div>
 
         {loading ? (
@@ -166,7 +174,7 @@ export default function AddressesPage() {
             {showAddForm && (
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  {editingAddress ? 'Adresi Düzenle' : 'Yeni Adres Ekle'}
+                  {editingAddress ? "Adresi Düzenle" : "Yeni Adres Ekle"}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -178,7 +186,9 @@ export default function AddressesPage() {
                         type="text"
                         required
                         value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, title: e.target.value })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         placeholder="Ev, İş, vb."
                       />
@@ -190,7 +200,12 @@ export default function AddressesPage() {
                       <input
                         type="tel"
                         value={formData.phoneNumber}
-                        onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            phoneNumber: e.target.value,
+                          })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         placeholder="0555 123 45 67"
                       />
@@ -205,7 +220,12 @@ export default function AddressesPage() {
                       required
                       rows={3}
                       value={formData.fullAddress}
-                      onChange={(e) => setFormData({ ...formData, fullAddress: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          fullAddress: e.target.value,
+                        })
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="Mahalle, sokak, bina no, daire no"
                     />
@@ -220,7 +240,9 @@ export default function AddressesPage() {
                         type="text"
                         required
                         value={formData.city}
-                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, city: e.target.value })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         placeholder="İstanbul"
                       />
@@ -233,7 +255,9 @@ export default function AddressesPage() {
                         type="text"
                         required
                         value={formData.district}
-                        onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, district: e.target.value })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         placeholder="Kadıköy"
                       />
@@ -246,7 +270,12 @@ export default function AddressesPage() {
                         type="text"
                         required
                         value={formData.postalCode}
-                        onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            postalCode: e.target.value,
+                          })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         placeholder="34710"
                       />
@@ -258,10 +287,18 @@ export default function AddressesPage() {
                       type="checkbox"
                       id="isDefault"
                       checked={formData.isDefault}
-                      onChange={(e) => setFormData({ ...formData, isDefault: e.target.checked })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          isDefault: e.target.checked,
+                        })
+                      }
                       className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                     />
-                    <label htmlFor="isDefault" className="ml-2 block text-sm text-gray-700">
+                    <label
+                      htmlFor="isDefault"
+                      className="ml-2 block text-sm text-gray-700"
+                    >
                       Varsayılan adres olarak ayarla
                     </label>
                   </div>
@@ -273,13 +310,13 @@ export default function AddressesPage() {
                         setShowAddForm(false);
                         setEditingAddress(null);
                         setFormData({
-                          title: '',
-                          fullAddress: '',
-                          city: '',
-                          district: '',
-                          postalCode: '',
-                          phoneNumber: '',
-                          isDefault: false
+                          title: "",
+                          fullAddress: "",
+                          city: "",
+                          district: "",
+                          postalCode: "",
+                          phoneNumber: "",
+                          isDefault: false,
                         });
                       }}
                       className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
@@ -290,7 +327,7 @@ export default function AddressesPage() {
                       type="submit"
                       className="px-4 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent rounded-md hover:bg-purple-700"
                     >
-                      {editingAddress ? 'Güncelle' : 'Kaydet'}
+                      {editingAddress ? "Güncelle" : "Kaydet"}
                     </button>
                   </div>
                 </form>
@@ -301,14 +338,35 @@ export default function AddressesPage() {
             {addresses.length === 0 ? (
               <div className="text-center py-12">
                 <div className="text-gray-400 mb-4">
-                  <svg className="mx-auto h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <svg
+                    className="mx-auto h-24 w-24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz adres eklenmemiş</h3>
-                <p className="text-gray-600 mb-6">İlk adresinizi ekleyerek alışverişe başlayın!</p>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Henüz adres eklenmemiş
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  İlk adresinizi ekleyerek alışverişe başlayın!
+                </p>
                 <button
+                  title="Adres Ekle"
+                  type="button"
                   onClick={() => setShowAddForm(true)}
                   className="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700"
                 >
@@ -318,7 +376,9 @@ export default function AddressesPage() {
             ) : (
               <>
                 <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-semibold text-gray-900">Kayıtlı Adresler</h2>
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    Kayıtlı Adresler
+                  </h2>
                   <button
                     onClick={() => setShowAddForm(true)}
                     className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700"
@@ -329,10 +389,15 @@ export default function AddressesPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {addresses.map((address) => (
-                    <div key={address.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div
+                      key={address.id}
+                      className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+                    >
                       <div className="flex justify-between items-start mb-4">
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900">{address.title}</h3>
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            {address.title}
+                          </h3>
                           {address.isDefault && (
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mt-1">
                               Varsayılan
@@ -341,19 +406,43 @@ export default function AddressesPage() {
                         </div>
                         <div className="flex space-x-2">
                           <button
+                            title="Adresi Düzenle"
+                            type="button"
                             onClick={() => handleEdit(address)}
                             className="text-purple-600 hover:text-purple-700"
                           >
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            <svg
+                              className="h-5 w-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
                             </svg>
                           </button>
                           <button
+                            title="Adresi Sil"
+                            type="button"
                             onClick={() => handleDelete(address.id)}
                             className="text-red-600 hover:text-red-700"
                           >
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            <svg
+                              className="h-5 w-5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
                             </svg>
                           </button>
                         </div>
@@ -361,7 +450,10 @@ export default function AddressesPage() {
 
                       <div className="space-y-2 text-sm text-gray-600">
                         <p>{address.fullAddress}</p>
-                        <p>{address.district}, {address.city} {address.postalCode}</p>
+                        <p>
+                          {address.district}, {address.city}{" "}
+                          {address.postalCode}
+                        </p>
                         {address.phoneNumber && (
                           <p>Tel: {address.phoneNumber}</p>
                         )}

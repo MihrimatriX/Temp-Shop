@@ -1,69 +1,73 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Review, ProductReviewSummary } from '@/types'
-import { ReviewService } from '@/services/review-service'
-import { ReviewCard } from '@/components/review-card'
-import { ReviewSummary } from '@/components/review-summary'
-import { ReviewForm } from '@/components/review-form'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { LoadingSpinner } from '@/components/ui/loading-spinner'
-import { MessageSquare, Star } from 'lucide-react'
-import { toast } from 'react-hot-toast'
+import { useState, useEffect } from "react";
+import { Review, ProductReviewSummary } from "@/types";
+import { ReviewService } from "@/services/review-service";
+import { ReviewCard } from "@/components/review-card";
+import { ReviewSummary } from "@/components/review-summary";
+import { ReviewForm } from "@/components/review-form";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { MessageSquare, Star } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 interface ReviewListProps {
-  productId: number
-  productName?: string
-  className?: string
+  productId: number;
+  productName?: string;
+  className?: string;
 }
 
-export function ReviewList({ productId, productName, className }: ReviewListProps) {
-  const [reviews, setReviews] = useState<Review[]>([])
-  const [summary, setSummary] = useState<ProductReviewSummary | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [showReviewForm, setShowReviewForm] = useState(false)
-  const [refreshing, setRefreshing] = useState(false)
+export function ReviewList({
+  productId,
+  productName,
+  className,
+}: ReviewListProps) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [summary, setSummary] = useState<ProductReviewSummary | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchReviews = async () => {
     try {
-      setRefreshing(true)
+      setRefreshing(true);
       const [reviewsResponse, summaryResponse] = await Promise.all([
         ReviewService.getProductReviews(productId),
-        ReviewService.getProductReviewSummary(productId)
-      ])
+        ReviewService.getProductReviewSummary(productId),
+      ]);
 
       if (reviewsResponse.success) {
-        setReviews(reviewsResponse.data || [])
+        setReviews(reviewsResponse.data || []);
       }
 
       if (summaryResponse.success) {
-        setSummary(summaryResponse.data || null)
+        setSummary(summaryResponse.data || null);
       }
     } catch (error) {
-      console.error('Error fetching reviews:', error)
-      toast.error('Yorumlar yüklenirken bir hata oluştu')
+      console.error("Error fetching reviews:", error);
+      toast.error("Yorumlar yüklenirken bir hata oluştu");
     } finally {
-      setLoading(false)
-      setRefreshing(false)
+      setLoading(false);
+      setRefreshing(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchReviews()
-  }, [productId])
+    fetchReviews();
+  }, [productId]);
 
   const handleReviewSubmitted = () => {
-    setShowReviewForm(false)
-    fetchReviews()
-  }
+    setShowReviewForm(false);
+    fetchReviews();
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center py-8">
         <LoadingSpinner size="lg" />
       </div>
-    )
+    );
   }
 
   return (
@@ -71,9 +75,7 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Review Summary */}
         <div className="lg:col-span-1">
-          {summary && (
-            <ReviewSummary summary={summary} />
-          )}
+          {summary && <ReviewSummary summary={summary} />}
         </div>
 
         {/* Reviews and Form */}
@@ -91,7 +93,7 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
                 </span>
               )}
             </div>
-            
+
             <Button
               onClick={() => setShowReviewForm(!showReviewForm)}
               variant="outline"
@@ -121,7 +123,7 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
                   showProductName={false}
                 />
               ))}
-              
+
               {refreshing && (
                 <div className="flex justify-center py-4">
                   <LoadingSpinner size="sm" />
@@ -162,15 +164,42 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
             <CardContent className="space-y-4">
               {/* Mock recommended products */}
               {[
-                { id: 1, name: "Samsung Galaxy S24", price: 15999, image: "https://picsum.photos/200/200?random=201", rating: 4.5 },
-                { id: 2, name: "iPhone 15 Pro", price: 18999, image: "https://picsum.photos/200/200?random=202", rating: 4.8 },
-                { id: 3, name: "MacBook Air M3", price: 24999, image: "https://picsum.photos/200/200?random=203", rating: 4.7 },
-                { id: 4, name: "iPad Pro 12.9", price: 17999, image: "https://picsum.photos/200/200?random=204", rating: 4.6 }
+                {
+                  id: 1,
+                  name: "Samsung Galaxy S24",
+                  price: 15999,
+                  image: "https://picsum.photos/200/200?random=201",
+                  rating: 4.5,
+                },
+                {
+                  id: 2,
+                  name: "iPhone 15 Pro",
+                  price: 18999,
+                  image: "https://picsum.photos/200/200?random=202",
+                  rating: 4.8,
+                },
+                {
+                  id: 3,
+                  name: "MacBook Air M3",
+                  price: 24999,
+                  image: "https://picsum.photos/200/200?random=203",
+                  rating: 4.7,
+                },
+                {
+                  id: 4,
+                  name: "iPad Pro 12.9",
+                  price: 17999,
+                  image: "https://picsum.photos/200/200?random=204",
+                  rating: 4.6,
+                },
               ].map((product) => (
-                <div key={product.id} className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                <div
+                  key={product.id}
+                  className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                >
                   <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
-                    <img 
-                      src={product.image} 
+                    <img
+                      src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover"
                     />
@@ -182,7 +211,14 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
                     <div className="flex items-center gap-1 mt-1">
                       <div className="flex">
                         {Array.from({ length: 5 }, (_, i) => (
-                          <span key={i} className={i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}>
+                          <span
+                            key={i}
+                            className={
+                              i < Math.floor(product.rating)
+                                ? "text-yellow-400"
+                                : "text-gray-300"
+                            }
+                          >
                             ★
                           </span>
                         ))}
@@ -192,12 +228,12 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
                       </span>
                     </div>
                     <p className="text-sm font-semibold text-purple-600 mt-1">
-                      {product.price.toLocaleString('tr-TR')} ₺
+                      {product.price.toLocaleString("tr-TR")} ₺
                     </p>
                   </div>
                 </div>
               ))}
-              
+
               <Button variant="outline" className="w-full mt-4">
                 Tümünü Gör
               </Button>
@@ -206,5 +242,5 @@ export function ReviewList({ productId, productName, className }: ReviewListProp
         </div>
       </div>
     </div>
-  )
+  );
 }

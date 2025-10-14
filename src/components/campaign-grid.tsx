@@ -1,87 +1,87 @@
-'use client'
+"use client";
 
-import { CampaignBanner } from './campaign-banner'
+import { CampaignBanner } from "./campaign-banner";
 
 const campaigns = [
   {
-    title: 'PREMIUM İNDİRİM GÜNLERİ',
-    subtitle: '6-13 EKİM',
-    description: 'Premium üyelere özel indirimler',
+    title: "PREMIUM İNDİRİM GÜNLERİ",
+    subtitle: "6-13 EKİM",
+    description: "Premium üyelere özel indirimler",
     discount: 50,
-    imageUrl: 'https://picsum.photos/200/150?random=1',
-    backgroundColor: 'bg-gradient-to-r from-purple-600 to-purple-800',
-    timeLeft: '5 gün 12 saat',
-    buttonText: 'Alışverişe Başla',
-    buttonHref: '/products?campaign=premium'
+    imageUrl: "https://picsum.photos/200/150?random=1",
+    backgroundColor: "bg-gradient-to-r from-purple-600 to-purple-800",
+    timeLeft: "5 gün 12 saat",
+    buttonText: "Alışverişe Başla",
+    buttonHref: "/products?campaign=premium",
   },
   {
-    title: 'Teknoloji Ürünlerinde',
-    subtitle: 'PREMIUM\'A ÖZEL',
-    description: 'Sepette 1.000 TL\'ye Varan İndirimler',
+    title: "Teknoloji Ürünlerinde",
+    subtitle: "PREMIUM'A ÖZEL",
+    description: "Sepette 1.000 TL'ye Varan İndirimler",
     discount: 30,
-    imageUrl: 'https://picsum.photos/200/150?random=2',
-    backgroundColor: 'bg-gradient-to-r from-blue-600 to-blue-800',
-    timeLeft: '3 gün 8 saat',
-    buttonText: 'Teknoloji Ürünleri',
-    buttonHref: '/categories/elektronik'
+    imageUrl: "https://picsum.photos/200/150?random=2",
+    backgroundColor: "bg-gradient-to-r from-blue-600 to-blue-800",
+    timeLeft: "3 gün 8 saat",
+    buttonText: "Teknoloji Ürünleri",
+    buttonHref: "/categories/elektronik",
   },
   {
-    title: 'Senin İçin Seçtiklerimiz',
-    subtitle: 'ÖZEL FIRSATLAR',
-    description: 'Size özel seçilmiş ürünlerde büyük indirimler',
+    title: "Senin İçin Seçtiklerimiz",
+    subtitle: "ÖZEL FIRSATLAR",
+    description: "Size özel seçilmiş ürünlerde büyük indirimler",
     discount: 25,
-    imageUrl: 'https://picsum.photos/200/150?random=3',
-    backgroundColor: 'bg-gradient-to-r from-orange-500 to-red-500',
-    timeLeft: '7 gün 15 saat',
-    buttonText: 'Keşfet',
-    buttonHref: '/products?featured=true'
-  }
-]
+    imageUrl: "https://picsum.photos/200/150?random=3",
+    backgroundColor: "bg-gradient-to-r from-orange-500 to-red-500",
+    timeLeft: "7 gün 15 saat",
+    buttonText: "Keşfet",
+    buttonHref: "/products?featured=true",
+  },
+];
 
 const smallCampaigns = [
   {
-    title: 'Bu Fiyatlar Kaçmaz',
-    subtitle: 'Elektronik',
+    title: "Bu Fiyatlar Kaçmaz",
+    subtitle: "Elektronik",
     discount: 40,
-    backgroundColor: 'bg-orange-500',
-    buttonHref: '/categories/elektronik'
+    backgroundColor: "bg-orange-500",
+    buttonHref: "/categories/elektronik",
   },
   {
-    title: '7/24 Altın Al',
-    subtitle: 'Hepsipay',
+    title: "7/24 Altın Al",
+    subtitle: "Hepsipay",
     discount: 0,
-    backgroundColor: 'bg-yellow-500',
-    buttonHref: '/products?category=gold'
+    backgroundColor: "bg-yellow-500",
+    buttonHref: "/products?category=gold",
   },
   {
-    title: '%0\'dan Başlayan Faiz',
-    subtitle: 'Hepsipay',
+    title: "%0'dan Başlayan Faiz",
+    subtitle: "Hepsipay",
     discount: 0,
-    backgroundColor: 'bg-green-500',
-    buttonHref: '/products?installment=true'
+    backgroundColor: "bg-green-500",
+    buttonHref: "/products?installment=true",
   },
   {
-    title: 'Premium\'a Özel',
-    subtitle: 'Ev Yaşam Ürünleri',
+    title: "Premium'a Özel",
+    subtitle: "Ev Yaşam Ürünleri",
     discount: 35,
-    backgroundColor: 'bg-purple-500',
-    buttonHref: '/categories/ev-yasam'
+    backgroundColor: "bg-purple-500",
+    buttonHref: "/categories/ev-yasam",
   },
   {
-    title: 'Fırsatları Keşfet',
-    subtitle: 'ALIŞVERİŞİN TOP LİSTESİ',
+    title: "Fırsatları Keşfet",
+    subtitle: "ALIŞVERİŞİN TOP LİSTESİ",
     discount: 20,
-    backgroundColor: 'bg-pink-500',
-    buttonHref: '/products?top=true'
+    backgroundColor: "bg-pink-500",
+    buttonHref: "/products?top=true",
   },
   {
-    title: '500 TL\'YE VARAN',
-    subtitle: 'ANINDA İNDİRİMLER',
+    title: "500 TL'YE VARAN",
+    subtitle: "ANINDA İNDİRİMLER",
     discount: 0,
-    backgroundColor: 'bg-red-500',
-    buttonHref: '/products?instant=true'
-  }
-]
+    backgroundColor: "bg-red-500",
+    buttonHref: "/products?instant=true",
+  },
+];
 
 export function CampaignGrid() {
   return (
@@ -104,12 +104,9 @@ export function CampaignGrid() {
       {/* Large Campaign Banners */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {campaigns.map((campaign, index) => (
-          <CampaignBanner
-            key={index}
-            {...campaign}
-          />
+          <CampaignBanner key={index} {...campaign} />
         ))}
       </div>
     </div>
-  )
+  );
 }

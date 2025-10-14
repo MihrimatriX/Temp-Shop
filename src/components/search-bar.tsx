@@ -1,37 +1,37 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Search, X } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useProductStore } from '@/store/product-store'
-import { debounce } from '@/lib/utils'
+import { useState } from "react";
+import { Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useProductStore } from "@/store/product-store";
+import { debounce } from "@/lib/utils";
 
 export function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const { setFilters, filters } = useProductStore()
+  const [searchTerm, setSearchTerm] = useState("");
+  const { setFilters, filters } = useProductStore();
 
   const debouncedSearch = debounce((term: string) => {
     setFilters({
       ...filters,
       searchTerm: term || undefined,
       pageNumber: 1,
-    })
-  }, 300)
+    });
+  }, 300);
 
   const handleSearch = (value: string) => {
-    setSearchTerm(value)
-    debouncedSearch(value)
-  }
+    setSearchTerm(value);
+    debouncedSearch(value);
+  };
 
   const clearSearch = () => {
-    setSearchTerm('')
+    setSearchTerm("");
     setFilters({
       ...filters,
       searchTerm: undefined,
       pageNumber: 1,
-    })
-  }
+    });
+  };
 
   return (
     <div className="space-y-4">
@@ -56,5 +56,5 @@ export function SearchBar() {
         )}
       </div>
     </div>
-  )
+  );
 }

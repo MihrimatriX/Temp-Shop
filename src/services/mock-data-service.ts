@@ -1,22 +1,69 @@
-import { Product, Category, Campaign } from '@/types'
+import { Product, Category, Campaign } from "@/types";
 
-// Mock Categories
 export const mockCategories: Category[] = [
-  { id: 1, categoryName: "Elektronik", description: "Telefon, bilgisayar, tablet ve diğer elektronik ürünler", isActive: true },
-  { id: 2, categoryName: "Moda", description: "Giyim, ayakkabı, çanta ve aksesuar", isActive: true },
-  { id: 3, categoryName: "Ev & Yaşam", description: "Ev dekorasyonu, mutfak, banyo ve yaşam ürünleri", isActive: true },
-  { id: 4, categoryName: "Spor & Outdoor", description: "Spor giyim, fitness, outdoor ve kamp ürünleri", isActive: true },
-  { id: 5, categoryName: "Anne & Bebek", description: "Bebek giyim, oyuncak, bakım ürünleri", isActive: true },
-  { id: 6, categoryName: "Kozmetik & Kişisel Bakım", description: "Makyaj, cilt bakımı, parfüm ve kişisel bakım", isActive: true },
-  { id: 7, categoryName: "Süpermarket", description: "Gıda, temizlik, kişisel bakım ürünleri", isActive: true },
-  { id: 8, categoryName: "Kitap & Müzik", description: "Kitaplar, müzik, film ve hobi ürünleri", isActive: true },
-  { id: 9, categoryName: "Oto & Bahçe", description: "Araç aksesuarları, bahçe malzemeleri", isActive: true },
-  { id: 10, categoryName: "Kırtasiye & Ofis", description: "Ofis malzemeleri, kırtasiye ürünleri", isActive: true }
-]
+  {
+    id: 1,
+    categoryName: "Elektronik",
+    description: "Telefon, bilgisayar, tablet ve diğer elektronik ürünler",
+    isActive: true,
+  },
+  {
+    id: 2,
+    categoryName: "Moda",
+    description: "Giyim, ayakkabı, çanta ve aksesuar",
+    isActive: true,
+  },
+  {
+    id: 3,
+    categoryName: "Ev & Yaşam",
+    description: "Ev dekorasyonu, mutfak, banyo ve yaşam ürünleri",
+    isActive: true,
+  },
+  {
+    id: 4,
+    categoryName: "Spor & Outdoor",
+    description: "Spor giyim, fitness, outdoor ve kamp ürünleri",
+    isActive: true,
+  },
+  {
+    id: 5,
+    categoryName: "Anne & Bebek",
+    description: "Bebek giyim, oyuncak, bakım ürünleri",
+    isActive: true,
+  },
+  {
+    id: 6,
+    categoryName: "Kozmetik & Kişisel Bakım",
+    description: "Makyaj, cilt bakımı, parfüm ve kişisel bakım",
+    isActive: true,
+  },
+  {
+    id: 7,
+    categoryName: "Süpermarket",
+    description: "Gıda, temizlik, kişisel bakım ürünleri",
+    isActive: true,
+  },
+  {
+    id: 8,
+    categoryName: "Kitap & Müzik",
+    description: "Kitaplar, müzik, film ve hobi ürünleri",
+    isActive: true,
+  },
+  {
+    id: 9,
+    categoryName: "Oto & Bahçe",
+    description: "Araç aksesuarları, bahçe malzemeleri",
+    isActive: true,
+  },
+  {
+    id: 10,
+    categoryName: "Kırtasiye & Ofis",
+    description: "Ofis malzemeleri, kırtasiye ürünleri",
+    isActive: true,
+  },
+];
 
-// Mock Products
 export const mockProducts: Product[] = [
-  // Elektronik Ürünleri
   {
     id: 1,
     productName: "Premium Laptop",
@@ -24,7 +71,8 @@ export const mockProducts: Product[] = [
     unitInStock: 15,
     quantityPerUnit: "1 adet",
     category: mockCategories[0],
-    description: "Yüksek performanslı laptop - Intel i7 işlemci, 16GB RAM, 512GB SSD",
+    description:
+      "Yüksek performanslı laptop - Intel i7 işlemci, 16GB RAM, 512GB SSD",
     imageUrl: "https://picsum.photos/400/300?random=1",
     discount: 10,
     isActive: true,
@@ -115,8 +163,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Spor Ürünleri
   {
     id: 4,
     productName: "Running Shoes",
@@ -173,8 +219,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Ev & Yaşam Ürünleri
   {
     id: 5,
     productName: "Coffee Maker",
@@ -231,8 +275,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Giyim Ürünleri
   {
     id: 6,
     productName: "Cotton T-Shirt",
@@ -289,8 +331,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Anne & Bebek Ürünleri
   {
     id: 20,
     productName: "Baby Stroller",
@@ -319,8 +359,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Kozmetik Ürünleri
   {
     id: 22,
     productName: "Skincare Set",
@@ -349,8 +387,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Süpermarket Ürünleri
   {
     id: 24,
     productName: "Organic Honey",
@@ -379,8 +415,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Kitap & Müzik Ürünleri
   {
     id: 26,
     productName: "Programming Book",
@@ -409,8 +443,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Oto & Bahçe Ürünleri
   {
     id: 28,
     productName: "Car Phone Mount",
@@ -439,8 +471,6 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-
-  // Kırtasiye & Ofis Ürünleri
   {
     id: 30,
     productName: "Office Chair",
@@ -469,9 +499,8 @@ export const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-]
+];
 
-// Mock Campaigns
 export const mockCampaigns: Campaign[] = [
   {
     id: 1,
@@ -524,4 +553,4 @@ export const mockCampaigns: Campaign[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-]
+];

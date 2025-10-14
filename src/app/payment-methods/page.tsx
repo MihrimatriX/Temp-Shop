@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useAuthStore } from '@/store/auth-store';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { CreditCard, Plus, Edit, Trash2, Shield, Check } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useAuthStore } from "@/store/auth-store";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CreditCard, Plus, Edit, Trash2, Shield, Check } from "lucide-react";
 
 interface PaymentMethod {
   id: number;
-  type: 'credit_card' | 'debit_card' | 'bank_transfer';
-  cardNumber: string;
-  cardHolderName: string;
-  expiryMonth: number;
-  expiryYear: number;
+  type: "credit_card" | "debit_card" | "bank_transfer";
+  cardNumber?: string;
+  cardHolderName?: string;
+  expiryMonth?: number;
+  expiryYear?: number;
   isDefault: boolean;
   bankName?: string;
   accountNumber?: string;
@@ -25,18 +25,20 @@ export default function PaymentMethodsPage() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingMethod, setEditingMethod] = useState<PaymentMethod | null>(null);
+  const [editingMethod, setEditingMethod] = useState<PaymentMethod | null>(
+    null
+  );
 
   const [formData, setFormData] = useState({
-    type: 'credit_card' as 'credit_card' | 'debit_card' | 'bank_transfer',
-    cardNumber: '',
-    cardHolderName: '',
+    type: "credit_card" as "credit_card" | "debit_card" | "bank_transfer",
+    cardNumber: "",
+    cardHolderName: "",
     expiryMonth: 1,
     expiryYear: 2024,
     isDefault: false,
-    bankName: '',
-    accountNumber: '',
-    accountHolderName: ''
+    bankName: "",
+    accountNumber: "",
+    accountHolderName: "",
   });
 
   useEffect(() => {
@@ -52,35 +54,35 @@ export default function PaymentMethodsPage() {
       const mockMethods: PaymentMethod[] = [
         {
           id: 1,
-          type: 'credit_card',
-          cardNumber: '**** **** **** 1234',
-          cardHolderName: 'Ahmet Yılmaz',
+          type: "credit_card",
+          cardNumber: "**** **** **** 1234",
+          cardHolderName: "Ahmet Yılmaz",
           expiryMonth: 12,
           expiryYear: 2026,
-          isDefault: true
+          isDefault: true,
         },
         {
           id: 2,
-          type: 'debit_card',
-          cardNumber: '**** **** **** 5678',
-          cardHolderName: 'Ahmet Yılmaz',
+          type: "debit_card",
+          cardNumber: "**** **** **** 5678",
+          cardHolderName: "Ahmet Yılmaz",
           expiryMonth: 8,
           expiryYear: 2025,
-          isDefault: false
+          isDefault: false,
         },
         {
           id: 3,
-          type: 'bank_transfer',
-          bankName: 'Ziraat Bankası',
-          accountNumber: '****1234',
-          accountHolderName: 'Ahmet Yılmaz',
-          isDefault: false
-        }
+          type: "bank_transfer",
+          bankName: "Ziraat Bankası",
+          accountNumber: "****1234",
+          accountHolderName: "Ahmet Yılmaz",
+          isDefault: false,
+        },
       ];
-      
+
       setPaymentMethods(mockMethods);
     } catch (error) {
-      console.error('Error fetching payment methods:', error);
+      console.error("Error fetching payment methods:", error);
     } finally {
       setLoading(false);
     }
@@ -91,11 +93,13 @@ export default function PaymentMethodsPage() {
     try {
       if (editingMethod) {
         // Update existing method
-        setPaymentMethods(paymentMethods.map(method => 
-          method.id === editingMethod.id 
-            ? { ...formData, id: editingMethod.id }
-            : method
-        ));
+        setPaymentMethods(
+          paymentMethods.map((method) =>
+            method.id === editingMethod.id
+              ? { ...formData, id: editingMethod.id }
+              : method
+          )
+        );
       } else {
         // Add new method
         const newMethod: PaymentMethod = {
@@ -104,12 +108,12 @@ export default function PaymentMethodsPage() {
         };
         setPaymentMethods([...paymentMethods, newMethod]);
       }
-      
+
       setShowAddForm(false);
       setEditingMethod(null);
       resetForm();
     } catch (error) {
-      console.error('Error saving payment method:', error);
+      console.error("Error saving payment method:", error);
     }
   };
 
@@ -117,53 +121,57 @@ export default function PaymentMethodsPage() {
     setEditingMethod(method);
     setFormData({
       type: method.type,
-      cardNumber: method.cardNumber,
-      cardHolderName: method.cardHolderName,
-      expiryMonth: method.expiryMonth,
-      expiryYear: method.expiryYear,
+      cardNumber: method.cardNumber || "",
+      cardHolderName: method.cardHolderName || "",
+      expiryMonth: method.expiryMonth || 1,
+      expiryYear: method.expiryYear || new Date().getFullYear(),
       isDefault: method.isDefault,
-      bankName: method.bankName || '',
-      accountNumber: method.accountNumber || '',
-      accountHolderName: method.accountHolderName || ''
+      bankName: method.bankName || "",
+      accountNumber: method.accountNumber || "",
+      accountHolderName: method.accountHolderName || "",
     });
     setShowAddForm(true);
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm('Bu ödeme yöntemini silmek istediğinizden emin misiniz?')) {
-      setPaymentMethods(paymentMethods.filter(method => method.id !== id));
+    if (
+      window.confirm("Bu ödeme yöntemini silmek istediğinizden emin misiniz?")
+    ) {
+      setPaymentMethods(paymentMethods.filter((method) => method.id !== id));
     }
   };
 
   const handleSetDefault = async (id: number) => {
-    setPaymentMethods(paymentMethods.map(method => ({
-      ...method,
-      isDefault: method.id === id
-    })));
+    setPaymentMethods(
+      paymentMethods.map((method) => ({
+        ...method,
+        isDefault: method.id === id,
+      }))
+    );
   };
 
   const resetForm = () => {
     setFormData({
-      type: 'credit_card',
-      cardNumber: '',
-      cardHolderName: '',
+      type: "credit_card",
+      cardNumber: "",
+      cardHolderName: "",
       expiryMonth: 1,
       expiryYear: 2024,
       isDefault: false,
-      bankName: '',
-      accountNumber: '',
-      accountHolderName: ''
+      bankName: "",
+      accountNumber: "",
+      accountHolderName: "",
     });
   };
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case 'credit_card':
-        return 'Kredi Kartı';
-      case 'debit_card':
-        return 'Banka Kartı';
-      case 'bank_transfer':
-        return 'Havale/EFT';
+      case "credit_card":
+        return "Kredi Kartı";
+      case "debit_card":
+        return "Banka Kartı";
+      case "bank_transfer":
+        return "Havale/EFT";
       default:
         return type;
     }
@@ -171,10 +179,10 @@ export default function PaymentMethodsPage() {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'credit_card':
-      case 'debit_card':
+      case "credit_card":
+      case "debit_card":
         return <CreditCard className="w-5 h-5" />;
-      case 'bank_transfer':
+      case "bank_transfer":
         return <Shield className="w-5 h-5" />;
       default:
         return <CreditCard className="w-5 h-5" />;
@@ -189,7 +197,9 @@ export default function PaymentMethodsPage() {
             <CreditCard className="mx-auto h-24 w-24" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Giriş Yapın</h2>
-          <p className="text-gray-600 mb-6">Ödeme yöntemlerinizi yönetmek için giriş yapmanız gerekiyor.</p>
+          <p className="text-gray-600 mb-6">
+            Ödeme yöntemlerinizi yönetmek için giriş yapmanız gerekiyor.
+          </p>
           <button className="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">
             Giriş Yap
           </button>
@@ -202,8 +212,12 @@ export default function PaymentMethodsPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Ödeme Yöntemlerim</h1>
-          <p className="text-gray-600 mt-2">Ödeme yöntemlerinizi buradan yönetebilirsiniz.</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Ödeme Yöntemlerim
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Ödeme yöntemlerinizi buradan yönetebilirsiniz.
+          </p>
         </div>
 
         {loading ? (
@@ -217,7 +231,9 @@ export default function PaymentMethodsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    {editingMethod ? 'Ödeme Yöntemini Düzenle' : 'Yeni Ödeme Yöntemi Ekle'}
+                    {editingMethod
+                      ? "Ödeme Yöntemini Düzenle"
+                      : "Yeni Ödeme Yöntemi Ekle"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -228,7 +244,12 @@ export default function PaymentMethodsPage() {
                       </label>
                       <select
                         value={formData.type}
-                        onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            type: e.target.value as any,
+                          })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                         title="Ödeme yöntemi türü"
                         aria-label="Ödeme yöntemi türü"
@@ -239,7 +260,7 @@ export default function PaymentMethodsPage() {
                       </select>
                     </div>
 
-                    {formData.type === 'bank_transfer' ? (
+                    {formData.type === "bank_transfer" ? (
                       <>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -249,7 +270,12 @@ export default function PaymentMethodsPage() {
                             type="text"
                             required
                             value={formData.bankName}
-                            onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                bankName: e.target.value,
+                              })
+                            }
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             placeholder="Ziraat Bankası"
                           />
@@ -262,7 +288,12 @@ export default function PaymentMethodsPage() {
                             type="text"
                             required
                             value={formData.accountHolderName}
-                            onChange={(e) => setFormData({ ...formData, accountHolderName: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                accountHolderName: e.target.value,
+                              })
+                            }
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             placeholder="Ahmet Yılmaz"
                           />
@@ -275,7 +306,12 @@ export default function PaymentMethodsPage() {
                             type="text"
                             required
                             value={formData.accountNumber}
-                            onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                accountNumber: e.target.value,
+                              })
+                            }
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             placeholder="1234567890"
                           />
@@ -291,7 +327,12 @@ export default function PaymentMethodsPage() {
                             type="text"
                             required
                             value={formData.cardNumber}
-                            onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                cardNumber: e.target.value,
+                              })
+                            }
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             placeholder="1234 5678 9012 3456"
                           />
@@ -304,7 +345,12 @@ export default function PaymentMethodsPage() {
                             type="text"
                             required
                             value={formData.cardHolderName}
-                            onChange={(e) => setFormData({ ...formData, cardHolderName: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                cardHolderName: e.target.value,
+                              })
+                            }
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                             placeholder="AHMET YILMAZ"
                           />
@@ -316,14 +362,19 @@ export default function PaymentMethodsPage() {
                             </label>
                             <select
                               value={formData.expiryMonth}
-                              onChange={(e) => setFormData({ ...formData, expiryMonth: parseInt(e.target.value) })}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  expiryMonth: parseInt(e.target.value),
+                                })
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                               title="Son kullanma ayı"
                               aria-label="Son kullanma ayı"
                             >
                               {Array.from({ length: 12 }, (_, i) => (
                                 <option key={i + 1} value={i + 1}>
-                                  {String(i + 1).padStart(2, '0')}
+                                  {String(i + 1).padStart(2, "0")}
                                 </option>
                               ))}
                             </select>
@@ -334,7 +385,12 @@ export default function PaymentMethodsPage() {
                             </label>
                             <select
                               value={formData.expiryYear}
-                              onChange={(e) => setFormData({ ...formData, expiryYear: parseInt(e.target.value) })}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  expiryYear: parseInt(e.target.value),
+                                })
+                              }
                               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                               title="Son kullanma yılı"
                               aria-label="Son kullanma yılı"
@@ -355,10 +411,18 @@ export default function PaymentMethodsPage() {
                         type="checkbox"
                         id="isDefault"
                         checked={formData.isDefault}
-                        onChange={(e) => setFormData({ ...formData, isDefault: e.target.checked })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            isDefault: e.target.checked,
+                          })
+                        }
                         className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                       />
-                      <label htmlFor="isDefault" className="ml-2 block text-sm text-gray-700">
+                      <label
+                        htmlFor="isDefault"
+                        className="ml-2 block text-sm text-gray-700"
+                      >
                         Varsayılan ödeme yöntemi olarak ayarla
                       </label>
                     </div>
@@ -376,7 +440,7 @@ export default function PaymentMethodsPage() {
                         İptal
                       </Button>
                       <Button type="submit">
-                        {editingMethod ? 'Güncelle' : 'Kaydet'}
+                        {editingMethod ? "Güncelle" : "Kaydet"}
                       </Button>
                     </div>
                   </form>
@@ -390,8 +454,12 @@ export default function PaymentMethodsPage() {
                 <div className="text-gray-400 mb-4">
                   <CreditCard className="mx-auto h-24 w-24" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz ödeme yöntemi eklenmemiş</h3>
-                <p className="text-gray-600 mb-6">İlk ödeme yönteminizi ekleyerek alışverişe başlayın!</p>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  Henüz ödeme yöntemi eklenmemiş
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  İlk ödeme yönteminizi ekleyerek alışverişe başlayın!
+                </p>
                 <Button onClick={() => setShowAddForm(true)}>
                   <Plus className="w-4 h-4 mr-2" />
                   Ödeme Yöntemi Ekle
@@ -400,7 +468,9 @@ export default function PaymentMethodsPage() {
             ) : (
               <>
                 <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-semibold text-gray-900">Kayıtlı Ödeme Yöntemleri</h2>
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    Kayıtlı Ödeme Yöntemleri
+                  </h2>
                   <Button onClick={() => setShowAddForm(true)}>
                     <Plus className="w-4 h-4 mr-2" />
                     Yeni Ekle
@@ -445,17 +515,35 @@ export default function PaymentMethodsPage() {
                         </div>
 
                         <div className="space-y-2 text-sm text-gray-600">
-                          {method.type === 'bank_transfer' ? (
+                          {method.type === "bank_transfer" ? (
                             <>
-                              <p><strong>Banka:</strong> {method.bankName}</p>
-                              <p><strong>Hesap Sahibi:</strong> {method.accountHolderName}</p>
-                              <p><strong>Hesap No:</strong> {method.accountNumber}</p>
+                              <p>
+                                <strong>Banka:</strong> {method.bankName}
+                              </p>
+                              <p>
+                                <strong>Hesap Sahibi:</strong>{" "}
+                                {method.accountHolderName}
+                              </p>
+                              <p>
+                                <strong>Hesap No:</strong>{" "}
+                                {method.accountNumber}
+                              </p>
                             </>
                           ) : (
                             <>
-                              <p><strong>Kart Numarası:</strong> {method.cardNumber}</p>
-                              <p><strong>Kart Sahibi:</strong> {method.cardHolderName}</p>
-                              <p><strong>Son Kullanma:</strong> {String(method.expiryMonth).padStart(2, '0')}/{method.expiryYear}</p>
+                              <p>
+                                <strong>Kart Numarası:</strong>{" "}
+                                {method.cardNumber}
+                              </p>
+                              <p>
+                                <strong>Kart Sahibi:</strong>{" "}
+                                {method.cardHolderName}
+                              </p>
+                              <p>
+                                <strong>Son Kullanma:</strong>{" "}
+                                {String(method.expiryMonth).padStart(2, "0")}/
+                                {method.expiryYear}
+                              </p>
                             </>
                           )}
                         </div>

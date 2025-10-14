@@ -1,75 +1,75 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useCartStore } from '@/store/cart-store'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, CreditCard, Truck, MapPin } from 'lucide-react'
-import { formatPrice } from '@/lib/utils'
-import Link from 'next/link'
-import Image from 'next/image'
-import toast from 'react-hot-toast'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cart-store";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, CreditCard, Truck, MapPin } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
+import Link from "next/link";
+import Image from "next/image";
+import toast from "react-hot-toast";
 
 interface CheckoutFormData {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  address: string
-  city: string
-  state: string
-  postalCode: string
-  country: string
-  paymentMethod: 'credit' | 'debit' | 'bank' | 'cod'
-  cardNumber: string
-  expiryDate: string
-  cvv: string
-  cardName: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  paymentMethod: "credit" | "debit" | "bank" | "cod";
+  cardNumber: string;
+  expiryDate: string;
+  cvv: string;
+  cardName: string;
 }
 
 export default function CheckoutPage() {
-  const router = useRouter()
-  const { items, totalItems, totalPrice, clearCart } = useCartStore()
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const { items, totalItems, totalPrice, clearCart } = useCartStore();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<CheckoutFormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'Türkiye',
-    paymentMethod: 'credit',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    cardName: '',
-  })
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "Türkiye",
+    paymentMethod: "credit",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+    cardName: "",
+  });
 
   const handleInputChange = (field: keyof CheckoutFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (items.length === 0) {
-      toast.error('Sepetiniz boş')
-      return
+      toast.error("Sepetiniz boş");
+      return;
     }
 
-    setLoading(true)
-    
+    setLoading(true);
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Create order
       const order = {
         orderNumber: `ORD-${Date.now()}`,
@@ -91,23 +91,22 @@ export default function CheckoutPage() {
         },
         paymentMethod: formData.paymentMethod,
         createdAt: new Date(),
-      }
+      };
 
-      console.log('Order created:', order)
-      
+      console.log("Order created:", order);
+
       // Clear cart
-      clearCart()
-      
-      toast.success('Siparişiniz başarıyla oluşturuldu!')
-      router.push(`/order-success?orderNumber=${order.orderNumber}`)
-      
+      clearCart();
+
+      toast.success("Siparişiniz başarıyla oluşturuldu!");
+      router.push(`/order-success?orderNumber=${order.orderNumber}`);
     } catch (error) {
-      console.error('Checkout error:', error)
-      toast.error('Sipariş oluşturulurken hata oluştu')
+      console.error("Checkout error:", error);
+      toast.error("Sipariş oluşturulurken hata oluştu");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (items.length === 0) {
     return (
@@ -122,7 +121,7 @@ export default function CheckoutPage() {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -157,71 +156,91 @@ export default function CheckoutPage() {
                   <label className="text-sm font-medium mb-2 block">Ad *</label>
                   <Input
                     value={formData.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("firstName", e.target.value)
+                    }
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Soyad *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Soyad *
+                  </label>
                   <Input
                     value={formData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("lastName", e.target.value)
+                    }
                     required
                   />
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">E-posta *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    E-posta *
+                  </label>
                   <Input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Telefon *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Telefon *
+                  </label>
                   <Input
                     value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
                     required
                   />
                 </div>
               </div>
-              
+
               <div>
-                <label className="text-sm font-medium mb-2 block">Adres *</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Adres *
+                </label>
                 <Input
                   value={formData.address}
-                  onChange={(e) => handleInputChange('address', e.target.value)}
+                  onChange={(e) => handleInputChange("address", e.target.value)}
                   required
                 />
               </div>
-              
+
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Şehir *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Şehir *
+                  </label>
                   <Input
                     value={formData.city}
-                    onChange={(e) => handleInputChange('city', e.target.value)}
+                    onChange={(e) => handleInputChange("city", e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">İlçe *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    İlçe *
+                  </label>
                   <Input
                     value={formData.state}
-                    onChange={(e) => handleInputChange('state', e.target.value)}
+                    onChange={(e) => handleInputChange("state", e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Posta Kodu *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Posta Kodu *
+                  </label>
                   <Input
                     value={formData.postalCode}
-                    onChange={(e) => handleInputChange('postalCode', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("postalCode", e.target.value)
+                    }
                     required
                   />
                 </div>
@@ -239,19 +258,27 @@ export default function CheckoutPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium mb-2 block">Ödeme Yöntemi *</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Ödeme Yöntemi *
+                </label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { value: 'credit', label: 'Kredi Kartı' },
-                    { value: 'debit', label: 'Banka Kartı' },
-                    { value: 'bank', label: 'Havale/EFT' },
-                    { value: 'cod', label: 'Kapıda Ödeme' },
+                    { value: "credit", label: "Kredi Kartı" },
+                    { value: "debit", label: "Banka Kartı" },
+                    { value: "bank", label: "Havale/EFT" },
+                    { value: "cod", label: "Kapıda Ödeme" },
                   ].map((method) => (
                     <Button
                       key={method.value}
                       type="button"
-                      variant={formData.paymentMethod === method.value ? 'default' : 'outline'}
-                      onClick={() => handleInputChange('paymentMethod', method.value)}
+                      variant={
+                        formData.paymentMethod === method.value
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() =>
+                        handleInputChange("paymentMethod", method.value)
+                      }
                       className="justify-start"
                     >
                       {method.label}
@@ -259,43 +286,60 @@ export default function CheckoutPage() {
                   ))}
                 </div>
               </div>
-              
-              {(formData.paymentMethod === 'credit' || formData.paymentMethod === 'debit') && (
+
+              {(formData.paymentMethod === "credit" ||
+                formData.paymentMethod === "debit") && (
                 <>
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Kart Üzerindeki İsim *</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Kart Üzerindeki İsim *
+                    </label>
                     <Input
                       value={formData.cardName}
-                      onChange={(e) => handleInputChange('cardName', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("cardName", e.target.value)
+                      }
                       required
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Kart Numarası *</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Kart Numarası *
+                    </label>
                     <Input
                       value={formData.cardNumber}
-                      onChange={(e) => handleInputChange('cardNumber', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("cardNumber", e.target.value)
+                      }
                       placeholder="1234 5678 9012 3456"
                       required
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium mb-2 block">Son Kullanma Tarihi *</label>
+                      <label className="text-sm font-medium mb-2 block">
+                        Son Kullanma Tarihi *
+                      </label>
                       <Input
                         value={formData.expiryDate}
-                        onChange={(e) => handleInputChange('expiryDate', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("expiryDate", e.target.value)
+                        }
                         placeholder="MM/YY"
                         required
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-2 block">CVV *</label>
+                      <label className="text-sm font-medium mb-2 block">
+                        CVV *
+                      </label>
                       <Input
                         value={formData.cvv}
-                        onChange={(e) => handleInputChange('cvv', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("cvv", e.target.value)
+                        }
                         placeholder="123"
                         required
                       />
@@ -319,7 +363,9 @@ export default function CheckoutPage() {
                   <div key={item.product.id} className="flex gap-3">
                     <div className="relative w-12 h-12 flex-shrink-0">
                       <Image
-                        src={item.product.imageUrl || '/placeholder-product.jpg'}
+                        src={
+                          item.product.imageUrl || "/placeholder-product.jpg"
+                        }
                         alt={item.product.productName}
                         fill
                         className="object-cover rounded"
@@ -339,9 +385,9 @@ export default function CheckoutPage() {
                   </div>
                 ))}
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span>Ürünler ({totalItems} adet)</span>
@@ -357,16 +403,16 @@ export default function CheckoutPage() {
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
               </div>
-              
-              <Button 
+
+              <Button
                 type="submit"
                 className="w-full"
                 size="lg"
                 disabled={loading}
               >
-                {loading ? 'İşleniyor...' : 'Siparişi Tamamla'}
+                {loading ? "İşleniyor..." : "Siparişi Tamamla"}
               </Button>
-              
+
               <p className="text-xs text-muted-foreground text-center">
                 Güvenli ödeme ile korunuyorsunuz
               </p>
@@ -375,5 +421,5 @@ export default function CheckoutPage() {
         </div>
       </form>
     </div>
-  )
+  );
 }

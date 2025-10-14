@@ -1,34 +1,36 @@
-'use client'
+"use client";
 
-import { ProductReviewSummary } from '@/types'
-import { StarRating } from '@/components/ui/star-rating'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
+import { ProductReviewSummary } from "@/types";
+import { StarRating } from "@/components/ui/star-rating";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
 interface ReviewSummaryProps {
-  summary: ProductReviewSummary
-  className?: string
+  summary: ProductReviewSummary;
+  className?: string;
 }
 
 export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
   const getRatingPercentage = (count: number) => {
-    if (summary.totalReviews === 0) return 0
-    return (count / summary.totalReviews) * 100
-  }
+    if (summary.totalReviews === 0) return 0;
+    return (count / summary.totalReviews) * 100;
+  };
 
   const getRatingLabel = (rating: number) => {
     const labels = {
-      5: 'Mükemmel',
-      4: 'Çok İyi',
-      3: 'İyi',
-      2: 'Orta',
-      1: 'Kötü'
-    }
-    return labels[rating as keyof typeof labels] || `${rating} Yıldız`
-  }
+      5: "Mükemmel",
+      4: "Çok İyi",
+      3: "İyi",
+      2: "Orta",
+      1: "Kötü",
+    };
+    return labels[rating as keyof typeof labels] || `${rating} Yıldız`;
+  };
 
   return (
-    <Card className={`${className} bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200`}>
+    <Card
+      className={`${className} bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200`}
+    >
       <CardHeader className="pb-4">
         <CardTitle className="text-lg flex items-center gap-2">
           <span className="text-purple-600">⭐</span>
@@ -52,23 +54,22 @@ export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
         {/* Rating Breakdown */}
         <div className="space-y-3">
           {[5, 4, 3, 2, 1].map((rating) => {
-            const count = summary[`rating${rating}Count` as keyof ProductReviewSummary] as number
-            const percentage = getRatingPercentage(count)
-            
+            const count = summary[
+              `rating${rating}Count` as keyof ProductReviewSummary
+            ] as number;
+            const percentage = getRatingPercentage(count);
+
             return (
               <div key={rating} className="flex items-center gap-3">
                 <div className="flex items-center gap-1 w-16">
                   <span className="text-sm text-gray-600">{rating}</span>
                   <StarRating rating={1} size="sm" />
                 </div>
-                
+
                 <div className="flex-1">
-                  <Progress 
-                    value={percentage} 
-                    className="h-2"
-                  />
+                  <Progress value={percentage} className="h-2" />
                 </div>
-                
+
                 <div className="flex items-center gap-2 w-20">
                   <span className="text-sm text-gray-600 w-8 text-right">
                     {count}
@@ -78,7 +79,7 @@ export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
                   </span>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
 
@@ -95,5 +96,5 @@ export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

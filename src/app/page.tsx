@@ -1,19 +1,19 @@
-import { Suspense } from 'react'
-import { ProductGrid } from '@/components/product-grid'
-import { SearchBar } from '@/components/search-bar'
-import { CategoryFilter } from '@/components/category-filter'
-import { HeroSection } from '@/components/hero-section'
-import { CampaignGrid } from '@/components/campaign-grid'
-import { CategoryGrid } from '@/components/category-grid'
-import { PersonalizedRecommendations } from '@/components/personalized-recommendations'
-import { LoadingSpinner } from '@/components/ui/loading-spinner'
+import { Suspense } from "react";
+import { ProductGrid } from "@/components/product-grid";
+import { SearchBar } from "@/components/search-bar";
+import { CategoryFilter } from "@/components/category-filter";
+import { HeroSection } from "@/components/hero-section";
+import { CampaignGrid } from "@/components/campaign-grid";
+import { CategoryGrid } from "@/components/category-grid";
+import { PersonalizedRecommendations } from "@/components/personalized-recommendations";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <HeroSection />
-      
+
       {/* Campaign Section */}
       <div className="container mx-auto px-4 py-8">
         <CampaignGrid />
@@ -31,7 +31,7 @@ export default function HomePage() {
       <div className="container mx-auto px-4 py-8">
         <PersonalizedRecommendations />
       </div>
-      
+
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -42,7 +42,7 @@ export default function HomePage() {
               <CategoryFilter />
             </div>
           </aside>
-          
+
           {/* Product Grid */}
           <main className="lg:w-3/4">
             <Suspense fallback={<LoadingSpinner />}>
@@ -52,5 +52,5 @@ export default function HomePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

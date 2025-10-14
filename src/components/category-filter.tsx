@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { useProductStore } from '@/store/product-store'
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useProductStore } from "@/store/product-store";
 
 interface CategoryFilterProps {
-  categoryId?: number
+  categoryId?: number;
 }
 
 export function CategoryFilter({ categoryId }: CategoryFilterProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
-  const { categories, filters, setFilters } = useProductStore()
+  const [isExpanded, setIsExpanded] = useState(true);
+  const { categories, filters, setFilters } = useProductStore();
 
   const handleCategorySelect = (categoryId: number | undefined) => {
     setFilters({
       ...filters,
       categoryId,
       pageNumber: 1,
-    })
-  }
+    });
+  };
 
   return (
     <div className="space-y-4">
@@ -48,7 +48,7 @@ export function CategoryFilter({ categoryId }: CategoryFilterProps) {
           >
             Tüm Kategoriler
           </Button>
-          
+
           {categories.map((category) => (
             <Button
               key={category.id}
@@ -62,5 +62,5 @@ export function CategoryFilter({ categoryId }: CategoryFilterProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,8 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["picsum.photos", "i.pravatar.cc", "localhost"],
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pravatar.cc",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
       {
         protocol: "https",
         hostname: "**",
@@ -15,7 +26,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: false,
   },
-  // Optimize for production
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,

@@ -1,5 +1,3 @@
-// E-ticaret için temel type tanımları
-
 export interface Product {
   id: number;
   productName: string;
@@ -104,21 +102,21 @@ export interface OrderItem {
 }
 
 export enum OrderStatus {
-  PENDING = 'PENDING',
-  CONFIRMED = 'CONFIRMED',
-  PROCESSING = 'PROCESSING',
-  SHIPPED = 'SHIPPED',
-  DELIVERED = 'DELIVERED',
-  CANCELLED = 'CANCELLED',
-  REFUNDED = 'REFUNDED'
+  PENDING = "PENDING",
+  CONFIRMED = "CONFIRMED",
+  PROCESSING = "PROCESSING",
+  SHIPPED = "SHIPPED",
+  DELIVERED = "DELIVERED",
+  CANCELLED = "CANCELLED",
+  REFUNDED = "REFUNDED",
 }
 
 export enum PaymentMethod {
-  CREDIT_CARD = 'CREDIT_CARD',
-  DEBIT_CARD = 'DEBIT_CARD',
-  BANK_TRANSFER = 'BANK_TRANSFER',
-  CASH_ON_DELIVERY = 'CASH_ON_DELIVERY',
-  PAYPAL = 'PAYPAL'
+  CREDIT_CARD = "CREDIT_CARD",
+  DEBIT_CARD = "DEBIT_CARD",
+  BANK_TRANSFER = "BANK_TRANSFER",
+  CASH_ON_DELIVERY = "CASH_ON_DELIVERY",
+  PAYPAL = "PAYPAL",
 }
 
 export interface ApiResponse<T> {
@@ -141,8 +139,8 @@ export interface ProductFilters {
   minPrice?: number;
   maxPrice?: number;
   searchTerm?: string;
-  sortBy?: 'name' | 'price' | 'createdAt';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "name" | "price" | "createdAt";
+  sortOrder?: "asc" | "desc";
   pageNumber?: number;
   pageSize?: number;
 }
@@ -153,19 +151,18 @@ export interface AuthState {
   token: string | null;
 }
 
-// Redux Action Types
 export interface AddToCartAction {
-  type: 'ADD_TO_CART';
+  type: "ADD_TO_CART";
   payload: Product;
 }
 
 export interface RemoveFromCartAction {
-  type: 'REMOVE_FROM_CART';
+  type: "REMOVE_FROM_CART";
   payload: Product;
 }
 
 export interface UpdateCartItemQuantityAction {
-  type: 'UPDATE_CART_ITEM_QUANTITY';
+  type: "UPDATE_CART_ITEM_QUANTITY";
   payload: {
     productId: number;
     quantity: number;
@@ -173,16 +170,15 @@ export interface UpdateCartItemQuantityAction {
 }
 
 export interface ClearCartAction {
-  type: 'CLEAR_CART';
+  type: "CLEAR_CART";
 }
 
-export type CartAction = 
-  | AddToCartAction 
-  | RemoveFromCartAction 
-  | UpdateCartItemQuantityAction 
+export type CartAction =
+  | AddToCartAction
+  | RemoveFromCartAction
+  | UpdateCartItemQuantityAction
   | ClearCartAction;
 
-// Form Types
 export interface ProductFormData {
   productName: string;
   unitPrice: number;
@@ -208,7 +204,6 @@ export interface LoginFormData {
   rememberMe?: boolean;
 }
 
-// Component Props Types
 export interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
@@ -243,7 +238,6 @@ export interface FilterSidebarProps {
   loading?: boolean;
 }
 
-// Review Types
 export interface Review {
   id: number;
   userId: number;

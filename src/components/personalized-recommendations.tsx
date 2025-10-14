@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { ProductCard } from '@/components/product-card'
-import { Button } from '@/components/ui/button'
-import { ArrowRight, Heart } from 'lucide-react'
+import { ProductCard } from "@/components/product-card";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Heart } from "lucide-react";
 
 const personalizedProducts = [
   {
@@ -88,8 +88,8 @@ const personalizedProducts = [
     isActive: true,
     createdAt: new Date(),
     updatedAt: new Date(),
-  }
-]
+  },
+];
 
 export function PersonalizedRecommendations() {
   return (
@@ -134,5 +134,5 @@ export function PersonalizedRecommendations() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

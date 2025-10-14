@@ -1,8 +1,8 @@
-import { Suspense } from 'react'
-import { ProductGrid } from '@/components/product-grid'
-import { SearchBar } from '@/components/search-bar'
-import { CategoryFilter } from '@/components/category-filter'
-import { LoadingSpinner } from '@/components/ui/loading-spinner'
+import { Suspense } from "react";
+import { ProductGrid } from "@/components/product-grid";
+import { SearchBar } from "@/components/search-bar";
+import { CategoryFilter } from "@/components/category-filter";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export default function ProductsPage() {
   return (
@@ -22,7 +22,7 @@ export default function ProductsPage() {
             <CategoryFilter />
           </div>
         </aside>
-        
+
         {/* Product Grid */}
         <main className="lg:w-3/4">
           <Suspense fallback={<LoadingSpinner />}>
@@ -31,5 +31,5 @@ export default function ProductsPage() {
         </main>
       </div>
     </div>
-  )
+  );
 }

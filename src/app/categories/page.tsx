@@ -1,16 +1,17 @@
-import { Metadata } from 'next'
-import { CategoryGrid } from '@/components/category-grid'
-import { HeroSection } from '@/components/hero-section'
+import { Metadata } from "next";
+import { CategoryGrid } from "@/components/category-grid";
+import { HeroSection } from "@/components/hero-section";
 
 export const metadata: Metadata = {
-  title: 'Kategoriler - E-Ticaret Sitesi',
-  description: 'Tüm ürün kategorilerini keşfedin. Elektronik, moda, ev & yaşam ve daha fazlası.',
-}
+  title: "Kategoriler - E-Ticaret Sitesi",
+  description:
+    "Tüm ürün kategorilerini keşfedin. Elektronik, moda, ev & yaşam ve daha fazlası.",
+};
 
 export default function CategoriesPage() {
   return (
     <div className="min-h-screen">
-      <HeroSection 
+      <HeroSection
         title="Kategoriler"
         subtitle="İhtiyacınız olan ürünleri kategorilere göre keşfedin"
         showSearch={true}
@@ -19,5 +20,5 @@ export default function CategoriesPage() {
         <CategoryGrid />
       </div>
     </div>
-  )
+  );
 }

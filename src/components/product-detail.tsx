@@ -1,43 +1,50 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-import { ShoppingCart, Heart, Share2, Minus, Plus, ArrowLeft } from 'lucide-react'
-import { formatPrice } from '@/lib/utils'
-import { useCartStore } from '@/store/cart-store'
-import { Product } from '@/types'
-import { ReviewList } from '@/components/review-list'
-import Link from 'next/link'
-import toast from 'react-hot-toast'
+import { useState } from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  ShoppingCart,
+  Heart,
+  Share2,
+  Minus,
+  Plus,
+  ArrowLeft,
+} from "lucide-react";
+import { formatPrice } from "@/lib/utils";
+import { useCartStore } from "@/store/cart-store";
+import { Product } from "@/types";
+import { ReviewList } from "@/components/review-list";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface ProductDetailProps {
-  product: Product
+  product: Product;
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
-  const [quantity, setQuantity] = useState(1)
-  const { addItem } = useCartStore()
+  const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCartStore();
 
-  const discountedPrice = product.discount 
+  const discountedPrice = product.discount
     ? product.unitPrice * (1 - product.discount / 100)
-    : product.unitPrice
+    : product.unitPrice;
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      addItem(product)
+      addItem(product);
     }
-    toast.success(`${product.productName} sepete eklendi (${quantity} adet)`)
-  }
+    toast.success(`${product.productName} sepete eklendi (${quantity} adet)`);
+  };
 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity >= 1 && newQuantity <= product.unitInStock) {
-      setQuantity(newQuantity)
+      setQuantity(newQuantity);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -55,17 +62,20 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <div className="space-y-4">
           <div className="aspect-square relative overflow-hidden rounded-lg">
             <Image
-              src={product.imageUrl || '/placeholder-product.jpg'}
+              src={product.imageUrl || "/placeholder-product.jpg"}
               alt={product.productName}
               fill
               className="object-cover"
             />
           </div>
-          
+
           {/* Additional Images */}
           <div className="grid grid-cols-4 gap-2">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="aspect-square relative overflow-hidden rounded-lg">
+              <div
+                key={i}
+                className="aspect-square relative overflow-hidden rounded-lg"
+              >
                 <Image
                   src={`https://picsum.photos/200/200?random=${i}`}
                   alt={`${product.productName} ${i}`}
@@ -81,7 +91,9 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Badge variant="secondary">{product.category?.categoryName}</Badge>
+              <Badge variant="secondary">
+                {product.category?.categoryName}
+              </Badge>
               {product.discount && product.discount > 0 && (
                 <Badge variant="destructive">%{product.discount} İndirim</Badge>
               )}
@@ -105,9 +117,13 @@ export function ProductDetail({ product }: ProductDetailProps) {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${product.unitInStock > 0 ? 'bg-green-500' : 'bg-red-500'}`} />
+              <span
+                className={`w-2 h-2 rounded-full ${product.unitInStock > 0 ? "bg-green-500" : "bg-red-500"}`}
+              />
               <span className="text-sm">
-                {product.unitInStock > 0 ? `${product.unitInStock} adet stokta` : 'Stokta yok'}
+                {product.unitInStock > 0
+                  ? `${product.unitInStock} adet stokta`
+                  : "Stokta yok"}
               </span>
             </div>
           </div>
@@ -119,8 +135,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <div className="flex items-center gap-4">
               <span className="font-medium">Adet:</span>
               <div className="flex items-center gap-2">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="icon"
                   onClick={() => handleQuantityChange(quantity - 1)}
                   disabled={quantity <= 1}
@@ -128,8 +144,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   <Minus className="h-4 w-4" />
                 </Button>
                 <span className="w-12 text-center">{quantity}</span>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="icon"
                   onClick={() => handleQuantityChange(quantity + 1)}
                   disabled={quantity >= product.unitInStock}
@@ -140,8 +156,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
             </div>
 
             <div className="flex gap-4">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="flex-1"
                 onClick={handleAddToCart}
                 disabled={product.unitInStock === 0}
@@ -185,11 +201,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
       {/* Reviews Section */}
       <div className="mt-12">
-        <ReviewList 
-          productId={product.id} 
-          productName={product.productName}
-        />
+        <ReviewList productId={product.id} productName={product.productName} />
       </div>
     </div>
-  )
+  );
 }
