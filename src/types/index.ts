@@ -5,6 +5,7 @@ export interface Product {
   unitInStock: number;
   quantityPerUnit: string;
   category?: Category;
+  subCategory?: SubCategory;
   description?: string;
   imageUrl?: string;
   discount?: number;
@@ -18,6 +19,19 @@ export interface Category {
   categoryName: string;
   description?: string;
   imageUrl?: string;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  subCategories?: SubCategory[];
+}
+
+export interface SubCategory {
+  id: number;
+  subCategoryName: string;
+  description?: string;
+  imageUrl?: string;
+  categoryId: number;
+  categoryName?: string;
   isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -275,4 +289,136 @@ export interface UpdateReview {
   rating?: number;
   title?: string;
   comment?: string;
+}
+
+// Order related types
+export interface OrderDto {
+  id: number;
+  orderNumber: string;
+  userId: number;
+  userName: string;
+  userEmail: string;
+  items: OrderItemDto[];
+  totalAmount: number;
+  status: string;
+  shippingAddress: AddressDto;
+  billingAddress: AddressDto;
+  paymentMethod: PaymentMethodDto;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface OrderItemDto {
+  id: number;
+  productId: number;
+  productName: string;
+  productImageUrl?: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+export interface CreateOrderDto {
+  shippingAddressId: number;
+  paymentMethodId: number;
+  items: CreateOrderItemDto[];
+  notes?: string;
+}
+
+export interface CreateOrderItemDto {
+  productId: number;
+  quantity: number;
+}
+
+export interface UpdateOrderStatusDto {
+  status: string;
+  notes?: string;
+}
+
+// Favorite related types
+export interface FavoriteDto {
+  id: number;
+  userId: number;
+  productId: number;
+  productName: string;
+  productImageUrl?: string;
+  productPrice: number;
+  productDiscount?: number;
+  productCategory?: string;
+  productInStock: boolean;
+  createdAt: Date;
+}
+
+export interface AddToFavoritesDto {
+  productId: number;
+}
+
+// Address related types
+export interface AddressDto {
+  id: number;
+  title: string;
+  fullAddress: string;
+  city: string;
+  district: string;
+  postalCode: string;
+  phoneNumber?: string;
+  isDefault: boolean;
+}
+
+export interface CreateAddressDto {
+  title: string;
+  fullAddress: string;
+  city: string;
+  district: string;
+  postalCode: string;
+  phoneNumber?: string;
+  isDefault: boolean;
+}
+
+export interface UpdateAddressDto {
+  title?: string;
+  fullAddress?: string;
+  city?: string;
+  district?: string;
+  postalCode?: string;
+  phoneNumber?: string;
+  isDefault?: boolean;
+}
+
+// Payment Method related types
+export interface PaymentMethodDto {
+  id: number;
+  type: "credit_card" | "debit_card" | "bank_transfer";
+  cardNumber?: string;
+  cardHolderName?: string;
+  expiryMonth?: number;
+  expiryYear?: number;
+  isDefault: boolean;
+  bankName?: string;
+  accountNumber?: string;
+  accountHolderName?: string;
+}
+
+export interface CreatePaymentMethodDto {
+  type: "credit_card" | "debit_card" | "bank_transfer";
+  cardNumber?: string;
+  cardHolderName?: string;
+  expiryMonth?: number;
+  expiryYear?: number;
+  isDefault: boolean;
+  bankName?: string;
+  accountNumber?: string;
+  accountHolderName?: string;
+}
+
+export interface UpdatePaymentMethodDto {
+  type?: "credit_card" | "debit_card" | "bank_transfer";
+  cardNumber?: string;
+  cardHolderName?: string;
+  expiryMonth?: number;
+  expiryYear?: number;
+  isDefault?: boolean;
+  bankName?: string;
+  accountNumber?: string;
+  accountHolderName?: string;
 }

@@ -13,12 +13,32 @@ export function CategoryFilter({ categoryId }: CategoryFilterProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const { categories, filters, setFilters } = useProductStore();
 
-  const handleCategorySelect = (categoryId: number | undefined) => {
+  const handleCategorySelect = async (categoryId: number | undefined) => {
     setFilters({
       ...filters,
       categoryId,
       pageNumber: 1,
     });
+    
+    // Anlık filtreleme için products'ı yeniden yükle
+    const { ProductService } = await import("@/services/product-service");
+    const productService = new ProductService();
+    
+    try {
+      const response = await productService.getProducts({
+        ...filters,
+        categoryId,
+        pageNumber: 1,
+      });
+      
+      if (response.data.success) {
+        const { setProducts } = useProductStore.getState();
+        const products = response.data.data;
+        setProducts(Array.isArray(products) ? products : []);
+      }
+    } catch (error) {
+      console.error("Error filtering products:", error);
+    }
   };
 
   return (

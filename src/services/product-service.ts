@@ -1,15 +1,20 @@
 import axios, { AxiosResponse } from "axios";
 import { Product, ApiResponse, ProductFilters } from "@/types";
-import { getApiUrl, API_ENDPOINTS, API_CONFIG } from "@/config/api";
+import { API_ENDPOINTS } from "@/config/api";
+import { useBackendStore } from "@/store/backend-store";
 import { mockProducts } from "./mock-data-service";
 
 export class ProductService {
-  private baseUrl = getApiUrl() + API_ENDPOINTS.PRODUCTS;
+  private getBaseUrl() {
+    const apiUrl = useBackendStore.getState().getCurrentApiUrl();
+    return apiUrl + API_ENDPOINTS.PRODUCTS();
+  }
 
   async getProducts(
     filters?: ProductFilters
   ): Promise<AxiosResponse<ApiResponse<Product[]>>> {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       let filteredProducts = [...mockProducts];
 
       if (filters) {
@@ -69,13 +74,21 @@ export class ProductService {
         params.append("pageSize", filters.pageSize.toString());
     }
 
-    return axios.get(`${this.baseUrl}?${params.toString()}`);
+    const response = await axios.get(`${this.getBaseUrl()}?${params.toString()}`);
+    
+    // DotNet backend returns PagedResultDto, extract items
+    if (response.data.success && response.data.data && response.data.data.items) {
+      response.data.data = response.data.data.items;
+    }
+    
+    return response;
   }
 
   async getProductById(
     id: number
   ): Promise<AxiosResponse<ApiResponse<Product>>> {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       const product = mockProducts.find((p) => p.id === id);
       return Promise.resolve({
         data: {
@@ -89,13 +102,14 @@ export class ProductService {
         config: {} as any,
       });
     }
-    return axios.get(`${this.baseUrl}/${id}`);
+    return axios.get(`${this.getBaseUrl()}/${id}`);
   }
 
   async getByProductName(
     productName: string
   ): Promise<AxiosResponse<ApiResponse<Product>>> {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       const product = mockProducts.find((p) => p.productName === productName);
       return Promise.resolve({
         data: {
@@ -110,14 +124,15 @@ export class ProductService {
       });
     }
     return axios.get(
-      `${this.baseUrl}/getByProductName?productName=${encodeURIComponent(productName)}`
+      `${this.getBaseUrl()}/getByProductName?productName=${encodeURIComponent(productName)}`
     );
   }
 
   async getProductsByCategory(
     categoryId: number
   ): Promise<AxiosResponse<ApiResponse<Product[]>>> {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       const products = mockProducts.filter(
         (p) => p.category?.id === categoryId
       );
@@ -133,13 +148,21 @@ export class ProductService {
         config: {} as any,
       });
     }
-    return axios.get(`${this.baseUrl}/category/${categoryId}`);
+    const response = await axios.get(`${this.getBaseUrl()}/category/${categoryId}`);
+    
+    // DotNet backend returns PagedResultDto, extract items
+    if (response.data.success && response.data.data && response.data.data.items) {
+      response.data.data = response.data.data.items;
+    }
+    
+    return response;
   }
 
   async searchProducts(
     searchTerm: string
   ): Promise<AxiosResponse<ApiResponse<Product[]>>> {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       const term = searchTerm.toLowerCase();
       const products = mockProducts.filter(
         (p) =>
@@ -158,13 +181,21 @@ export class ProductService {
         config: {} as any,
       });
     }
-    return axios.get(
-      `${this.baseUrl}/search?q=${encodeURIComponent(searchTerm)}`
+    const response = await axios.get(
+      `${this.getBaseUrl()}/search?q=${encodeURIComponent(searchTerm)}`
     );
+    
+    // DotNet backend returns PagedResultDto, extract items
+    if (response.data.success && response.data.data && response.data.data.items) {
+      response.data.data = response.data.data.items;
+    }
+    
+    return response;
   }
 
   async getFeaturedProducts(): Promise<AxiosResponse<ApiResponse<Product[]>>> {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       const products = mockProducts.filter(
         (p) => p.discount && p.discount > 20
       );
@@ -180,13 +211,14 @@ export class ProductService {
         config: {} as any,
       });
     }
-    return axios.get(`${this.baseUrl}/featured`);
+    return axios.get(`${this.getBaseUrl()}/featured`);
   }
 
   async getDiscountedProducts(): Promise<
     AxiosResponse<ApiResponse<Product[]>>
   > {
-    if (API_CONFIG.BACKEND_TYPE === "mock") {
+    const backendType = useBackendStore.getState().config.type;
+    if (backendType === "mock") {
       const products = mockProducts.filter((p) => p.discount && p.discount > 0);
       return Promise.resolve({
         data: {
@@ -200,6 +232,6 @@ export class ProductService {
         config: {} as any,
       });
     }
-    return axios.get(`${this.baseUrl}/discounted`);
+    return axios.get(`${this.getBaseUrl()}/discounted`);
   }
 }

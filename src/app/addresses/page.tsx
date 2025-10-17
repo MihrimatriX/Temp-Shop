@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/auth-store";
+import { AddressService } from "@/services/address-service";
 
 interface Address {
   id: number;
@@ -40,31 +41,20 @@ export default function AddressesPage() {
   const fetchAddresses = async () => {
     try {
       setLoading(true);
-      // Mock data for now
-      const mockAddresses: Address[] = [
-        {
-          id: 1,
-          title: "Ev",
-          fullAddress: "Atatürk Mahallesi, Cumhuriyet Caddesi No:123 Daire:5",
-          city: "İstanbul",
-          district: "Kadıköy",
-          postalCode: "34710",
-          phoneNumber: "0555 123 45 67",
-          isDefault: true,
-        },
-        {
-          id: 2,
-          title: "İş",
-          fullAddress: "Levent Mahallesi, Büyükdere Caddesi No:456 Kat:12",
-          city: "İstanbul",
-          district: "Şişli",
-          postalCode: "34330",
-          phoneNumber: "0212 555 12 34",
-          isDefault: false,
-        },
-      ];
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No authentication token found");
+        return;
+      }
 
-      setAddresses(mockAddresses);
+      const addressService = new AddressService();
+      const response = await addressService.getUserAddresses(token);
+      
+      if (response.data.success) {
+        setAddresses(response.data.data);
+      } else {
+        console.error("Error fetching addresses:", response.data.message);
+      }
     } catch (error) {
       console.error("Error fetching addresses:", error);
     } finally {

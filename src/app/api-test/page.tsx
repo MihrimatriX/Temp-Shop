@@ -14,7 +14,7 @@ import { ProductService } from "@/services/product-service";
 import { CategoryService } from "@/services/category-service";
 import { ReviewService } from "@/services/review-service";
 import { Product, Category, Review, ProductReviewSummary } from "@/types";
-import { API_CONFIG } from "@/config/api";
+import { useBackendStore } from "@/store/backend-store";
 
 export default function ApiTestPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,11 +24,12 @@ export default function ApiTestPage() {
     useState<ProductReviewSummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { config } = useBackendStore();
   const [backendType, setBackendType] = useState<string>("");
 
   useEffect(() => {
-    setBackendType(API_CONFIG.BACKEND_TYPE);
-  }, []);
+    setBackendType(config.type);
+  }, [config.type]);
 
   const testProducts = async () => {
     setLoading(true);

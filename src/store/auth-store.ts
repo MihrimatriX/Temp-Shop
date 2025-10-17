@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { useBackendStore } from "./backend-store";
 
 export interface User {
   id: number;
@@ -63,8 +64,7 @@ export interface RegisterResponse {
   message?: string;
 }
 
-const API_URL =
-  process.env.NEXT_PUBLIC_DOTNET_API_URL || "http://localhost:5000/api";
+// API URL artık backend store'dan alınacak
 
 export const useAuthStore = create<AuthState & AuthActions>()(
   persist(
@@ -81,7 +81,8 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         set({ isLoading: true, error: null });
 
         try {
-          const response = await fetch(`${API_URL}/Auth/login`, {
+          const apiUrl = useBackendStore.getState().getCurrentApiUrl();
+          const response = await fetch(`${apiUrl}/Auth/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -129,7 +130,8 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         set({ isLoading: true, error: null });
 
         try {
-          const response = await fetch(`${API_URL}/Auth/register`, {
+          const apiUrl = useBackendStore.getState().getCurrentApiUrl();
+          const response = await fetch(`${apiUrl}/Auth/register`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

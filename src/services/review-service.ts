@@ -5,17 +5,28 @@ import {
   UpdateReview,
   ApiResponse,
 } from "@/types";
-import { getApiUrl, API_ENDPOINTS } from "@/config/api";
-
-const API_URL = getApiUrl();
+import { API_ENDPOINTS } from "@/config/api";
+import { useBackendStore } from "@/store/backend-store";
+import { mockReviews, mockReviewSummaries } from "./mock-data-service";
 
 export class ReviewService {
   static async getProductReviews(
     productId: number
   ): Promise<ApiResponse<Review[]>> {
+    const backendType = useBackendStore.getState().config.type;
+    
+    if (backendType === "mock") {
+      const reviews = mockReviews.filter(review => review.productId === productId);
+      return Promise.resolve({
+        success: true,
+        data: reviews,
+        message: "Reviews fetched successfully",
+      });
+    }
+
     try {
       const response = await fetch(
-        `${API_URL}${API_ENDPOINTS.REVIEWS}/product/${productId}`
+        `${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}/product/${productId}`
       );
 
       if (!response.ok) {
@@ -33,9 +44,33 @@ export class ReviewService {
   static async getProductReviewSummary(
     productId: number
   ): Promise<ApiResponse<ProductReviewSummary>> {
+    const backendType = useBackendStore.getState().config.type;
+    
+    if (backendType === "mock") {
+      const summary = mockReviewSummaries.find(s => s.productId === productId);
+      if (summary) {
+        return Promise.resolve({
+          success: true,
+          data: summary,
+          message: "Review summary fetched successfully",
+        });
+      } else {
+        return Promise.resolve({
+          success: true,
+          data: {
+            productId,
+            averageRating: 0,
+            totalReviews: 0,
+            ratingDistribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+          },
+          message: "No reviews found",
+        });
+      }
+    }
+
     try {
       const response = await fetch(
-        `${API_URL}${API_ENDPOINTS.REVIEWS}/product/${productId}/summary`
+        `${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}/product/${productId}/summary`
       );
 
       if (!response.ok) {
@@ -51,9 +86,28 @@ export class ReviewService {
   }
 
   static async getReviewById(reviewId: number): Promise<ApiResponse<Review>> {
+    const backendType = useBackendStore.getState().config.type;
+    
+    if (backendType === "mock") {
+      const review = mockReviews.find(r => r.id === reviewId);
+      if (review) {
+        return Promise.resolve({
+          success: true,
+          data: review,
+          message: "Review fetched successfully",
+        });
+      } else {
+        return Promise.resolve({
+          success: false,
+          data: null as any,
+          message: "Review not found",
+        });
+      }
+    }
+
     try {
       const response = await fetch(
-        `${API_URL}${API_ENDPOINTS.REVIEWS}/${reviewId}`
+        `${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}/${reviewId}`
       );
 
       if (!response.ok) {
@@ -71,8 +125,29 @@ export class ReviewService {
   static async createReview(
     reviewData: CreateReview
   ): Promise<ApiResponse<Review>> {
+    const backendType = useBackendStore.getState().config.type;
+    
+    if (backendType === "mock") {
+      const newReview: Review = {
+        id: mockReviews.length + 1,
+        productId: reviewData.productId,
+        userId: reviewData.userId,
+        userName: "Mock User",
+        rating: reviewData.rating,
+        comment: reviewData.comment,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      
+      return Promise.resolve({
+        success: true,
+        data: newReview,
+        message: "Review created successfully",
+      });
+    }
+
     try {
-      const response = await fetch(`${API_URL}${API_ENDPOINTS.REVIEWS}`, {
+      const response = await fetch(`${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,9 +171,35 @@ export class ReviewService {
     reviewId: number,
     reviewData: UpdateReview
   ): Promise<ApiResponse<Review>> {
+    const backendType = useBackendStore.getState().config.type;
+    
+    if (backendType === "mock") {
+      const existingReview = mockReviews.find(r => r.id === reviewId);
+      if (existingReview) {
+        const updatedReview: Review = {
+          ...existingReview,
+          rating: reviewData.rating || existingReview.rating,
+          comment: reviewData.comment || existingReview.comment,
+          updatedAt: new Date(),
+        };
+        
+        return Promise.resolve({
+          success: true,
+          data: updatedReview,
+          message: "Review updated successfully",
+        });
+      } else {
+        return Promise.resolve({
+          success: false,
+          data: null as any,
+          message: "Review not found",
+        });
+      }
+    }
+
     try {
       const response = await fetch(
-        `${API_URL}${API_ENDPOINTS.REVIEWS}/${reviewId}`,
+        `${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}/${reviewId}`,
         {
           method: "PUT",
           headers: {
@@ -121,9 +222,28 @@ export class ReviewService {
   }
 
   static async deleteReview(reviewId: number): Promise<ApiResponse<string>> {
+    const backendType = useBackendStore.getState().config.type;
+    
+    if (backendType === "mock") {
+      const existingReview = mockReviews.find(r => r.id === reviewId);
+      if (existingReview) {
+        return Promise.resolve({
+          success: true,
+          data: "Review deleted successfully",
+          message: "Review deleted successfully",
+        });
+      } else {
+        return Promise.resolve({
+          success: false,
+          data: "",
+          message: "Review not found",
+        });
+      }
+    }
+
     try {
       const response = await fetch(
-        `${API_URL}${API_ENDPOINTS.REVIEWS}/${reviewId}`,
+        `${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}/${reviewId}`,
         {
           method: "DELETE",
         }

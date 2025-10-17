@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,9 @@ import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
 import { CartModal } from "@/components/cart-modal";
 import { AccountModal } from "@/components/account-modal";
+import { BackendSwitch } from "@/components/backend-switch";
+import { SubCategoryService } from "@/services/subcategory-service";
+import { SubCategory } from "@/types";
 import {
   ShoppingCart,
   Search,
@@ -22,6 +25,29 @@ export function Navigation() {
   const { isAuthenticated, user } = useAuthStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // SubCategory'leri yükle
+  useEffect(() => {
+    const loadSubCategories = async () => {
+      try {
+        setLoading(true);
+        const subCategoryService = new SubCategoryService();
+        const response = await subCategoryService.getSubCategories();
+        if (response.data.success) {
+          setSubCategories(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error loading subcategories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSubCategories();
+  }, []);
 
   const categories = [
     { name: "Elektronik", href: "/categories/elektronik" },
@@ -35,6 +61,32 @@ export function Navigation() {
     { name: "Oto & Bahçe", href: "/categories/oto" },
     { name: "Kırtasiye & Ofis", href: "/categories/kirtasiye" },
   ];
+
+  // Dinamik mega menu data oluştur
+  const getMegaMenuData = (categoryName: string) => {
+    const categorySubCategories = subCategories.filter(sc => sc.categoryName === categoryName);
+    
+    if (categorySubCategories.length === 0) return null;
+    
+    // SubCategory'leri 3 sütuna böl
+    const columns = [];
+    const itemsPerColumn = Math.ceil(categorySubCategories.length / 3);
+    
+    for (let i = 0; i < 3; i++) {
+      const startIndex = i * itemsPerColumn;
+      const endIndex = Math.min(startIndex + itemsPerColumn, categorySubCategories.length);
+      const columnSubCategories = categorySubCategories.slice(startIndex, endIndex);
+      
+      if (columnSubCategories.length > 0) {
+        columns.push({
+          title: columnSubCategories[0].subCategoryName,
+          items: columnSubCategories.map(sc => sc.subCategoryName)
+        });
+      }
+    }
+    
+    return { columns };
+  };
 
   return (
     <>
@@ -116,6 +168,8 @@ export function Navigation() {
 
             {/* User Actions */}
             <div className="flex items-center space-x-4">
+              <BackendSwitch />
+              
               <Button variant="ghost" className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
                 <span className="hidden md:inline">Konum</span>
@@ -156,7 +210,7 @@ export function Navigation() {
       </header>
 
       {/* Category Navigation */}
-      <nav className="bg-white border-b">
+      <nav className="bg-white border-b relative">
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 py-3 overflow-x-auto scrollbar-hide">
             <Button
@@ -168,11 +222,53 @@ export function Navigation() {
             </Button>
 
             {categories.map((category) => (
-              <Link key={category.name} href={category.href}>
-                <Button variant="ghost" className="text-sm whitespace-nowrap">
-                  {category.name}
-                </Button>
-              </Link>
+              <div
+                key={category.name}
+                className="relative"
+                onMouseEnter={() => setHoveredCategory(category.name)}
+                onMouseLeave={() => setHoveredCategory(null)}
+              >
+                <Link href={category.href}>
+                  <Button 
+                    variant="ghost" 
+                    className={`text-sm whitespace-nowrap ${
+                      hoveredCategory === category.name 
+                        ? 'text-orange-500 border-b-2 border-orange-500' 
+                        : ''
+                    }`}
+                  >
+                    {category.name}
+                    <ChevronDown className="w-3 h-3 ml-1" />
+                  </Button>
+                </Link>
+
+                {/* Mega Menu */}
+                {hoveredCategory === category.name && getMegaMenuData(category.name) && (
+                  <div className="absolute top-full left-0 w-screen bg-white border-t shadow-lg z-50">
+                    <div className="container mx-auto px-4 py-6">
+                      <div className="grid grid-cols-4 gap-8">
+                        {getMegaMenuData(category.name)?.columns.map((column, index) => (
+                          <div key={index} className="space-y-4">
+                            <h3 className="font-bold text-orange-500 text-lg">{column.title}</h3>
+                            <ul className="space-y-2">
+                              {column.items.map((item, itemIndex) => (
+                                <li key={itemIndex}>
+                                  <Link 
+                                    href={`/categories/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                    className="text-gray-700 hover:text-orange-500 transition-colors"
+                                  >
+                                    {item}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

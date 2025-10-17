@@ -39,6 +39,12 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
   getFilteredProducts: () => {
     const { products, filters } = get();
+    
+    // Ensure products is an array
+    if (!Array.isArray(products)) {
+      return [];
+    }
+    
     let filtered = [...products];
 
     // Category filter

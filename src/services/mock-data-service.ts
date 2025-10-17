@@ -1,4 +1,4 @@
-import { Product, Category, Campaign } from "@/types";
+import { Product, Category, SubCategory, Campaign, Review, ProductReviewSummary } from "@/types";
 
 export const mockCategories: Category[] = [
   {
@@ -553,4 +553,246 @@ export const mockCampaigns: Campaign[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+];
+
+export const mockReviews: Review[] = [
+  {
+    id: 1,
+    productId: 1,
+    userId: 1,
+    userName: "Ahmet Yılmaz",
+    rating: 5,
+    comment: "Harika bir ürün! Kesinlikle tavsiye ederim.",
+    createdAt: new Date("2024-01-15"),
+    updatedAt: new Date("2024-01-15"),
+  },
+  {
+    id: 2,
+    productId: 1,
+    userId: 2,
+    userName: "Ayşe Demir",
+    rating: 4,
+    comment: "Güzel ürün, hızlı kargo. Teşekkürler.",
+    createdAt: new Date("2024-01-20"),
+    updatedAt: new Date("2024-01-20"),
+  },
+  {
+    id: 3,
+    productId: 1,
+    userId: 3,
+    userName: "Mehmet Kaya",
+    rating: 5,
+    comment: "Mükemmel kalite, fiyatına göre çok iyi.",
+    createdAt: new Date("2024-01-25"),
+    updatedAt: new Date("2024-01-25"),
+  },
+  {
+    id: 4,
+    productId: 2,
+    userId: 4,
+    userName: "Fatma Öz",
+    rating: 3,
+    comment: "Orta kalite, beklentilerimi tam karşılamadı.",
+    createdAt: new Date("2024-01-18"),
+    updatedAt: new Date("2024-01-18"),
+  },
+  {
+    id: 5,
+    productId: 2,
+    userId: 5,
+    userName: "Ali Veli",
+    rating: 4,
+    comment: "İyi ürün, hızlı teslimat.",
+    createdAt: new Date("2024-01-22"),
+    updatedAt: new Date("2024-01-22"),
+  },
+  {
+    id: 6,
+    productId: 3,
+    userId: 6,
+    userName: "Zeynep Ak",
+    rating: 5,
+    comment: "Çok memnun kaldım, tekrar alacağım.",
+    createdAt: new Date("2024-01-28"),
+    updatedAt: new Date("2024-01-28"),
+  },
+  {
+    id: 7,
+    productId: 4,
+    userId: 7,
+    userName: "Can Özkan",
+    rating: 4,
+    comment: "Güzel ürün, kaliteli malzeme.",
+    createdAt: new Date("2024-01-30"),
+    updatedAt: new Date("2024-01-30"),
+  },
+  {
+    id: 8,
+    productId: 5,
+    userId: 8,
+    userName: "Elif Yıldız",
+    rating: 5,
+    comment: "Harika! Kesinlikle tavsiye ederim.",
+    createdAt: new Date("2024-02-01"),
+    updatedAt: new Date("2024-02-01"),
+  },
+  {
+    id: 9,
+    productId: 6,
+    userId: 9,
+    userName: "Burak Kılıç",
+    rating: 3,
+    comment: "Orta kalite, fiyatına göre uygun.",
+    createdAt: new Date("2024-02-02"),
+    updatedAt: new Date("2024-02-02"),
+  },
+  {
+    id: 10,
+    productId: 7,
+    userId: 10,
+    userName: "Selin Arslan",
+    rating: 4,
+    comment: "İyi ürün, hızlı kargo.",
+    createdAt: new Date("2024-02-03"),
+    updatedAt: new Date("2024-02-03"),
+  },
+];
+
+export const mockReviewSummaries: ProductReviewSummary[] = [
+  {
+    productId: 1,
+    averageRating: 4.7,
+    totalReviews: 3,
+    ratingDistribution: {
+      5: 2,
+      4: 1,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+  },
+  {
+    productId: 2,
+    averageRating: 3.5,
+    totalReviews: 2,
+    ratingDistribution: {
+      5: 0,
+      4: 1,
+      3: 1,
+      2: 0,
+      1: 0,
+    },
+  },
+  {
+    productId: 3,
+    averageRating: 5.0,
+    totalReviews: 1,
+    ratingDistribution: {
+      5: 1,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+  },
+  {
+    productId: 4,
+    averageRating: 4.0,
+    totalReviews: 1,
+    ratingDistribution: {
+      5: 0,
+      4: 1,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+  },
+  {
+    productId: 5,
+    averageRating: 5.0,
+    totalReviews: 1,
+    ratingDistribution: {
+      5: 1,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+  },
+  {
+    productId: 6,
+    averageRating: 3.0,
+    totalReviews: 1,
+    ratingDistribution: {
+      5: 0,
+      4: 0,
+      3: 1,
+      2: 0,
+      1: 0,
+    },
+  },
+  {
+    productId: 7,
+    averageRating: 4.0,
+    totalReviews: 1,
+    ratingDistribution: {
+      5: 0,
+      4: 1,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+  },
+];
+
+export const mockSubCategories: SubCategory[] = [
+  // Elektronik SubCategories
+  { id: 1, subCategoryName: "Telefon & Tablet", categoryId: 1, categoryName: "Elektronik", description: "Akıllı telefonlar ve tabletler", isActive: true },
+  { id: 2, subCategoryName: "Bilgisayar", categoryId: 1, categoryName: "Elektronik", description: "Laptop, masaüstü bilgisayar ve aksesuarları", isActive: true },
+  { id: 3, subCategoryName: "Ev Elektroniği", categoryId: 1, categoryName: "Elektronik", description: "TV, ses sistemleri ve ev elektroniği", isActive: true },
+  
+  // Moda SubCategories
+  { id: 4, subCategoryName: "Kadın Giyim", categoryId: 2, categoryName: "Moda", description: "Kadın giyim ürünleri", isActive: true },
+  { id: 5, subCategoryName: "Erkek Giyim", categoryId: 2, categoryName: "Moda", description: "Erkek giyim ürünleri", isActive: true },
+  { id: 6, subCategoryName: "Ayakkabı & Çanta", categoryId: 2, categoryName: "Moda", description: "Ayakkabı ve çanta ürünleri", isActive: true },
+  
+  // Ev & Yaşam SubCategories
+  { id: 7, subCategoryName: "Mobilya", categoryId: 3, categoryName: "Ev & Yaşam", description: "Ev mobilyaları", isActive: true },
+  { id: 8, subCategoryName: "Dekorasyon", categoryId: 3, categoryName: "Ev & Yaşam", description: "Ev dekorasyon ürünleri", isActive: true },
+  { id: 9, subCategoryName: "Mutfak & Banyo", categoryId: 3, categoryName: "Ev & Yaşam", description: "Mutfak ve banyo ürünleri", isActive: true },
+  
+  // Spor & Outdoor SubCategories
+  { id: 10, subCategoryName: "Fitness", categoryId: 4, categoryName: "Spor & Outdoor", description: "Fitness ve spor ekipmanları", isActive: true },
+  { id: 11, subCategoryName: "Outdoor", categoryId: 4, categoryName: "Spor & Outdoor", description: "Açık hava sporları", isActive: true },
+  { id: 12, subCategoryName: "Takım Sporları", categoryId: 4, categoryName: "Spor & Outdoor", description: "Takım sporları ekipmanları", isActive: true },
+  
+  // Anne & Bebek SubCategories
+  { id: 13, subCategoryName: "Bebek Giyim", categoryId: 5, categoryName: "Anne & Bebek", description: "Bebek giyim ürünleri", isActive: true },
+  { id: 14, subCategoryName: "Bebek Bakım", categoryId: 5, categoryName: "Anne & Bebek", description: "Bebek bakım ürünleri", isActive: true },
+  { id: 15, subCategoryName: "Bebek Beslenme", categoryId: 5, categoryName: "Anne & Bebek", description: "Bebek beslenme ürünleri", isActive: true },
+  
+  // Kozmetik & Kişisel Bakım SubCategories
+  { id: 16, subCategoryName: "Makyaj", categoryId: 6, categoryName: "Kozmetik & Kişisel Bakım", description: "Makyaj ürünleri", isActive: true },
+  { id: 17, subCategoryName: "Cilt Bakımı", categoryId: 6, categoryName: "Kozmetik & Kişisel Bakım", description: "Cilt bakım ürünleri", isActive: true },
+  { id: 18, subCategoryName: "Saç Bakımı", categoryId: 6, categoryName: "Kozmetik & Kişisel Bakım", description: "Saç bakım ürünleri", isActive: true },
+  
+  // Süpermarket SubCategories
+  { id: 19, subCategoryName: "Gıda", categoryId: 7, categoryName: "Süpermarket", description: "Gıda ürünleri", isActive: true },
+  { id: 20, subCategoryName: "Temizlik", categoryId: 7, categoryName: "Süpermarket", description: "Temizlik ürünleri", isActive: true },
+  { id: 21, subCategoryName: "Kişisel Bakım", categoryId: 7, categoryName: "Süpermarket", description: "Kişisel bakım ürünleri", isActive: true },
+  
+  // Kitap & Müzik SubCategories
+  { id: 22, subCategoryName: "Kitaplar", categoryId: 8, categoryName: "Kitap & Müzik", description: "Kitap ürünleri", isActive: true },
+  { id: 23, subCategoryName: "Müzik", categoryId: 8, categoryName: "Kitap & Müzik", description: "Müzik ürünleri", isActive: true },
+  { id: 24, subCategoryName: "Medya", categoryId: 8, categoryName: "Kitap & Müzik", description: "Medya ürünleri", isActive: true },
+  
+  // Oto & Bahçe SubCategories
+  { id: 25, subCategoryName: "Otomotiv", categoryId: 9, categoryName: "Oto & Bahçe", description: "Otomotiv ürünleri", isActive: true },
+  { id: 26, subCategoryName: "Bahçe", categoryId: 9, categoryName: "Oto & Bahçe", description: "Bahçe ürünleri", isActive: true },
+  { id: 27, subCategoryName: "İnşaat & Yapı", categoryId: 9, categoryName: "Oto & Bahçe", description: "İnşaat ve yapı ürünleri", isActive: true },
+  
+  // Kırtasiye & Ofis SubCategories
+  { id: 28, subCategoryName: "Kırtasiye", categoryId: 10, categoryName: "Kırtasiye & Ofis", description: "Kırtasiye ürünleri", isActive: true },
+  { id: 29, subCategoryName: "Ofis", categoryId: 10, categoryName: "Kırtasiye & Ofis", description: "Ofis ürünleri", isActive: true },
+  { id: 30, subCategoryName: "Okul", categoryId: 10, categoryName: "Kırtasiye & Ofis", description: "Okul ürünleri", isActive: true },
 ];
