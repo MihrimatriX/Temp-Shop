@@ -61,7 +61,11 @@ export class ReviewService {
             productId,
             averageRating: 0,
             totalReviews: 0,
-            ratingDistribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+            rating1Count: 0,
+            rating2Count: 0,
+            rating3Count: 0,
+            rating4Count: 0,
+            rating5Count: 0,
           },
           message: "No reviews found",
         });
@@ -131,12 +135,14 @@ export class ReviewService {
       const newReview: Review = {
         id: mockReviews.length + 1,
         productId: reviewData.productId,
-        userId: reviewData.userId,
+        userId: 1, // Mock user ID
         userName: "Mock User",
         rating: reviewData.rating,
         comment: reviewData.comment,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        isVerified: false,
+        isHelpful: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       
       return Promise.resolve({
@@ -180,7 +186,7 @@ export class ReviewService {
           ...existingReview,
           rating: reviewData.rating || existingReview.rating,
           comment: reviewData.comment || existingReview.comment,
-          updatedAt: new Date(),
+          updatedAt: new Date().toISOString(),
         };
         
         return Promise.resolve({
