@@ -44,7 +44,7 @@ export default function FavoritesPage() {
 
       const favoriteService = new FavoriteService();
       const response = await favoriteService.getUserFavorites(token);
-      
+
       if (response.data.success) {
         setFavorites(response.data.data);
       } else {
@@ -66,10 +66,13 @@ export default function FavoritesPage() {
       }
 
       const favoriteService = new FavoriteService();
-      const response = await favoriteService.removeFromFavorites(productId, token);
-      
+      const response = await favoriteService.removeFromFavorites(
+        productId,
+        token
+      );
+
       if (response.data.success) {
-        setFavorites(favorites.filter(fav => fav.productId !== productId));
+        setFavorites(favorites.filter((fav) => fav.productId !== productId));
       } else {
         console.error("Error removing from favorites:", response.data.message);
       }
@@ -79,20 +82,27 @@ export default function FavoritesPage() {
   };
 
   const handleAddToCart = (product: FavoriteProduct) => {
-    addItem({
-      id: product.productId,
-      productName: product.productName,
-      unitPrice: product.productPrice,
-      imageUrl: product.productImageUrl || "/placeholder-product.jpg",
-      category: { id: 1, categoryName: product.productCategory || "Genel", isActive: true },
-      unitInStock: product.productInStock ? 100 : 0,
-      quantityPerUnit: "1 adet",
-      isActive: true,
-      description: "",
-      discount: product.productDiscount,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }, 1);
+    addItem(
+      {
+        id: product.productId,
+        productName: product.productName,
+        unitPrice: product.productPrice,
+        imageUrl: product.productImageUrl || "/placeholder-product.jpg",
+        category: {
+          id: 1,
+          categoryName: product.productCategory || "Genel",
+          isActive: true,
+        },
+        unitInStock: product.productInStock ? 100 : 0,
+        quantityPerUnit: "1 adet",
+        isActive: true,
+        description: "",
+        discount: product.productDiscount,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      1
+    );
   };
 
   if (loading) {
@@ -113,7 +123,9 @@ export default function FavoritesPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Favoriler</h1>
-          <p className="text-gray-600">Favorilerinizi görmek için giriş yapmanız gerekiyor.</p>
+          <p className="text-gray-600">
+            Favorilerinizi görmek için giriş yapmanız gerekiyor.
+          </p>
         </div>
       </div>
     );
@@ -168,7 +180,10 @@ export default function FavoritesPage() {
                   </Badge>
                 )}
                 {!product.productInStock && (
-                  <Badge variant="destructive" className="absolute bottom-2 left-2">
+                  <Badge
+                    variant="destructive"
+                    className="absolute bottom-2 left-2"
+                  >
                     Stokta Yok
                   </Badge>
                 )}
@@ -178,9 +193,11 @@ export default function FavoritesPage() {
                 <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
                   {product.productName}
                 </h3>
-                
+
                 {product.productCategory && (
-                  <p className="text-sm text-gray-500 mb-2">{product.productCategory}</p>
+                  <p className="text-sm text-gray-500 mb-2">
+                    {product.productCategory}
+                  </p>
                 )}
 
                 <div className="flex items-center justify-between mb-3">
@@ -190,7 +207,11 @@ export default function FavoritesPage() {
                     </span>
                     {product.productDiscount && product.productDiscount > 0 && (
                       <span className="text-sm text-gray-500 line-through">
-                        ₺{(product.productPrice / (1 - product.productDiscount / 100)).toFixed(2)}
+                        ₺
+                        {(
+                          product.productPrice /
+                          (1 - product.productDiscount / 100)
+                        ).toFixed(2)}
                       </span>
                     )}
                   </div>

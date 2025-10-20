@@ -14,9 +14,11 @@ export class ReviewService {
     productId: number
   ): Promise<ApiResponse<Review[]>> {
     const backendType = useBackendStore.getState().config.type;
-    
+
     if (backendType === "mock") {
-      const reviews = mockReviews.filter(review => review.productId === productId);
+      const reviews = mockReviews.filter(
+        (review) => review.productId === productId
+      );
       return Promise.resolve({
         success: true,
         data: reviews,
@@ -45,9 +47,11 @@ export class ReviewService {
     productId: number
   ): Promise<ApiResponse<ProductReviewSummary>> {
     const backendType = useBackendStore.getState().config.type;
-    
+
     if (backendType === "mock") {
-      const summary = mockReviewSummaries.find(s => s.productId === productId);
+      const summary = mockReviewSummaries.find(
+        (s) => s.productId === productId
+      );
       if (summary) {
         return Promise.resolve({
           success: true,
@@ -91,9 +95,9 @@ export class ReviewService {
 
   static async getReviewById(reviewId: number): Promise<ApiResponse<Review>> {
     const backendType = useBackendStore.getState().config.type;
-    
+
     if (backendType === "mock") {
-      const review = mockReviews.find(r => r.id === reviewId);
+      const review = mockReviews.find((r) => r.id === reviewId);
       if (review) {
         return Promise.resolve({
           success: true,
@@ -130,7 +134,7 @@ export class ReviewService {
     reviewData: CreateReview
   ): Promise<ApiResponse<Review>> {
     const backendType = useBackendStore.getState().config.type;
-    
+
     if (backendType === "mock") {
       const newReview: Review = {
         id: mockReviews.length + 1,
@@ -144,7 +148,7 @@ export class ReviewService {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      
+
       return Promise.resolve({
         success: true,
         data: newReview,
@@ -153,13 +157,16 @@ export class ReviewService {
     }
 
     try {
-      const response = await fetch(`${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reviewData),
-      });
+      const response = await fetch(
+        `${useBackendStore.getState().getCurrentApiUrl()}${API_ENDPOINTS.REVIEWS()}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reviewData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -178,9 +185,9 @@ export class ReviewService {
     reviewData: UpdateReview
   ): Promise<ApiResponse<Review>> {
     const backendType = useBackendStore.getState().config.type;
-    
+
     if (backendType === "mock") {
-      const existingReview = mockReviews.find(r => r.id === reviewId);
+      const existingReview = mockReviews.find((r) => r.id === reviewId);
       if (existingReview) {
         const updatedReview: Review = {
           ...existingReview,
@@ -188,7 +195,7 @@ export class ReviewService {
           comment: reviewData.comment || existingReview.comment,
           updatedAt: new Date().toISOString(),
         };
-        
+
         return Promise.resolve({
           success: true,
           data: updatedReview,
@@ -229,9 +236,9 @@ export class ReviewService {
 
   static async deleteReview(reviewId: number): Promise<ApiResponse<string>> {
     const backendType = useBackendStore.getState().config.type;
-    
+
     if (backendType === "mock") {
-      const existingReview = mockReviews.find(r => r.id === reviewId);
+      const existingReview = mockReviews.find((r) => r.id === reviewId);
       if (existingReview) {
         return Promise.resolve({
           success: true,

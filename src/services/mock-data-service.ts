@@ -1,4 +1,11 @@
-import { Product, Category, SubCategory, Campaign, Review, ProductReviewSummary } from "@/types";
+import {
+  Product,
+  Category,
+  SubCategory,
+  Campaign,
+  Review,
+  ProductReviewSummary,
+} from "@/types";
 
 // Mock Products
 export const mockProducts: Product[] = [
@@ -9,7 +16,8 @@ export const mockProducts: Product[] = [
     unitInStock: 15,
     quantityPerUnit: "1 adet",
     category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "Yüksek performanslı laptop - Intel i7 işlemci, 16GB RAM, 512GB SSD",
+    description:
+      "Yüksek performanslı laptop - Intel i7 işlemci, 16GB RAM, 512GB SSD",
     imageUrl: "https://picsum.photos/600/400?random=1",
     discount: 10,
     isActive: true,
@@ -74,7 +82,7 @@ export const mockProducts: Product[] = [
   },
   {
     id: 6,
-    productName: "Monitor 27\"",
+    productName: 'Monitor 27"',
     unitPrice: 3500,
     unitInStock: 30,
     quantityPerUnit: "1 adet",

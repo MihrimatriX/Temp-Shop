@@ -9,7 +9,9 @@ export class FavoriteService {
     return apiUrl + API_ENDPOINTS.FAVORITES;
   }
 
-  async getUserFavorites(token: string): Promise<AxiosResponse<ApiResponse<FavoriteDto[]>>> {
+  async getUserFavorites(
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<FavoriteDto[]>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for favorites
@@ -82,7 +84,10 @@ export class FavoriteService {
     });
   }
 
-  async addToFavorites(addToFavoritesDto: AddToFavoritesDto, token: string): Promise<AxiosResponse<ApiResponse<FavoriteDto>>> {
+  async addToFavorites(
+    addToFavoritesDto: AddToFavoritesDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<FavoriteDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for adding to favorites
@@ -117,7 +122,10 @@ export class FavoriteService {
     });
   }
 
-  async removeFromFavorites(productId: number, token: string): Promise<AxiosResponse<ApiResponse<string>>> {
+  async removeFromFavorites(
+    productId: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<string>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for removing from favorites
@@ -139,7 +147,10 @@ export class FavoriteService {
     });
   }
 
-  async isProductInFavorites(productId: number, token: string): Promise<AxiosResponse<ApiResponse<boolean>>> {
+  async isProductInFavorites(
+    productId: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<boolean>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for checking if product is in favorites
@@ -161,7 +172,9 @@ export class FavoriteService {
     });
   }
 
-  async clearFavorites(token: string): Promise<AxiosResponse<ApiResponse<string>>> {
+  async clearFavorites(
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<string>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for clearing favorites

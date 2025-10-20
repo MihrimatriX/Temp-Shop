@@ -23,8 +23,10 @@ export interface BackendActions {
 
 const defaultConfig: BackendConfig = {
   type: "mock",
-  dotnetUrl: process.env.NEXT_PUBLIC_DOTNET_API_URL || "http://localhost:5000/api",
-  springUrl: process.env.NEXT_PUBLIC_SPRING_API_URL || "http://localhost:8082/api",
+  dotnetUrl:
+    process.env.NEXT_PUBLIC_DOTNET_API_URL || "http://localhost:5000/api",
+  springUrl:
+    process.env.NEXT_PUBLIC_SPRING_API_URL || "http://localhost:8082/api",
 };
 
 export const useBackendStore = create<BackendState & BackendActions>()(
@@ -69,13 +71,13 @@ export const useBackendStore = create<BackendState & BackendActions>()(
 
       clearAllCache: () => {
         // Tüm localStorage cache'ini temizle
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           // Zustand persist storage'ları temizle
-          localStorage.removeItem('auth-storage');
-          localStorage.removeItem('cart-storage');
-          localStorage.removeItem('favorites-storage');
-          localStorage.removeItem('user-settings-storage');
-          
+          localStorage.removeItem("auth-storage");
+          localStorage.removeItem("cart-storage");
+          localStorage.removeItem("favorites-storage");
+          localStorage.removeItem("user-settings-storage");
+
           // Sayfayı yenile (tüm state'i sıfırla)
           window.location.reload();
         }

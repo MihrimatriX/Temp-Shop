@@ -74,13 +74,19 @@ export class ProductService {
         params.append("pageSize", filters.pageSize.toString());
     }
 
-    const response = await axios.get(`${this.getBaseUrl()}?${params.toString()}`);
-    
+    const response = await axios.get(
+      `${this.getBaseUrl()}?${params.toString()}`
+    );
+
     // DotNet backend returns PagedResultDto, extract items
-    if (response.data.success && response.data.data && response.data.data.items) {
+    if (
+      response.data.success &&
+      response.data.data &&
+      response.data.data.items
+    ) {
       response.data.data = response.data.data.items;
     }
-    
+
     return response;
   }
 
@@ -148,13 +154,19 @@ export class ProductService {
         config: {} as any,
       });
     }
-    const response = await axios.get(`${this.getBaseUrl()}/category/${categoryId}`);
-    
+    const response = await axios.get(
+      `${this.getBaseUrl()}/category/${categoryId}`
+    );
+
     // DotNet backend returns PagedResultDto, extract items
-    if (response.data.success && response.data.data && response.data.data.items) {
+    if (
+      response.data.success &&
+      response.data.data &&
+      response.data.data.items
+    ) {
       response.data.data = response.data.data.items;
     }
-    
+
     return response;
   }
 
@@ -184,12 +196,16 @@ export class ProductService {
     const response = await axios.get(
       `${this.getBaseUrl()}/search?q=${encodeURIComponent(searchTerm)}`
     );
-    
+
     // DotNet backend returns PagedResultDto, extract items
-    if (response.data.success && response.data.data && response.data.data.items) {
+    if (
+      response.data.success &&
+      response.data.data &&
+      response.data.data.items
+    ) {
       response.data.data = response.data.data.items;
     }
-    
+
     return response;
   }
 

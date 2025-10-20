@@ -17,10 +17,7 @@ interface ProductCardProps {
   onViewDetails?: (product: Product) => void;
 }
 
-export function ProductCard({
-  product,
-  onAddToCart,
-}: ProductCardProps) {
+export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const { addItem } = useCartStore();
 
   const handleAddToCart = (e: React.MouseEvent) => {

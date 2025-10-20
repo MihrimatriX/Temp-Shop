@@ -19,18 +19,18 @@ export function CategoryFilter({ categoryId }: CategoryFilterProps) {
       categoryId,
       pageNumber: 1,
     });
-    
+
     // Anlık filtreleme için products'ı yeniden yükle
     const { ProductService } = await import("@/services/product-service");
     const productService = new ProductService();
-    
+
     try {
       const response = await productService.getProducts({
         ...filters,
         categoryId,
         pageNumber: 1,
       });
-      
+
       if (response.data.success) {
         const { setProducts } = useProductStore.getState();
         const products = response.data.data;

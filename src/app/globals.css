@@ -1,7 +1,31 @@
 /* stylelint-disable at-rule-no-unknown */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Tailwind v4: kaynak dosyaları belirtin ki util sınıfları taransın */
+@source "../**/*.{ts,tsx,js,jsx,mdx}";
+
+@theme {
+  /* Map CSS variables to Tailwind color tokens for v4 */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
 
 @layer utilities {
   .scrollbar-hide {
@@ -62,38 +86,13 @@
 
 @layer base {
   * {
-    /* stylelint-disable-next-line at-rule-no-unknown */
-    @apply border-border;
+    border-color: var(--color-border);
   }
 
   body {
-    /* stylelint-disable-next-line at-rule-no-unknown */
-    @apply bg-background text-foreground;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 }
 
-/* Custom styles for e-commerce */
-.product-card {
-  /* stylelint-disable-next-line at-rule-no-unknown */
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
-}
-
-.btn-primary {
-  /* stylelint-disable-next-line at-rule-no-unknown */
-  @apply bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md font-medium transition-colors;
-}
-
-.btn-secondary {
-  /* stylelint-disable-next-line at-rule-no-unknown */
-  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-md font-medium transition-colors;
-}
-
-.input-field {
-  /* stylelint-disable-next-line at-rule-no-unknown */
-  @apply w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
-}
-
-.card {
-  /* stylelint-disable-next-line at-rule-no-unknown */
-  @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm;
-}
+/* Custom utility sınıflar kaldırıldı; Tailwind sınıflarını JSX içinde kullanın */

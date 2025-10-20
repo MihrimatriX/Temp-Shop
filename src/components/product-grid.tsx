@@ -11,7 +11,7 @@ interface ProductGridProps {
   categoryId?: number;
 }
 
-export function ProductGrid({ }: ProductGridProps) {
+export function ProductGrid({}: ProductGridProps) {
   const {
     loading,
     setProducts,
@@ -29,10 +29,10 @@ export function ProductGrid({ }: ProductGridProps) {
 
         const productService = new ProductService();
         const categoryService = new CategoryService();
-        
+
         const [productsResponse, categoriesResponse] = await Promise.all([
           productService.getProducts(),
-          categoryService.getCategories()
+          categoryService.getCategories(),
         ]);
 
         if (productsResponse.data.success) {

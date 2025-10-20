@@ -49,7 +49,7 @@ export default function AddressesPage() {
 
       const addressService = new AddressService();
       const response = await addressService.getUserAddresses(token);
-      
+
       if (response.data.success) {
         setAddresses(response.data.data);
       } else {

@@ -5,7 +5,8 @@ import { useState } from "react";
 import { Settings, Server, Database, Zap } from "lucide-react";
 
 export const BackendSwitch = () => {
-  const { config, setBackendType, setDotnetUrl, setSpringUrl } = useBackendStore();
+  const { config, setBackendType, setDotnetUrl, setSpringUrl } =
+    useBackendStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleBackendChange = (type: "dotnet" | "spring" | "mock") => {
@@ -60,12 +61,8 @@ export const BackendSwitch = () => {
         aria-label="Backend seçimi"
       >
         <Settings className="w-4 h-4" />
-        <span className="hidden sm:inline">
-          {getBackendLabel(config.type)}
-        </span>
-        <span className="sm:hidden">
-          {getBackendIcon(config.type)}
-        </span>
+        <span className="hidden sm:inline">{getBackendLabel(config.type)}</span>
+        <span className="sm:hidden">{getBackendIcon(config.type)}</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
@@ -87,11 +84,9 @@ export const BackendSwitch = () => {
             <h3 className="text-sm font-semibold text-gray-900">
               Backend Seçimi
             </h3>
-            <p className="text-xs text-gray-500 mt-1">
-              API backend'ini seçin
-            </p>
+            <p className="text-xs text-gray-500 mt-1">API backend'ini seçin</p>
           </div>
-          
+
           <div className="p-2">
             {(["dotnet", "spring", "mock"] as const).map((type) => (
               <button
@@ -103,11 +98,13 @@ export const BackendSwitch = () => {
                     : "hover:bg-gray-50"
                 }`}
               >
-                <div className={`p-2 rounded-lg ${
-                  config.type === type
-                    ? "bg-blue-100 text-blue-600"
-                    : "bg-gray-100 text-gray-600"
-                }`}>
+                <div
+                  className={`p-2 rounded-lg ${
+                    config.type === type
+                      ? "bg-blue-100 text-blue-600"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
                   {getBackendIcon(type)}
                 </div>
                 <div className="flex-1">
@@ -129,9 +126,11 @@ export const BackendSwitch = () => {
             <div className="text-xs text-gray-500">
               <div className="font-medium mb-1">Mevcut URL:</div>
               <div className="font-mono text-xs break-all">
-                {config.type === "dotnet" ? config.dotnetUrl : 
-                 config.type === "spring" ? config.springUrl : 
-                 "Mock Data"}
+                {config.type === "dotnet"
+                  ? config.dotnetUrl
+                  : config.type === "spring"
+                    ? config.springUrl
+                    : "Mock Data"}
               </div>
             </div>
           </div>
@@ -140,10 +139,7 @@ export const BackendSwitch = () => {
 
       {/* Overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
       )}
     </div>
   );

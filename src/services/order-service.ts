@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { ApiResponse, OrderDto, CreateOrderDto, UpdateOrderStatusDto } from "@/types";
+import {
+  ApiResponse,
+  OrderDto,
+  CreateOrderDto,
+  UpdateOrderStatusDto,
+} from "@/types";
 import { API_ENDPOINTS } from "@/config/api";
 import { useBackendStore } from "@/store/backend-store";
 
@@ -9,7 +14,9 @@ export class OrderService {
     return apiUrl + API_ENDPOINTS.ORDERS;
   }
 
-  async getUserOrders(token: string): Promise<AxiosResponse<ApiResponse<OrderDto[]>>> {
+  async getUserOrders(
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<OrderDto[]>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for orders
@@ -85,7 +92,10 @@ export class OrderService {
     });
   }
 
-  async getOrderById(id: number, token: string): Promise<AxiosResponse<ApiResponse<OrderDto>>> {
+  async getOrderById(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<OrderDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for single order
@@ -159,7 +169,10 @@ export class OrderService {
     });
   }
 
-  async createOrder(createOrderDto: CreateOrderDto, token: string): Promise<AxiosResponse<ApiResponse<OrderDto>>> {
+  async createOrder(
+    createOrderDto: CreateOrderDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<OrderDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for creating order
@@ -178,7 +191,10 @@ export class OrderService {
           unitPrice: 100,
           totalPrice: 100 * item.quantity,
         })),
-        totalAmount: createOrderDto.items.reduce((total, item) => total + (100 * item.quantity), 0),
+        totalAmount: createOrderDto.items.reduce(
+          (total, item) => total + 100 * item.quantity,
+          0
+        ),
         status: "Pending",
         shippingAddress: {
           id: createOrderDto.shippingAddressId,
@@ -231,7 +247,11 @@ export class OrderService {
     });
   }
 
-  async updateOrderStatus(id: number, updateOrderStatusDto: UpdateOrderStatusDto, token: string): Promise<AxiosResponse<ApiResponse<OrderDto>>> {
+  async updateOrderStatus(
+    id: number,
+    updateOrderStatusDto: UpdateOrderStatusDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<OrderDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for updating order status
@@ -300,12 +320,19 @@ export class OrderService {
       });
     }
 
-    return axios.put(`${this.getBaseUrl()}/${id}/status`, updateOrderStatusDto, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return axios.put(
+      `${this.getBaseUrl()}/${id}/status`,
+      updateOrderStatusDto,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   }
 
-  async cancelOrder(id: number, token: string): Promise<AxiosResponse<ApiResponse<string>>> {
+  async cancelOrder(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<string>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for cancelling order
@@ -322,8 +349,12 @@ export class OrderService {
       });
     }
 
-    return axios.put(`${this.getBaseUrl()}/${id}/cancel`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return axios.put(
+      `${this.getBaseUrl()}/${id}/cancel`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   }
 }

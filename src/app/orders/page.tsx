@@ -80,7 +80,7 @@ export default function OrdersPage() {
 
       const orderService = new OrderService();
       const response = await orderService.getUserOrders(token);
-      
+
       if (response.data.success) {
         setOrders(response.data.data);
       } else {
@@ -144,8 +144,12 @@ export default function OrdersPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Siparişlerim</h1>
-          <p className="text-gray-600">Siparişlerinizi görmek için giriş yapmanız gerekiyor.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Siparişlerim
+          </h1>
+          <p className="text-gray-600">
+            Siparişlerinizi görmek için giriş yapmanız gerekiyor.
+          </p>
         </div>
       </div>
     );
@@ -212,16 +216,24 @@ export default function OrdersPage() {
                     <h4 className="font-semibold mb-3">Sipariş Detayları</h4>
                     <div className="space-y-3">
                       {order.items.map((item) => (
-                        <div key={item.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div
+                          key={item.id}
+                          className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
+                        >
                           <img
-                            src={item.productImageUrl || "/placeholder-product.jpg"}
+                            src={
+                              item.productImageUrl || "/placeholder-product.jpg"
+                            }
                             alt={item.productName}
                             className="w-12 h-12 object-cover rounded"
                           />
                           <div className="flex-1">
-                            <h5 className="font-medium text-sm">{item.productName}</h5>
+                            <h5 className="font-medium text-sm">
+                              {item.productName}
+                            </h5>
                             <p className="text-xs text-gray-600">
-                              Adet: {item.quantity} × ₺{item.unitPrice.toFixed(2)}
+                              Adet: {item.quantity} × ₺
+                              {item.unitPrice.toFixed(2)}
                             </p>
                           </div>
                           <div className="text-sm font-medium">
@@ -241,10 +253,14 @@ export default function OrdersPage() {
                         Teslimat Adresi
                       </h4>
                       <div className="text-sm text-gray-600">
-                        <p className="font-medium">{order.shippingAddress.title}</p>
+                        <p className="font-medium">
+                          {order.shippingAddress.title}
+                        </p>
                         <p>{order.shippingAddress.fullAddress}</p>
                         <p>
-                          {order.shippingAddress.district}, {order.shippingAddress.city} {order.shippingAddress.postalCode}
+                          {order.shippingAddress.district},{" "}
+                          {order.shippingAddress.city}{" "}
+                          {order.shippingAddress.postalCode}
                         </p>
                         {order.shippingAddress.phoneNumber && (
                           <p>{order.shippingAddress.phoneNumber}</p>

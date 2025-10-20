@@ -27,7 +27,9 @@ export default function PaymentMethodsPage() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingMethod, setEditingMethod] = useState<PaymentMethod | null>(null);
+  const [editingMethod, setEditingMethod] = useState<PaymentMethod | null>(
+    null
+  );
   const [formData, setFormData] = useState({
     type: "credit_card" as "credit_card" | "debit_card" | "bank_transfer",
     cardNumber: "",
@@ -57,7 +59,7 @@ export default function PaymentMethodsPage() {
 
       const paymentMethodService = new PaymentMethodService();
       const response = await paymentMethodService.getUserPaymentMethods(token);
-      
+
       if (response.data.success) {
         setPaymentMethods(response.data.data);
       } else {
@@ -80,34 +82,47 @@ export default function PaymentMethodsPage() {
       }
 
       const paymentMethodService = new PaymentMethodService();
-      
+
       if (editingMethod) {
         // Update existing payment method
         const updateData = {
           ...formData,
-          expiryMonth: formData.expiryMonth ? parseInt(formData.expiryMonth) : undefined,
-          expiryYear: formData.expiryYear ? parseInt(formData.expiryYear) : undefined,
+          expiryMonth: formData.expiryMonth
+            ? parseInt(formData.expiryMonth)
+            : undefined,
+          expiryYear: formData.expiryYear
+            ? parseInt(formData.expiryYear)
+            : undefined,
         };
         const response = await paymentMethodService.updatePaymentMethod(
           editingMethod.id,
           updateData,
           token
         );
-        
+
         if (response.data.success) {
-          setPaymentMethods(paymentMethods.map(method => 
-            method.id === editingMethod.id ? response.data.data : method
-          ));
+          setPaymentMethods(
+            paymentMethods.map((method) =>
+              method.id === editingMethod.id ? response.data.data : method
+            )
+          );
         }
       } else {
         // Create new payment method
         const createData = {
           ...formData,
-          expiryMonth: formData.expiryMonth ? parseInt(formData.expiryMonth) : undefined,
-          expiryYear: formData.expiryYear ? parseInt(formData.expiryYear) : undefined,
+          expiryMonth: formData.expiryMonth
+            ? parseInt(formData.expiryMonth)
+            : undefined,
+          expiryYear: formData.expiryYear
+            ? parseInt(formData.expiryYear)
+            : undefined,
         };
-        const response = await paymentMethodService.createPaymentMethod(createData, token);
-        
+        const response = await paymentMethodService.createPaymentMethod(
+          createData,
+          token
+        );
+
         if (response.data.success) {
           setPaymentMethods([...paymentMethods, response.data.data]);
         }
@@ -160,10 +175,13 @@ export default function PaymentMethodsPage() {
       }
 
       const paymentMethodService = new PaymentMethodService();
-      const response = await paymentMethodService.deletePaymentMethod(id, token);
-      
+      const response = await paymentMethodService.deletePaymentMethod(
+        id,
+        token
+      );
+
       if (response.data.success) {
-        setPaymentMethods(paymentMethods.filter(method => method.id !== id));
+        setPaymentMethods(paymentMethods.filter((method) => method.id !== id));
       }
     } catch (error) {
       console.error("Error deleting payment method:", error);
@@ -179,13 +197,18 @@ export default function PaymentMethodsPage() {
       }
 
       const paymentMethodService = new PaymentMethodService();
-      const response = await paymentMethodService.setDefaultPaymentMethod(id, token);
-      
+      const response = await paymentMethodService.setDefaultPaymentMethod(
+        id,
+        token
+      );
+
       if (response.data.success) {
-        setPaymentMethods(paymentMethods.map(method => ({
-          ...method,
-          isDefault: method.id === id
-        })));
+        setPaymentMethods(
+          paymentMethods.map((method) => ({
+            ...method,
+            isDefault: method.id === id,
+          }))
+        );
       }
     } catch (error) {
       console.error("Error setting default payment method:", error);
@@ -235,8 +258,12 @@ export default function PaymentMethodsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Ödeme Yöntemleri</h1>
-          <p className="text-gray-600">Ödeme yöntemlerinizi görmek için giriş yapmanız gerekiyor.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Ödeme Yöntemleri
+          </h1>
+          <p className="text-gray-600">
+            Ödeme yöntemlerinizi görmek için giriş yapmanız gerekiyor.
+          </p>
         </div>
       </div>
     );
@@ -256,7 +283,9 @@ export default function PaymentMethodsPage() {
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>
-              {editingMethod ? "Ödeme Yöntemini Düzenle" : "Yeni Ödeme Yöntemi Ekle"}
+              {editingMethod
+                ? "Ödeme Yöntemini Düzenle"
+                : "Yeni Ödeme Yöntemi Ekle"}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -266,7 +295,9 @@ export default function PaymentMethodsPage() {
                 <select
                   id="type"
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, type: e.target.value as any })
+                  }
                   className="w-full p-2 border border-gray-300 rounded-md"
                   title="Ödeme yöntemi türü"
                 >
@@ -283,7 +314,9 @@ export default function PaymentMethodsPage() {
                     <Input
                       id="bankName"
                       value={formData.bankName}
-                      onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, bankName: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -292,7 +325,12 @@ export default function PaymentMethodsPage() {
                     <Input
                       id="accountNumber"
                       value={formData.accountNumber}
-                      onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          accountNumber: e.target.value,
+                        })
+                      }
                       required
                     />
                   </div>
@@ -301,7 +339,12 @@ export default function PaymentMethodsPage() {
                     <Input
                       id="accountHolderName"
                       value={formData.accountHolderName}
-                      onChange={(e) => setFormData({ ...formData, accountHolderName: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          accountHolderName: e.target.value,
+                        })
+                      }
                       required
                     />
                   </div>
@@ -313,7 +356,9 @@ export default function PaymentMethodsPage() {
                     <Input
                       id="cardNumber"
                       value={formData.cardNumber}
-                      onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, cardNumber: e.target.value })
+                      }
                       placeholder="1234 5678 9012 3456"
                       required
                     />
@@ -323,7 +368,12 @@ export default function PaymentMethodsPage() {
                     <Input
                       id="cardHolderName"
                       value={formData.cardHolderName}
-                      onChange={(e) => setFormData({ ...formData, cardHolderName: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          cardHolderName: e.target.value,
+                        })
+                      }
                       required
                     />
                   </div>
@@ -336,7 +386,12 @@ export default function PaymentMethodsPage() {
                         min="1"
                         max="12"
                         value={formData.expiryMonth}
-                        onChange={(e) => setFormData({ ...formData, expiryMonth: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            expiryMonth: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
@@ -347,7 +402,12 @@ export default function PaymentMethodsPage() {
                         type="number"
                         min={new Date().getFullYear()}
                         value={formData.expiryYear}
-                        onChange={(e) => setFormData({ ...formData, expiryYear: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            expiryYear: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
@@ -360,11 +420,15 @@ export default function PaymentMethodsPage() {
                   type="checkbox"
                   id="isDefault"
                   checked={formData.isDefault}
-                  onChange={(e) => setFormData({ ...formData, isDefault: e.target.checked })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, isDefault: e.target.checked })
+                  }
                   className="rounded"
                   title="Varsayılan ödeme yöntemi"
                 />
-                <Label htmlFor="isDefault">Varsayılan ödeme yöntemi olarak ayarla</Label>
+                <Label htmlFor="isDefault">
+                  Varsayılan ödeme yöntemi olarak ayarla
+                </Label>
               </div>
 
               <div className="flex space-x-2">
@@ -419,7 +483,9 @@ export default function PaymentMethodsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <span className="text-2xl">{getPaymentMethodIcon(method.type)}</span>
+                    <span className="text-2xl">
+                      {getPaymentMethodIcon(method.type)}
+                    </span>
                     <div>
                       <CardTitle className="text-lg">
                         {getPaymentMethodName(method.type)}
@@ -454,15 +520,28 @@ export default function PaymentMethodsPage() {
               <CardContent>
                 {method.type === "bank_transfer" ? (
                   <div className="space-y-2 text-sm">
-                    <p><strong>Banka:</strong> {method.bankName}</p>
-                    <p><strong>Hesap:</strong> {method.accountNumber}</p>
-                    <p><strong>Sahibi:</strong> {method.accountHolderName}</p>
+                    <p>
+                      <strong>Banka:</strong> {method.bankName}
+                    </p>
+                    <p>
+                      <strong>Hesap:</strong> {method.accountNumber}
+                    </p>
+                    <p>
+                      <strong>Sahibi:</strong> {method.accountHolderName}
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-2 text-sm">
-                    <p><strong>Kart:</strong> {method.cardNumber}</p>
-                    <p><strong>Sahibi:</strong> {method.cardHolderName}</p>
-                    <p><strong>Son Kullanma:</strong> {method.expiryMonth}/{method.expiryYear}</p>
+                    <p>
+                      <strong>Kart:</strong> {method.cardNumber}
+                    </p>
+                    <p>
+                      <strong>Sahibi:</strong> {method.cardHolderName}
+                    </p>
+                    <p>
+                      <strong>Son Kullanma:</strong> {method.expiryMonth}/
+                      {method.expiryYear}
+                    </p>
                   </div>
                 )}
 

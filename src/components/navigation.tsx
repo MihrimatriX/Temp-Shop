@@ -64,27 +64,35 @@ export function Navigation() {
 
   // Dinamik mega menu data oluştur
   const getMegaMenuData = (categoryName: string) => {
-    const categorySubCategories = subCategories.filter(sc => sc.categoryName === categoryName);
-    
+    const categorySubCategories = subCategories.filter(
+      (sc) => sc.categoryName === categoryName
+    );
+
     if (categorySubCategories.length === 0) return null;
-    
+
     // SubCategory'leri 3 sütuna böl
     const columns = [];
     const itemsPerColumn = Math.ceil(categorySubCategories.length / 3);
-    
+
     for (let i = 0; i < 3; i++) {
       const startIndex = i * itemsPerColumn;
-      const endIndex = Math.min(startIndex + itemsPerColumn, categorySubCategories.length);
-      const columnSubCategories = categorySubCategories.slice(startIndex, endIndex);
-      
+      const endIndex = Math.min(
+        startIndex + itemsPerColumn,
+        categorySubCategories.length
+      );
+      const columnSubCategories = categorySubCategories.slice(
+        startIndex,
+        endIndex
+      );
+
       if (columnSubCategories.length > 0) {
         columns.push({
           title: columnSubCategories[0].subCategoryName,
-          items: columnSubCategories.map(sc => sc.subCategoryName)
+          items: columnSubCategories.map((sc) => sc.subCategoryName),
         });
       }
     }
-    
+
     return { columns };
   };
 
@@ -169,7 +177,7 @@ export function Navigation() {
             {/* User Actions */}
             <div className="flex items-center space-x-4">
               <BackendSwitch />
-              
+
               <Button variant="ghost" className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
                 <span className="hidden md:inline">Konum</span>
@@ -229,12 +237,12 @@ export function Navigation() {
                 onMouseLeave={() => setHoveredCategory(null)}
               >
                 <Link href={category.href}>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className={`text-sm whitespace-nowrap ${
-                      hoveredCategory === category.name 
-                        ? 'text-orange-500 border-b-2 border-orange-500' 
-                        : ''
+                      hoveredCategory === category.name
+                        ? "text-orange-500 border-b-2 border-orange-500"
+                        : ""
                     }`}
                   >
                     {category.name}
@@ -243,31 +251,36 @@ export function Navigation() {
                 </Link>
 
                 {/* Mega Menu */}
-                {hoveredCategory === category.name && getMegaMenuData(category.name) && (
-                  <div className="absolute top-full left-0 w-screen bg-white border-t shadow-lg z-50">
-                    <div className="container mx-auto px-4 py-6">
-                      <div className="grid grid-cols-4 gap-8">
-                        {getMegaMenuData(category.name)?.columns.map((column, index) => (
-                          <div key={index} className="space-y-4">
-                            <h3 className="font-bold text-orange-500 text-lg">{column.title}</h3>
-                            <ul className="space-y-2">
-                              {column.items.map((item, itemIndex) => (
-                                <li key={itemIndex}>
-                                  <Link 
-                                    href={`/categories/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                                    className="text-gray-700 hover:text-orange-500 transition-colors"
-                                  >
-                                    {item}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
+                {hoveredCategory === category.name &&
+                  getMegaMenuData(category.name) && (
+                    <div className="absolute top-full left-0 w-screen bg-white border-t shadow-lg z-50">
+                      <div className="container mx-auto px-4 py-6">
+                        <div className="grid grid-cols-4 gap-8">
+                          {getMegaMenuData(category.name)?.columns.map(
+                            (column, index) => (
+                              <div key={index} className="space-y-4">
+                                <h3 className="font-bold text-orange-500 text-lg">
+                                  {column.title}
+                                </h3>
+                                <ul className="space-y-2">
+                                  {column.items.map((item, itemIndex) => (
+                                    <li key={itemIndex}>
+                                      <Link
+                                        href={`/categories/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                                        className="text-gray-700 hover:text-orange-500 transition-colors"
+                                      >
+                                        {item}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             ))}
           </div>

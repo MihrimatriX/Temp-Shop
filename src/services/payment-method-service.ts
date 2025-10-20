@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { ApiResponse, PaymentMethodDto, CreatePaymentMethodDto, UpdatePaymentMethodDto } from "@/types";
+import {
+  ApiResponse,
+  PaymentMethodDto,
+  CreatePaymentMethodDto,
+  UpdatePaymentMethodDto,
+} from "@/types";
 import { API_ENDPOINTS } from "@/config/api";
 import { useBackendStore } from "@/store/backend-store";
 
@@ -9,7 +14,9 @@ export class PaymentMethodService {
     return apiUrl + API_ENDPOINTS.PAYMENT_METHODS;
   }
 
-  async getUserPaymentMethods(token: string): Promise<AxiosResponse<ApiResponse<PaymentMethodDto[]>>> {
+  async getUserPaymentMethods(
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<PaymentMethodDto[]>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for payment methods
@@ -60,7 +67,10 @@ export class PaymentMethodService {
     });
   }
 
-  async getPaymentMethodById(id: number, token: string): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
+  async getPaymentMethodById(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for single payment method
@@ -92,20 +102,27 @@ export class PaymentMethodService {
     });
   }
 
-  async createPaymentMethod(createPaymentMethodDto: CreatePaymentMethodDto, token: string): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
+  async createPaymentMethod(
+    createPaymentMethodDto: CreatePaymentMethodDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for creating payment method
       const mockPaymentMethod: PaymentMethodDto = {
         id: Date.now(),
         type: createPaymentMethodDto.type,
-        cardNumber: createPaymentMethodDto.cardNumber ? "**** **** **** " + createPaymentMethodDto.cardNumber.slice(-4) : undefined,
+        cardNumber: createPaymentMethodDto.cardNumber
+          ? "**** **** **** " + createPaymentMethodDto.cardNumber.slice(-4)
+          : undefined,
         cardHolderName: createPaymentMethodDto.cardHolderName,
         expiryMonth: createPaymentMethodDto.expiryMonth,
         expiryYear: createPaymentMethodDto.expiryYear,
         isDefault: createPaymentMethodDto.isDefault,
         bankName: createPaymentMethodDto.bankName,
-        accountNumber: createPaymentMethodDto.accountNumber ? "****" + createPaymentMethodDto.accountNumber.slice(-4) : undefined,
+        accountNumber: createPaymentMethodDto.accountNumber
+          ? "****" + createPaymentMethodDto.accountNumber.slice(-4)
+          : undefined,
         accountHolderName: createPaymentMethodDto.accountHolderName,
       };
 
@@ -127,20 +144,28 @@ export class PaymentMethodService {
     });
   }
 
-  async updatePaymentMethod(id: number, updatePaymentMethodDto: UpdatePaymentMethodDto, token: string): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
+  async updatePaymentMethod(
+    id: number,
+    updatePaymentMethodDto: UpdatePaymentMethodDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for updating payment method
       const mockPaymentMethod: PaymentMethodDto = {
         id: id,
         type: updatePaymentMethodDto.type || "credit_card",
-        cardNumber: updatePaymentMethodDto.cardNumber ? "**** **** **** " + updatePaymentMethodDto.cardNumber.slice(-4) : "**** **** **** 1234",
+        cardNumber: updatePaymentMethodDto.cardNumber
+          ? "**** **** **** " + updatePaymentMethodDto.cardNumber.slice(-4)
+          : "**** **** **** 1234",
         cardHolderName: updatePaymentMethodDto.cardHolderName || "Ahmet Yılmaz",
         expiryMonth: updatePaymentMethodDto.expiryMonth || 12,
         expiryYear: updatePaymentMethodDto.expiryYear || 2026,
         isDefault: updatePaymentMethodDto.isDefault ?? true,
         bankName: updatePaymentMethodDto.bankName,
-        accountNumber: updatePaymentMethodDto.accountNumber ? "****" + updatePaymentMethodDto.accountNumber.slice(-4) : undefined,
+        accountNumber: updatePaymentMethodDto.accountNumber
+          ? "****" + updatePaymentMethodDto.accountNumber.slice(-4)
+          : undefined,
         accountHolderName: updatePaymentMethodDto.accountHolderName,
       };
 
@@ -162,7 +187,10 @@ export class PaymentMethodService {
     });
   }
 
-  async deletePaymentMethod(id: number, token: string): Promise<AxiosResponse<ApiResponse<string>>> {
+  async deletePaymentMethod(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<string>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for deleting payment method
@@ -184,7 +212,10 @@ export class PaymentMethodService {
     });
   }
 
-  async setDefaultPaymentMethod(id: number, token: string): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
+  async setDefaultPaymentMethod(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<PaymentMethodDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for setting default payment method
@@ -211,8 +242,12 @@ export class PaymentMethodService {
       });
     }
 
-    return axios.put(`${this.getBaseUrl()}/${id}/default`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return axios.put(
+      `${this.getBaseUrl()}/${id}/default`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   }
 }

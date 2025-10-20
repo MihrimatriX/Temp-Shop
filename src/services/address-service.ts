@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { ApiResponse, AddressDto, CreateAddressDto, UpdateAddressDto } from "@/types";
+import {
+  ApiResponse,
+  AddressDto,
+  CreateAddressDto,
+  UpdateAddressDto,
+} from "@/types";
 import { API_ENDPOINTS } from "@/config/api";
 import { useBackendStore } from "@/store/backend-store";
 
@@ -9,7 +14,9 @@ export class AddressService {
     return apiUrl + API_ENDPOINTS.ADDRESSES;
   }
 
-  async getUserAddresses(token: string): Promise<AxiosResponse<ApiResponse<AddressDto[]>>> {
+  async getUserAddresses(
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<AddressDto[]>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for addresses
@@ -54,7 +61,10 @@ export class AddressService {
     });
   }
 
-  async getAddressById(id: number, token: string): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
+  async getAddressById(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for single address
@@ -87,7 +97,10 @@ export class AddressService {
     });
   }
 
-  async createAddress(createAddressDto: CreateAddressDto, token: string): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
+  async createAddress(
+    createAddressDto: CreateAddressDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for creating address
@@ -120,14 +133,20 @@ export class AddressService {
     });
   }
 
-  async updateAddress(id: number, updateAddressDto: UpdateAddressDto, token: string): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
+  async updateAddress(
+    id: number,
+    updateAddressDto: UpdateAddressDto,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for updating address
       const mockAddress: AddressDto = {
         id: id,
         title: updateAddressDto.title || "Ev",
-        fullAddress: updateAddressDto.fullAddress || "Atatürk Mahallesi, Cumhuriyet Caddesi No:123 Daire:5",
+        fullAddress:
+          updateAddressDto.fullAddress ||
+          "Atatürk Mahallesi, Cumhuriyet Caddesi No:123 Daire:5",
         city: updateAddressDto.city || "İstanbul",
         district: updateAddressDto.district || "Kadıköy",
         postalCode: updateAddressDto.postalCode || "34710",
@@ -153,7 +172,10 @@ export class AddressService {
     });
   }
 
-  async deleteAddress(id: number, token: string): Promise<AxiosResponse<ApiResponse<string>>> {
+  async deleteAddress(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<string>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for deleting address
@@ -175,7 +197,10 @@ export class AddressService {
     });
   }
 
-  async setDefaultAddress(id: number, token: string): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
+  async setDefaultAddress(
+    id: number,
+    token: string
+  ): Promise<AxiosResponse<ApiResponse<AddressDto>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
       // Mock implementation for setting default address
@@ -203,8 +228,12 @@ export class AddressService {
       });
     }
 
-    return axios.put(`${this.getBaseUrl()}/${id}/default`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return axios.put(
+      `${this.getBaseUrl()}/${id}/default`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   }
 }

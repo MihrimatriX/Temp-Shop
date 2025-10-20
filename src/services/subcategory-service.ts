@@ -28,10 +28,14 @@ export class SubCategoryService {
     return axios.get(this.getBaseUrl());
   }
 
-  async getSubCategoriesByCategoryId(categoryId: number): Promise<AxiosResponse<ApiResponse<SubCategory[]>>> {
+  async getSubCategoriesByCategoryId(
+    categoryId: number
+  ): Promise<AxiosResponse<ApiResponse<SubCategory[]>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
-      const filteredSubCategories = mockSubCategories.filter(sc => sc.categoryId === categoryId);
+      const filteredSubCategories = mockSubCategories.filter(
+        (sc) => sc.categoryId === categoryId
+      );
       return Promise.resolve({
         data: {
           success: true,
@@ -47,10 +51,12 @@ export class SubCategoryService {
     return axios.get(`${this.getBaseUrl()}/category/${categoryId}`);
   }
 
-  async getSubCategoryById(id: number): Promise<AxiosResponse<ApiResponse<SubCategory>>> {
+  async getSubCategoryById(
+    id: number
+  ): Promise<AxiosResponse<ApiResponse<SubCategory>>> {
     const backendType = useBackendStore.getState().config.type;
     if (backendType === "mock") {
-      const subCategory = mockSubCategories.find(sc => sc.id === id);
+      const subCategory = mockSubCategories.find((sc) => sc.id === id);
       if (!subCategory) {
         return Promise.reject(new Error("SubCategory not found"));
       }
