@@ -1,8 +1,25 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 import { ProductGrid } from "@/components/product-grid";
 import { SearchBar } from "@/components/search-bar";
 import { CategoryFilter } from "@/components/category-filter";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+
+export const metadata: Metadata = {
+  title: "Tüm Ürünler - TempShop",
+  description: "TempShop'ta binlerce ürün arasından seçim yapın. Elektronik, moda, ev & yaşam, spor ve daha fazla kategoride en kaliteli ürünler.",
+  keywords: "tüm ürünler, elektronik, moda, ev yaşam, spor, TempShop, online alışveriş",
+  robots: "index, follow",
+  openGraph: {
+    title: "Tüm Ürünler - TempShop",
+    description: "TempShop'ta binlerce ürün arasından seçim yapın. En kaliteli ürünler, uygun fiyatlar.",
+    type: "website",
+    locale: "tr_TR",
+  },
+  alternates: {
+    canonical: "https://tempshop.com/products",
+  },
+};
 
 export default function ProductsPage() {
   return (

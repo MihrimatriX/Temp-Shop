@@ -2,13 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
 import { CartModal } from "@/components/cart-modal";
 import { AccountModal } from "@/components/account-modal";
 import { BackendSwitch } from "@/components/backend-switch";
+import { LocationModal } from "@/components/location-modal";
+import { SearchPopup } from "@/components/search-popup";
+import { MobileNavigation } from "@/components/mobile-navigation";
 import { SubCategoryService } from "@/services/subcategory-service";
 import { SubCategory } from "@/types";
 import {
@@ -21,13 +26,18 @@ import {
 } from "lucide-react";
 
 export function Navigation() {
+  const router = useRouter();
   const { totalItems } = useCartStore();
   const { isAuthenticated, user } = useAuthStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("İstanbul");
 
   // SubCategory'leri yükle
   useEffect(() => {
@@ -48,6 +58,23 @@ export function Navigation() {
 
     loadSubCategories();
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+      setIsSearchOpen(false);
+    }
+  };
+
+  const handleSearchInputFocus = () => {
+    setIsSearchOpen(true);
+  };
+
+  const handleLocationSelect = (location: any) => {
+    setSelectedLocation(location.fullAddress);
+    setIsLocationOpen(false);
+  };
 
   const categories = [
     { name: "Elektronik", href: "/categories/elektronik" },
@@ -143,54 +170,73 @@ export function Navigation() {
         </div>
       </div>
 
-      {/* Main Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center">
-                <span className="text-white font-bold text-sm">E</span>
-              </div>
-              <div>
-                <span className="font-bold text-xl text-purple-600">
-                  E-Ticaret
-                </span>
-                <div className="text-xs text-muted-foreground">
-                  Premium'u keşfet
-                </div>
-              </div>
-            </Link>
+             {/* Main Header */}
+             <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+               <div className="container mx-auto px-4">
+                 <div className="flex h-16 items-center justify-between">
+                   {/* Mobile Menu & Logo */}
+                   <div className="flex items-center gap-4">
+                     <MobileNavigation
+                       selectedLocation={selectedLocation}
+                       onLocationClick={() => setIsLocationOpen(true)}
+                       searchTerm={searchTerm}
+                       onSearchTermChange={setSearchTerm}
+                       onSearchSubmit={handleSearch}
+                       onSearchFocus={handleSearchInputFocus}
+                     />
+                     <Link href="/" className="flex items-center space-x-2">
+                       <div className="w-8 h-8 bg-purple-600 rounded-md flex items-center justify-center">
+                         <span className="text-white font-bold text-sm">E</span>
+                       </div>
+                       <div>
+                         <span className="font-bold text-xl text-purple-600">
+                           E-Ticaret
+                         </span>
+                         <div className="text-xs text-muted-foreground">
+                           Premium'u keşfet
+                         </div>
+                       </div>
+                     </Link>
+                   </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 max-w-2xl mx-8">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Ürün, kategori veya marka ara"
-                  className="w-full pl-10 pr-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-              </div>
-            </div>
+                   {/* Search Bar - Hidden on mobile */}
+                   <div className="hidden md:flex flex-1 max-w-2xl mx-8">
+                     <form onSubmit={handleSearch} className="relative w-full">
+                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                       <Input
+                         type="text"
+                         value={searchTerm}
+                         onChange={(e) => setSearchTerm(e.target.value)}
+                         onFocus={handleSearchInputFocus}
+                         placeholder="Ürün, kategori veya marka ara"
+                         className="w-full pl-10 pr-4 py-3"
+                       />
+                     </form>
+                   </div>
 
             {/* User Actions */}
-            <div className="flex items-center space-x-4">
-              <BackendSwitch />
+            <div className="flex items-center space-x-2 md:space-x-4">
+              <div className="hidden lg:block">
+                <BackendSwitch />
+              </div>
 
-              <Button variant="ghost" className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                className="hidden md:flex items-center gap-2"
+                onClick={() => setIsLocationOpen(true)}
+              >
                 <MapPin className="w-4 h-4" />
-                <span className="hidden md:inline">Konum</span>
+                <span>{selectedLocation}</span>
                 <ChevronDown className="w-3 h-3" />
               </Button>
 
               <Button
                 variant="ghost"
-                className="flex items-center gap-2"
+                className="hidden md:flex items-center gap-2"
                 onClick={() => setIsAccountOpen(true)}
               >
                 <User className="w-4 h-4" />
-                <span className="hidden md:inline">
+                <span>
                   {isAuthenticated ? `Hesabım ${user?.firstName}` : "Hesabım"}
                 </span>
                 <ChevronDown className="w-3 h-3" />
@@ -217,8 +263,8 @@ export function Navigation() {
         </div>
       </header>
 
-      {/* Category Navigation */}
-      <nav className="bg-white border-b relative">
+      {/* Category Navigation - Hidden on mobile */}
+      <nav className="hidden md:block bg-white border-b relative">
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 py-3 overflow-x-auto scrollbar-hide">
             <Button
@@ -287,12 +333,23 @@ export function Navigation() {
         </div>
       </nav>
 
-      {/* Modals */}
-      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      <AccountModal
-        isOpen={isAccountOpen}
-        onClose={() => setIsAccountOpen(false)}
-      />
+             {/* Modals */}
+             <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+             <AccountModal
+               isOpen={isAccountOpen}
+               onClose={() => setIsAccountOpen(false)}
+             />
+             <LocationModal
+               isOpen={isLocationOpen}
+               onClose={() => setIsLocationOpen(false)}
+               onLocationSelect={handleLocationSelect}
+             />
+             <SearchPopup
+               isOpen={isSearchOpen}
+               onClose={() => setIsSearchOpen(false)}
+               searchTerm={searchTerm}
+               onSearchTermChange={setSearchTerm}
+             />
     </>
   );
 }

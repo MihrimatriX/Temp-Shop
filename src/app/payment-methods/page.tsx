@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2, Edit, Plus, CreditCard, Star } from "lucide-react";
 import { PaymentMethodService } from "@/services/payment-method-service";
 
@@ -292,19 +293,21 @@ export default function PaymentMethodsPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <Label htmlFor="type">Ödeme Yöntemi Türü</Label>
-                <select
-                  id="type"
+                <Select
                   value={formData.type}
-                  onChange={(e) =>
-                    setFormData({ ...formData, type: e.target.value as any })
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, type: value as any })
                   }
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  title="Ödeme yöntemi türü"
                 >
-                  <option value="credit_card">Kredi Kartı</option>
-                  <option value="debit_card">Banka Kartı</option>
-                  <option value="bank_transfer">Havale/EFT</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Ödeme yöntemi seçin" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="credit_card">Kredi Kartı</SelectItem>
+                    <SelectItem value="debit_card">Banka Kartı</SelectItem>
+                    <SelectItem value="bank_transfer">Havale/EFT</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               {formData.type === "bank_transfer" ? (

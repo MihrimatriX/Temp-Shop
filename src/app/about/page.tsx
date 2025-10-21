@@ -13,9 +13,19 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Hakkımızda - E-Ticaret Sitesi",
-  description:
-    "E-ticaret sitemiz hakkında bilgi edinin. Misyonumuz, vizyonumuz ve değerlerimiz.",
+  title: "Hakkımızda - TempShop",
+  description: "TempShop hakkında bilgi edinin. Misyonumuz, vizyonumuz ve değerlerimiz. 2020'den beri müşteri memnuniyetini ön planda tutan e-ticaret platformu.",
+  keywords: "hakkımızda, TempShop, misyon, vizyon, değerler, e-ticaret, müşteri memnuniyeti",
+  robots: "index, follow",
+  openGraph: {
+    title: "Hakkımızda - TempShop",
+    description: "TempShop hakkında bilgi edinin. Misyonumuz, vizyonumuz ve değerlerimiz.",
+    type: "website",
+    locale: "tr_TR",
+  },
+  alternates: {
+    canonical: "https://tempshop.com/about",
+  },
 };
 
 const stats = [

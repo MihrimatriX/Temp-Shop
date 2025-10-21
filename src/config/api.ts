@@ -10,6 +10,21 @@ export const getApiUrl = (): string => {
   return process.env.NEXT_PUBLIC_DOTNET_API_URL || "http://localhost:5000/api";
 };
 
+export const getEnvironmentApiUrl = (): string => {
+  if (typeof window === 'undefined') return '';
+  
+  const backendType = process.env.NEXT_PUBLIC_BACKEND_TYPE || 'mock';
+  
+  switch (backendType) {
+    case 'dotnet':
+      return process.env.NEXT_PUBLIC_API_DOTNET_URL || 'http://localhost:5000/api';
+    case 'spring':
+      return process.env.NEXT_PUBLIC_API_SPRING_URL || 'http://localhost:8080/api';
+    default:
+      return '';
+  }
+};
+
 // Backend türüne göre endpoint'leri döndüren fonksiyonlar
 export const getProductEndpoint = () => {
   if (typeof window === "undefined") return "/Product"; // SSR için default

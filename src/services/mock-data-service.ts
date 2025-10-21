@@ -6,374 +6,199 @@ import {
   Review,
   ProductReviewSummary,
 } from "@/types";
+import {
+  extendedCategories,
+  extendedSubCategories,
+  extendedCampaigns,
+  generateExtendedProducts,
+  generateExtendedReviews,
+  generateExtendedReviewSummaries,
+} from "@/data/mock-data-extended";
 
-// Mock Products
-export const mockProducts: Product[] = [
-  {
-    id: 1,
-    productName: "Premium Laptop",
-    unitPrice: 25000,
-    unitInStock: 15,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description:
-      "Yüksek performanslı laptop - Intel i7 işlemci, 16GB RAM, 512GB SSD",
-    imageUrl: "https://picsum.photos/600/400?random=1",
-    discount: 10,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    productName: "Wireless Headphones",
-    unitPrice: 1200,
-    unitInStock: 50,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "Bluetooth kulaklık - 30 saat pil ömrü, gürültü engelleme",
-    imageUrl: "https://picsum.photos/600/400?random=2",
-    discount: 15,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    productName: "Smartphone",
-    unitPrice: 18000,
-    unitInStock: 25,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "Son model akıllı telefon - 128GB depolama, çift kamera",
-    imageUrl: "https://picsum.photos/600/400?random=3",
-    discount: 5,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 4,
-    productName: "Gaming Mouse",
-    unitPrice: 800,
-    unitInStock: 100,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "Profesyonel oyun faresi - 16000 DPI, RGB aydınlatma",
-    imageUrl: "https://picsum.photos/600/400?random=4",
-    discount: 20,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 5,
-    productName: "Mechanical Keyboard",
-    unitPrice: 1500,
-    unitInStock: 75,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "Mekanik klavye - Cherry MX switches, RGB aydınlatma",
-    imageUrl: "https://picsum.photos/600/400?random=5",
-    discount: 12,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 6,
-    productName: 'Monitor 27"',
-    unitPrice: 3500,
-    unitInStock: 30,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "4K monitör - 27 inç, 144Hz yenileme hızı",
-    imageUrl: "https://picsum.photos/600/400?random=6",
-    discount: 8,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 7,
-    productName: "Tablet",
-    unitPrice: 8000,
-    unitInStock: 40,
-    quantityPerUnit: "1 adet",
-    category: { id: 1, categoryName: "Elektronik", isActive: true },
-    description: "10 inç tablet - 64GB depolama, Wi-Fi + 4G",
-    imageUrl: "https://picsum.photos/600/400?random=7",
-    discount: 18,
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+// Mock Products - Genişletilmiş veri kullanılıyor
+export const mockProducts: Product[] = generateExtendedProducts();
 
-// Mock Categories
-export const mockCategories: Category[] = [
-  {
-    id: 1,
-    categoryName: "Elektronik",
-    description: "Telefon, bilgisayar, tablet ve diğer elektronik ürünler",
-    imageUrl: "https://picsum.photos/300/200?random=10",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    categoryName: "Moda",
-    description: "Giyim, ayakkabı, çanta ve aksesuar",
-    imageUrl: "https://picsum.photos/300/200?random=11",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    categoryName: "Ev & Yaşam",
-    description: "Ev dekorasyonu, mutfak, banyo ve yaşam ürünleri",
-    imageUrl: "https://picsum.photos/300/200?random=12",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 4,
-    categoryName: "Spor & Outdoor",
-    description: "Spor giyim, fitness, outdoor ve kamp ürünleri",
-    imageUrl: "https://picsum.photos/300/200?random=13",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 5,
-    categoryName: "Anne & Bebek",
-    description: "Bebek giyim, oyuncak, bakım ürünleri",
-    imageUrl: "https://picsum.photos/300/200?random=14",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 6,
-    categoryName: "Kozmetik & Kişisel Bakım",
-    description: "Makyaj, cilt bakımı, parfüm ve kişisel bakım",
-    imageUrl: "https://picsum.photos/300/200?random=15",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+// Mock Categories - Genişletilmiş veri kullanılıyor
+export const mockCategories: Category[] = extendedCategories;
 
-// Mock SubCategories
-export const mockSubCategories: SubCategory[] = [
-  {
-    id: 1,
-    subCategoryName: "Laptop",
-    description: "Dizüstü bilgisayarlar",
-    categoryId: 1,
-    categoryName: "Elektronik",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    subCategoryName: "Telefon",
-    description: "Akıllı telefonlar",
-    categoryId: 1,
-    categoryName: "Elektronik",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    subCategoryName: "Aksesuar",
-    description: "Telefon ve bilgisayar aksesuarları",
-    categoryId: 1,
-    categoryName: "Elektronik",
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+// Mock SubCategories - Genişletilmiş veri kullanılıyor
+export const mockSubCategories: SubCategory[] = extendedSubCategories;
 
-// Mock Campaigns
-export const mockCampaigns: Campaign[] = [
-  {
-    id: 1,
-    title: "Elektronik Ürünlerde Büyük İndirim",
-    subtitle: "Tüm elektronik ürünlerde %30'a varan indirimler",
-    description: "En sevilen elektronik ürünlerde sınırlı süre indirim fırsatı",
-    discount: 30,
-    imageUrl: "https://picsum.photos/800/400?random=20",
-    backgroundColor: "bg-gradient-to-r from-blue-600 to-purple-600",
-    timeLeft: "5 gün kaldı",
-    buttonText: "Hemen Keşfet",
-    buttonHref: "/categories/elektronik",
-    isActive: true,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    title: "Moda Fırsatları",
-    subtitle: "Yeni sezon koleksiyonunda %25 indirim",
-    description: "En trend moda ürünlerinde özel fiyatlar",
-    discount: 25,
-    imageUrl: "https://picsum.photos/800/400?random=21",
-    backgroundColor: "bg-gradient-to-r from-pink-600 to-red-600",
-    timeLeft: "3 gün kaldı",
-    buttonText: "Alışverişe Başla",
-    buttonHref: "/categories/moda",
-    isActive: true,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+// Mock Campaigns - Genişletilmiş veri kullanılıyor
+export const mockCampaigns: Campaign[] = extendedCampaigns;
 
-// Mock Reviews
-export const mockReviews: Review[] = [
-  {
-    id: 1,
-    productId: 1,
-    userId: 1,
-    userName: "Ahmet Yılmaz",
-    rating: 5,
-    comment: "Harika bir ürün! Kesinlikle tavsiye ederim.",
-    isVerified: true,
-    isHelpful: true,
-    createdAt: "2024-01-15T00:00:00.000Z",
-    updatedAt: "2024-01-15T00:00:00.000Z",
-  },
-  {
-    id: 2,
-    productId: 1,
-    userId: 2,
-    userName: "Ayşe Demir",
-    rating: 4,
-    comment: "Güzel ürün, hızlı kargo. Teşekkürler.",
-    isVerified: true,
-    isHelpful: false,
-    createdAt: "2024-01-20T00:00:00.000Z",
-    updatedAt: "2024-01-20T00:00:00.000Z",
-  },
-  {
-    id: 3,
-    productId: 1,
-    userId: 3,
-    userName: "Mehmet Kaya",
-    rating: 5,
-    comment: "Mükemmel kalite, fiyatına göre çok iyi.",
-    isVerified: true,
-    isHelpful: true,
-    createdAt: "2024-01-25T00:00:00.000Z",
-    updatedAt: "2024-01-25T00:00:00.000Z",
-  },
-  {
-    id: 4,
-    productId: 2,
-    userId: 4,
-    userName: "Fatma Öz",
-    rating: 3,
-    comment: "Orta kalite, beklentilerimi tam karşılamadı.",
-    isVerified: false,
-    isHelpful: false,
-    createdAt: "2024-01-18T00:00:00.000Z",
-    updatedAt: "2024-01-18T00:00:00.000Z",
-  },
-  {
-    id: 5,
-    productId: 2,
-    userId: 5,
-    userName: "Ali Veli",
-    rating: 4,
-    comment: "İyi ürün, hızlı teslimat.",
-    isVerified: true,
-    isHelpful: true,
-    createdAt: "2024-01-22T00:00:00.000Z",
-    updatedAt: "2024-01-22T00:00:00.000Z",
-  },
-];
+// Mock Reviews - Dinamik olarak oluşturuluyor
+export const mockReviews: Review[] = generateExtendedReviews(mockProducts);
 
-// Mock Review Summaries
-export const mockReviewSummaries: ProductReviewSummary[] = [
-  {
-    productId: 1,
-    averageRating: 4.7,
-    totalReviews: 3,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 0,
-    rating4Count: 1,
-    rating5Count: 2,
-  },
-  {
-    productId: 2,
-    averageRating: 3.5,
-    totalReviews: 2,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 1,
-    rating4Count: 1,
-    rating5Count: 0,
-  },
-  {
-    productId: 3,
-    averageRating: 5.0,
-    totalReviews: 1,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 0,
-    rating4Count: 0,
-    rating5Count: 1,
-  },
-  {
-    productId: 4,
-    averageRating: 4.0,
-    totalReviews: 1,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 0,
-    rating4Count: 1,
-    rating5Count: 0,
-  },
-  {
-    productId: 5,
-    averageRating: 5.0,
-    totalReviews: 1,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 0,
-    rating4Count: 0,
-    rating5Count: 1,
-  },
-  {
-    productId: 6,
-    averageRating: 3.0,
-    totalReviews: 1,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 1,
-    rating4Count: 0,
-    rating5Count: 0,
-  },
-  {
-    productId: 7,
-    averageRating: 4.0,
-    totalReviews: 1,
-    rating1Count: 0,
-    rating2Count: 0,
-    rating3Count: 0,
-    rating4Count: 1,
-    rating5Count: 0,
-  },
-];
+// Mock Review Summaries - Dinamik olarak oluşturuluyor
+export const mockReviewSummaries: ProductReviewSummary[] = generateExtendedReviewSummaries(mockProducts, mockReviews);
+
+// Mock Data Service Class
+export class MockDataService {
+  // Products
+  static getProducts(): Product[] {
+    return mockProducts;
+  }
+
+  static getProductById(id: number): Product | undefined {
+    return mockProducts.find(product => product.id === id);
+  }
+
+  static getProductsByCategory(categoryId: number): Product[] {
+    return mockProducts.filter(product => product.category?.id === categoryId);
+  }
+
+  static searchProducts(searchTerm: string): Product[] {
+    const term = searchTerm.toLowerCase();
+    return mockProducts.filter(product => 
+      product.productName.toLowerCase().includes(term) ||
+      product.description?.toLowerCase().includes(term) ||
+      product.category?.categoryName.toLowerCase().includes(term)
+    );
+  }
+
+  static getFeaturedProducts(): Product[] {
+    return mockProducts.filter(product => product.discount && product.discount > 15);
+  }
+
+  static getDiscountedProducts(): Product[] {
+    return mockProducts.filter(product => product.discount && product.discount > 0);
+  }
+
+  // Categories
+  static getCategories(): Category[] {
+    return mockCategories;
+  }
+
+  static getCategoryById(id: number): Category | undefined {
+    return mockCategories.find(category => category.id === id);
+  }
+
+  // SubCategories
+  static getSubCategories(): SubCategory[] {
+    return mockSubCategories;
+  }
+
+  static getSubCategoryById(id: number): SubCategory | undefined {
+    return mockSubCategories.find(subCategory => subCategory.id === id);
+  }
+
+  static getSubCategoriesByCategoryId(categoryId: number): SubCategory[] {
+    return mockSubCategories.filter(subCategory => subCategory.categoryId === categoryId);
+  }
+
+  // Campaigns
+  static getCampaigns(): Campaign[] {
+    return mockCampaigns;
+  }
+
+  static getCampaignById(id: number): Campaign | undefined {
+    return mockCampaigns.find(campaign => campaign.id === id);
+  }
+
+  static getActiveCampaigns(): Campaign[] {
+    const now = new Date();
+    return mockCampaigns.filter(campaign => 
+      campaign.isActive && 
+      campaign.startDate <= now && 
+      campaign.endDate >= now
+    );
+  }
+
+  // Reviews
+  static getReviews(): Review[] {
+    return mockReviews;
+  }
+
+  static getReviewById(id: number): Review | undefined {
+    return mockReviews.find(review => review.id === id);
+  }
+
+  static getProductReviews(productId: number): Review[] {
+    return mockReviews.filter(review => review.productId === productId);
+  }
+
+  static getProductReviewSummary(productId: number): ProductReviewSummary | undefined {
+    return mockReviewSummaries.find(summary => summary.productId === productId);
+  }
+
+  static createReview(reviewData: Omit<Review, 'id' | 'createdAt' | 'updatedAt'>): Review {
+    const newReview: Review = {
+      ...reviewData,
+      id: mockReviews.length + 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    mockReviews.push(newReview);
+    return newReview;
+  }
+
+  static updateReview(id: number, updateData: Partial<Review>): Review | undefined {
+    const reviewIndex = mockReviews.findIndex(review => review.id === id);
+    if (reviewIndex === -1) return undefined;
+
+    mockReviews[reviewIndex] = {
+      ...mockReviews[reviewIndex],
+      ...updateData,
+      updatedAt: new Date().toISOString(),
+    };
+    return mockReviews[reviewIndex];
+  }
+
+  static deleteReview(id: number): boolean {
+    const reviewIndex = mockReviews.findIndex(review => review.id === id);
+    if (reviewIndex === -1) return false;
+
+    mockReviews.splice(reviewIndex, 1);
+    return true;
+  }
+
+  // Utility Methods
+  static getRandomProducts(count: number): Product[] {
+    const shuffled = [...mockProducts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  static getProductsByPriceRange(minPrice: number, maxPrice: number): Product[] {
+    return mockProducts.filter(product => 
+      product.unitPrice >= minPrice && product.unitPrice <= maxPrice
+    );
+  }
+
+  static getProductsByDiscount(minDiscount: number): Product[] {
+    return mockProducts.filter(product => 
+      product.discount && product.discount >= minDiscount
+    );
+  }
+
+  static getInStockProducts(): Product[] {
+    return mockProducts.filter(product => product.unitInStock > 0);
+  }
+
+  static getOutOfStockProducts(): Product[] {
+    return mockProducts.filter(product => product.unitInStock === 0);
+  }
+
+  // Statistics
+  static getProductStats() {
+    const totalProducts = mockProducts.length;
+    const inStockProducts = this.getInStockProducts().length;
+    const outOfStockProducts = this.getOutOfStockProducts().length;
+    const discountedProducts = this.getDiscountedProducts().length;
+    const totalCategories = mockCategories.length;
+    const totalSubCategories = mockSubCategories.length;
+    const activeCampaigns = this.getActiveCampaigns().length;
+    const totalReviews = mockReviews.length;
+
+    return {
+      totalProducts,
+      inStockProducts,
+      outOfStockProducts,
+      discountedProducts,
+      totalCategories,
+      totalSubCategories,
+      activeCampaigns,
+      totalReviews,
+    };
+  }
+}

@@ -3,9 +3,19 @@ import { CategoryGrid } from "@/components/category-grid";
 import { HeroSection } from "@/components/hero-section";
 
 export const metadata: Metadata = {
-  title: "Kategoriler - E-Ticaret Sitesi",
-  description:
-    "Tüm ürün kategorilerini keşfedin. Elektronik, moda, ev & yaşam ve daha fazlası.",
+  title: "Kategoriler - TempShop",
+  description: "TempShop'ta tüm ürün kategorilerini keşfedin. Elektronik, moda, ev & yaşam, spor, anne & bebek ve daha fazlası. Her kategoride en kaliteli ürünler.",
+  keywords: "kategoriler, elektronik, moda, ev yaşam, spor, anne bebek, kozmetik, TempShop",
+  robots: "index, follow",
+  openGraph: {
+    title: "Kategoriler - TempShop",
+    description: "TempShop'ta tüm ürün kategorilerini keşfedin. Her kategoride en kaliteli ürünler.",
+    type: "website",
+    locale: "tr_TR",
+  },
+  alternates: {
+    canonical: "https://tempshop.com/categories",
+  },
 };
 
 export default function CategoriesPage() {

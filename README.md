@@ -13,20 +13,31 @@ Modern bir e-ticaret sitesi uygulaması. Next.js 14, TypeScript, Tailwind CSS, Z
 - ✅ **Responsive Design**: Mobil-first tasarım yaklaşımı
 
 ### E-Ticaret Özellikleri
-- 🛍️ **Ürün Listeleme**: Grid ve liste görünümü
-- 🔍 **Arama ve Filtreleme**: Gelişmiş arama ve filtreleme sistemi
+- 🛍️ **Ürün Listeleme**: Grid ve liste görünümü, sayfalama
+- 🔍 **Gelişmiş Arama**: Popup ile günün favorileri, en çok arananlar, otomatik tamamlama
+- 🗺️ **Konum Seçimi**: Modal ile şehir ve ilçe seçimi, GPS desteği
 - 🛒 **Sepet Yönetimi**: Ürün ekleme, çıkarma, miktar güncelleme
 - 💳 **Ödeme Sistemi**: Çoklu ödeme yöntemi desteği
-- 📱 **Responsive Tasarım**: Mobil uyumlu arayüz
-- 🎨 **Modern UI/UX**: Kullanıcı dostu tasarım
+- 📱 **Mobile Navigation**: Hamburger menü, touch optimizasyonları
+- 🎨 **Modern UI/UX**: Kullanıcı dostu tasarım, responsive layout
+- 📦 **Sipariş Yönetimi**: Sipariş geçmişi, durum takibi
+- ⭐ **Favoriler**: Ürünleri favorilere ekleme
+- 📍 **Adres Yönetimi**: Çoklu adres desteği
+- 💳 **Ödeme Yöntemleri**: Kart ve hesap bilgilerini kaydetme
 
 ### Gelişmiş Özellikler
-- 🔄 **Loading States**: Yükleme durumları
+- 🔄 **Backend Switch**: 3 farklı backend desteği (Mock, .NET Core, Spring Boot)
+- 🔧 **Backend Config UI**: Ayarlar sayfasından endpoint yönetimi
 - 📢 **Toast Notifications**: Kullanıcı bildirimleri
-- 🏷️ **İndirim Sistemi**: Ürün indirimleri
-- 📊 **Stok Takibi**: Stok durumu gösterimi
-- 🏪 **Kategori Sistemi**: Ürün kategorileri
-- 📄 **Sipariş Takibi**: Sipariş durumu takibi
+- 🏷️ **Kampanyalar**: İndirim ve kampanya yönetimi
+- 📊 **Genişletilmiş Mock Data**: 200+ ürün, kategoriler, yorumlar
+- 🏪 **Kategori ve Alt Kategoriler**: Dinamik mega menü
+- 📄 **SEO Optimizasyonu**: Tüm sayfalarda metadata, Open Graph, structured data
+- 🦶 **Footer**: Kapsamlı footer ile tüm bağlantılar
+- 👩‍💼 **Satıcı Sayfası**: Satıcı başvuru ve bilgilendirme
+- 🎁 **Premium Üyelik**: Özel avantajlar sayfası
+- 🔒 **Güvenlik Ayarları**: 2FA, şifre değiştirme
+- 🔔 **Bildirimler**: Kullanıcı bildirimleri ve tercihler
 
 ## 🛠️ Teknolojiler
 
@@ -99,37 +110,66 @@ http://localhost:3000
 ## 🏗️ Proje Yapısı
 
 ```
-├── app/                    # Next.js App Router
-│   ├── globals.css        # Global CSS
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Ana sayfa
-│   ├── products/          # Ürün sayfaları
-│   │   ├── page.tsx       # Ürün listesi
-│   │   └── [id]/page.tsx  # Ürün detayı
-│   ├── cart/page.tsx      # Sepet sayfası
-│   ├── checkout/page.tsx  # Ödeme sayfası
-│   └── order-success/page.tsx # Sipariş başarı
-├── src/
-│   ├── components/        # Bileşenler
-│   │   ├── ui/           # Temel UI bileşenleri
-│   │   ├── navigation.tsx # Navigasyon
-│   │   ├── product-card.tsx # Ürün kartı
-│   │   ├── product-grid.tsx # Ürün grid'i
-│   │   ├── search-bar.tsx # Arama çubuğu
-│   │   └── category-filter.tsx # Kategori filtresi
-│   ├── lib/              # Yardımcı fonksiyonlar
-│   │   └── utils.ts      # Utility fonksiyonları
-│   ├── store/            # Zustand store'ları
-│   │   ├── cart-store.ts # Sepet state
-│   │   └── product-store.ts # Ürün state
-│   ├── services/         # API servisleri
-│   │   └── product-service.ts
-│   └── types/            # TypeScript type tanımları
-│       └── index.ts
-├── public/               # Statik dosyalar
-├── tailwind.config.js    # Tailwind konfigürasyonu
-├── next.config.js        # Next.js konfigürasyonu
-└── tsconfig.json         # TypeScript konfigürasyonu
+├── src/app/                   # Next.js App Router
+│   ├── globals.css           # Global CSS
+│   ├── layout.tsx            # Root layout
+│   ├── page.tsx              # Ana sayfa
+│   ├── products/             # Ürün sayfaları
+│   ├── cart/                 # Sepet
+│   ├── checkout/             # Ödeme
+│   ├── search/               # Arama sayfası
+│   ├── campaigns/            # Kampanyalar
+│   ├── categories/           # Kategoriler
+│   ├── orders/               # Siparişler
+│   ├── favorites/            # Favoriler
+│   ├── addresses/            # Adresler
+│   ├── payment-methods/      # Ödeme yöntemleri
+│   ├── settings/             # Ayarlar
+│   ├── security/             # Güvenlik
+│   ├── notifications/        # Bildirimler
+│   ├── premium/              # Premium üyelik
+│   ├── seller/               # Satıcı ol
+│   ├── customer-service/     # Müşteri hizmetleri
+│   ├── entrepreneur-women/   # Girişimci kadınlar
+│   ├── international/        # Yurt dışından
+│   ├── about/                # Hakkımızda
+│   ├── help/                 # Yardım
+│   ├── robots.ts             # SEO robots
+│   └── sitemap.ts            # SEO sitemap
+├── src/components/           # Bileşenler
+│   ├── ui/                   # Shadcn UI bileşenleri
+│   ├── navigation.tsx        # Ana navigasyon
+│   ├── mobile-navigation.tsx # Mobile menü
+│   ├── footer.tsx            # Footer
+│   ├── location-modal.tsx    # Konum seçimi
+│   ├── search-popup.tsx      # Gelişmiş arama
+│   ├── product-card.tsx      # Ürün kartı
+│   ├── product-grid.tsx      # Ürün grid
+│   ├── category-grid.tsx     # Kategori grid
+│   ├── campaign-grid.tsx     # Kampanya grid
+│   └── backend-switch.tsx    # Backend seçici
+├── src/store/                # Zustand stores
+│   ├── cart-store.ts         # Sepet
+│   ├── product-store.ts      # Ürünler
+│   ├── auth-store.ts         # Kimlik doğrulama
+│   └── backend-store.ts      # Backend config
+├── src/services/             # API servisleri
+│   ├── product-service.ts    # Ürün API
+│   ├── category-service.ts   # Kategori API
+│   ├── order-service.ts      # Sipariş API
+│   ├── favorite-service.ts   # Favori API
+│   └── mock-data-service.ts  # Mock data
+├── src/data/                 # Mock data
+│   └── mock-data-extended.ts # Genişletilmiş mock data
+├── src/config/               # Konfigürasyon
+│   └── api.ts                # API config
+├── src/types/                # TypeScript types
+│   └── index.ts
+├── public/                   # Statik dosyalar
+├── env.example               # Environment örneği
+├── tailwind.config.js        # Tailwind config
+├── next.config.js            # Next.js config
+└── tsconfig.json             # TypeScript config
 ```
 
 ## 🎯 Kullanım
