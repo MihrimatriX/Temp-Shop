@@ -9,6 +9,7 @@ export interface Product {
   description?: string;
   imageUrl?: string;
   discount?: number;
+  rating?: number;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -19,6 +20,7 @@ export interface Category {
   categoryName: string;
   description?: string;
   imageUrl?: string;
+  productCount?: number;
   isActive: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -265,6 +267,16 @@ export interface Review {
   updatedAt: string;
   userName?: string;
   productName?: string;
+  userAvatar?: string;
+  photos?: ReviewPhoto[];
+  helpfulCount?: number;
+  notHelpfulCount?: number;
+}
+
+export interface ReviewPhoto {
+  id: string;
+  url: string;
+  alt: string;
 }
 
 export interface ProductReviewSummary {

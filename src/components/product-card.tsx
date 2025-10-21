@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/store/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { Product } from "@/types";
+import { motion } from "framer-motion";
+import { cardHover, buttonTap } from "@/components/ui/animations";
 import toast from "react-hot-toast";
 
 interface ProductCardProps {
@@ -33,13 +35,19 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     : product.unitPrice;
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      <Link href={`/products/${product.id}`}>
+    <motion.div
+      whileHover={{ y: -5, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)" }}
+      transition={{ duration: 0.2 }}
+      className="group"
+    >
+      <Card className="overflow-hidden transition-all duration-300">
+        <Link href={`/products/${product.id}`}>
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={product.imageUrl || "/placeholder-product.jpg"}
             alt={product.productName}
             fill
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
 
@@ -111,17 +119,23 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
             </div>
           </div>
 
-          <Button
-            onClick={handleAddToCart}
-            disabled={product.unitInStock === 0}
-            className="w-full"
-            size="sm"
+          <motion.div
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.1 }}
           >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            {product.unitInStock > 0 ? "Sepete Ekle" : "Stokta Yok"}
-          </Button>
+            <Button
+              onClick={handleAddToCart}
+              disabled={product.unitInStock === 0}
+              className="w-full"
+              size="sm"
+            >
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              {product.unitInStock > 0 ? "Sepete Ekle" : "Stokta Yok"}
+            </Button>
+          </motion.div>
         </div>
       </CardFooter>
     </Card>
+    </motion.div>
   );
 }

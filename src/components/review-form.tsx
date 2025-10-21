@@ -82,7 +82,8 @@ export function ReviewForm({
         comment: data.comment || undefined,
       };
 
-      const response = await ReviewService.createReview(reviewData);
+      const reviewService = new ReviewService();
+      const response = await reviewService.createReview(reviewData);
 
       if (response.success) {
         toast.success("Yorumunuz başarıyla eklendi!");

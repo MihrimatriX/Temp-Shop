@@ -368,6 +368,7 @@ export default function CheckoutPage() {
                         }
                         alt={item.product.productName}
                         fill
+                        sizes="60px"
                         className="object-cover rounded"
                       />
                     </div>

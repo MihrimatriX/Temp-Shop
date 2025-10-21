@@ -10,9 +10,7 @@ import { useBackendStore } from "@/store/backend-store";
 import { mockReviews, mockReviewSummaries } from "./mock-data-service";
 
 export class ReviewService {
-  static async getProductReviews(
-    productId: number
-  ): Promise<ApiResponse<Review[]>> {
+  async getProductReviews(productId: number): Promise<ApiResponse<Review[]>> {
     const backendType = useBackendStore.getState().config.type;
 
     if (backendType === "mock") {
@@ -43,7 +41,7 @@ export class ReviewService {
     }
   }
 
-  static async getProductReviewSummary(
+  async getProductReviewSummary(
     productId: number
   ): Promise<ApiResponse<ProductReviewSummary>> {
     const backendType = useBackendStore.getState().config.type;
@@ -93,7 +91,7 @@ export class ReviewService {
     }
   }
 
-  static async getReviewById(reviewId: number): Promise<ApiResponse<Review>> {
+  async getReviewById(reviewId: number): Promise<ApiResponse<Review>> {
     const backendType = useBackendStore.getState().config.type;
 
     if (backendType === "mock") {
@@ -130,9 +128,7 @@ export class ReviewService {
     }
   }
 
-  static async createReview(
-    reviewData: CreateReview
-  ): Promise<ApiResponse<Review>> {
+  async createReview(reviewData: CreateReview): Promise<ApiResponse<Review>> {
     const backendType = useBackendStore.getState().config.type;
 
     if (backendType === "mock") {
@@ -180,7 +176,7 @@ export class ReviewService {
     }
   }
 
-  static async updateReview(
+  async updateReview(
     reviewId: number,
     reviewData: UpdateReview
   ): Promise<ApiResponse<Review>> {
@@ -234,7 +230,7 @@ export class ReviewService {
     }
   }
 
-  static async deleteReview(reviewId: number): Promise<ApiResponse<string>> {
+  async deleteReview(reviewId: number): Promise<ApiResponse<string>> {
     const backendType = useBackendStore.getState().config.type;
 
     if (backendType === "mock") {

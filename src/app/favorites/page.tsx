@@ -7,24 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, ShoppingCart, Trash2, Star } from "lucide-react";
 import { FavoriteService } from "@/services/favorite-service";
-
-interface FavoriteProduct {
-  id: number;
-  userId: number;
-  productId: number;
-  productName: string;
-  productImageUrl?: string;
-  productPrice: number;
-  productDiscount?: number;
-  productCategory?: string;
-  productInStock: boolean;
-  createdAt: Date;
-}
+import { FavoriteDto } from "@/types";
 
 export default function FavoritesPage() {
   const { user } = useAuthStore();
   const { addItem } = useCartStore();
-  const [favorites, setFavorites] = useState<FavoriteProduct[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteDto[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -81,7 +69,7 @@ export default function FavoritesPage() {
     }
   };
 
-  const handleAddToCart = (product: FavoriteProduct) => {
+  const handleAddToCart = (product: FavoriteDto) => {
     addItem(
       {
         id: product.productId,

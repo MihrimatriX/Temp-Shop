@@ -85,6 +85,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         }
                         alt={item.product.productName}
                         fill
+                        sizes="80px"
                         className="object-cover rounded-md"
                       />
                     </div>

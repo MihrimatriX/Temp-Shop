@@ -555,12 +555,36 @@ export const generateExtendedProducts = (): Product[] => {
 
   // Tüm ürün listelerini birleştir
   const allProducts = [
-    ...electronicsProducts.map((name, index) => ({ name, categoryId: 1, basePrice: 500 + index * 100 })),
-    ...fashionProducts.map((name, index) => ({ name, categoryId: 2, basePrice: 50 + index * 25 })),
-    ...homeProducts.map((name, index) => ({ name, categoryId: 3, basePrice: 200 + index * 50 })),
-    ...sportsProducts.map((name, index) => ({ name, categoryId: 4, basePrice: 100 + index * 30 })),
-    ...babyProducts.map((name, index) => ({ name, categoryId: 5, basePrice: 80 + index * 20 })),
-    ...beautyProducts.map((name, index) => ({ name, categoryId: 6, basePrice: 30 + index * 15 })),
+    ...electronicsProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 1, 
+      basePrice: Math.floor(Math.random() * 50000) + 1000 // 1000-51000 arası
+    })),
+    ...fashionProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 2, 
+      basePrice: Math.floor(Math.random() * 2000) + 50 // 50-2050 arası
+    })),
+    ...homeProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 3, 
+      basePrice: Math.floor(Math.random() * 5000) + 200 // 200-5200 arası
+    })),
+    ...sportsProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 4, 
+      basePrice: Math.floor(Math.random() * 3000) + 100 // 100-3100 arası
+    })),
+    ...babyProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 5, 
+      basePrice: Math.floor(Math.random() * 1000) + 80 // 80-1080 arası
+    })),
+    ...beautyProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 6, 
+      basePrice: Math.floor(Math.random() * 500) + 30 // 30-530 arası
+    })),
   ];
 
   // Ürünleri oluştur

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import { SearchPopup } from "@/components/search-popup";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import { SubCategoryService } from "@/services/subcategory-service";
 import { SubCategory } from "@/types";
+import { megaMenuData, getMegaMenuData, getCategoryIcon, popularCategories } from "@/data/mega-menu-data";
 import {
   ShoppingCart,
   Search,
@@ -23,6 +24,8 @@ import {
   Menu,
   ChevronDown,
   MapPin,
+  Star,
+  TrendingUp,
 } from "lucide-react";
 
 export function Navigation() {
@@ -34,10 +37,12 @@ export function Navigation() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("İstanbul");
+  const megaMenuRef = useRef<HTMLDivElement>(null);
 
   // SubCategory'leri yükle
   useEffect(() => {
@@ -76,51 +81,34 @@ export function Navigation() {
     setIsLocationOpen(false);
   };
 
-  const categories = [
-    { name: "Elektronik", href: "/categories/elektronik" },
-    { name: "Moda", href: "/categories/moda" },
-    { name: "Ev & Yaşam", href: "/categories/ev-yasam" },
-    { name: "Spor & Outdoor", href: "/categories/spor" },
-    { name: "Anne & Bebek", href: "/categories/anne-bebek" },
-    { name: "Kozmetik & Bakım", href: "/categories/kozmetik" },
-    { name: "Süpermarket", href: "/categories/süpermarket" },
-    { name: "Kitap & Müzik", href: "/categories/kitap" },
-    { name: "Oto & Bahçe", href: "/categories/oto" },
-    { name: "Kırtasiye & Ofis", href: "/categories/kirtasiye" },
-  ];
-
-  // Dinamik mega menu data oluştur
-  const getMegaMenuData = (categoryName: string) => {
-    const categorySubCategories = subCategories.filter(
-      (sc) => sc.categoryName === categoryName
-    );
-
-    if (categorySubCategories.length === 0) return null;
-
-    // SubCategory'leri 3 sütuna böl
-    const columns = [];
-    const itemsPerColumn = Math.ceil(categorySubCategories.length / 3);
-
-    for (let i = 0; i < 3; i++) {
-      const startIndex = i * itemsPerColumn;
-      const endIndex = Math.min(
-        startIndex + itemsPerColumn,
-        categorySubCategories.length
-      );
-      const columnSubCategories = categorySubCategories.slice(
-        startIndex,
-        endIndex
-      );
-
-      if (columnSubCategories.length > 0) {
-        columns.push({
-          title: columnSubCategories[0].subCategoryName,
-          items: columnSubCategories.map((sc) => sc.subCategoryName),
-        });
-      }
+  const handleCategoryClick = (categoryName: string) => {
+    if (activeCategory === categoryName) {
+      setActiveCategory(null);
+    } else {
+      setActiveCategory(categoryName);
     }
+  };
 
-    return { columns };
+  // Click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (megaMenuRef.current && !megaMenuRef.current.contains(event.target as Node)) {
+        setActiveCategory(null);
+        setHoveredCategory(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const categories = popularCategories;
+
+  // Mega menu data'yı al
+  const getMegaMenuDataForCategory = (categoryName: string) => {
+    return getMegaMenuData(categoryName);
   };
 
   return (
@@ -264,7 +252,7 @@ export function Navigation() {
       </header>
 
       {/* Category Navigation - Hidden on mobile */}
-      <nav className="hidden md:block bg-white border-b relative">
+      <nav className="hidden md:block bg-white border-b relative" ref={megaMenuRef}>
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 py-3 overflow-x-auto scrollbar-hide">
             <Button
@@ -275,60 +263,151 @@ export function Navigation() {
               <span>Kategoriler</span>
             </Button>
 
-            {categories.map((category) => (
-              <div
-                key={category.name}
-                className="relative"
-                onMouseEnter={() => setHoveredCategory(category.name)}
-                onMouseLeave={() => setHoveredCategory(null)}
-              >
-                <Link href={category.href}>
+            {categories.map((category) => {
+              const megaMenuData = getMegaMenuDataForCategory(category.name);
+              const IconComponent = category.icon;
+              
+              return (
+                <div
+                  key={category.name}
+                  className="relative"
+                  onMouseEnter={() => {
+                    setHoveredCategory(category.name);
+                    // Eğer başka bir kategori aktifse, hover ile değiştir
+                    if (activeCategory && activeCategory !== category.name) {
+                      setActiveCategory(category.name);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    // Sadece hover'ı temizle, active category'yi koru
+                    setHoveredCategory(null);
+                  }}
+                >
                   <Button
                     variant="ghost"
-                    className={`text-sm whitespace-nowrap ${
-                      hoveredCategory === category.name
-                        ? "text-orange-500 border-b-2 border-orange-500"
+                    className={`text-sm whitespace-nowrap flex items-center gap-2 ${
+                      (hoveredCategory === category.name || activeCategory === category.name)
+                        ? "text-purple-600 border-b-2 border-purple-600"
                         : ""
                     }`}
+                    onClick={() => handleCategoryClick(category.name)}
                   >
+                    <IconComponent className="w-4 h-4" />
                     {category.name}
-                    <ChevronDown className="w-3 h-3 ml-1" />
+                    <ChevronDown className="w-3 h-3" />
                   </Button>
-                </Link>
 
-                {/* Mega Menu */}
-                {hoveredCategory === category.name &&
-                  getMegaMenuData(category.name) && (
-                    <div className="absolute top-full left-0 w-screen bg-white border-t shadow-lg z-50">
-                      <div className="container mx-auto px-4 py-6">
-                        <div className="grid grid-cols-4 gap-8">
-                          {getMegaMenuData(category.name)?.columns.map(
-                            (column, index) => (
+                  {/* Mega Menu */}
+                  {(hoveredCategory === category.name || activeCategory === category.name) && megaMenuData && (
+                    <div className="absolute top-full left-0 w-screen bg-white border-t shadow-xl z-50">
+                      <div className="container mx-auto px-4 py-8">
+                        <div className="grid grid-cols-5 gap-8">
+                          {/* Kategori sütunları */}
+                          {megaMenuData.columns.map((column, index) => {
+                            const ColumnIcon = column.icon;
+                            return (
                               <div key={index} className="space-y-4">
-                                <h3 className="font-bold text-orange-500 text-lg">
-                                  {column.title}
-                                </h3>
+                                <div className="flex items-center gap-2 mb-3">
+                                  <ColumnIcon className="w-5 h-5 text-purple-600" />
+                                  <h3 className="font-bold text-purple-600 text-lg">
+                                    {column.title}
+                                  </h3>
+                                </div>
                                 <ul className="space-y-2">
                                   {column.items.map((item, itemIndex) => (
                                     <li key={itemIndex}>
                                       <Link
-                                        href={`/categories/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, "-")}`}
-                                        className="text-gray-700 hover:text-orange-500 transition-colors"
+                                        href={item.href}
+                                        className="text-gray-700 hover:text-purple-600 transition-colors text-sm flex items-center gap-2 group"
                                       >
-                                        {item}
+                                        {item.name}
+                                        {item.isPopular && (
+                                          <Badge variant="secondary" className="text-xs">
+                                            Popüler
+                                          </Badge>
+                                        )}
+                                        {item.isNew && (
+                                          <Badge variant="default" className="text-xs bg-green-500">
+                                            Yeni
+                                          </Badge>
+                                        )}
+                                        {item.isSale && (
+                                          <Badge variant="destructive" className="text-xs">
+                                            İndirim
+                                          </Badge>
+                                        )}
                                       </Link>
                                     </li>
                                   ))}
                                 </ul>
                               </div>
-                            )
+                            );
+                          })}
+                          
+                          {/* Öne çıkan ürünler sütunu */}
+                          {megaMenuData.featured && megaMenuData.featured.length > 0 && (
+                            <div className="space-y-4">
+                              <div className="flex items-center gap-2 mb-3">
+                                <TrendingUp className="w-5 h-5 text-purple-600" />
+                                <h3 className="font-bold text-purple-600 text-lg">
+                                  Öne Çıkan Ürünler
+                                </h3>
+                              </div>
+                              <div className="space-y-3">
+                                {megaMenuData.featured.map((product) => (
+                                  <Link
+                                    key={product.id}
+                                    href={product.href}
+                                    className="block p-3 border rounded-lg hover:shadow-md transition-shadow group"
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <img
+                                        src={product.imageUrl}
+                                        alt={product.name}
+                                        className="w-12 h-12 object-cover rounded"
+                                        sizes="48px"
+                                      />
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="font-medium text-sm text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-2">
+                                          {product.name}
+                                        </h4>
+                                        <div className="flex items-center gap-2 mt-1">
+                                          <div className="flex items-center gap-1">
+                                            <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                            <span className="text-xs text-gray-600">
+                                              {product.rating}
+                                            </span>
+                                          </div>
+                                          <div className="flex items-center gap-1">
+                                            <span className="text-sm font-bold text-purple-600">
+                                              {product.price.toLocaleString("tr-TR")} ₺
+                                            </span>
+                                            {product.originalPrice && (
+                                              <span className="text-xs text-gray-500 line-through">
+                                                {product.originalPrice.toLocaleString("tr-TR")} ₺
+                                              </span>
+                                            )}
+                                          </div>
+                                        </div>
+                                        {product.discount && (
+                                          <Badge variant="destructive" className="text-xs mt-1">
+                                            %{product.discount} İndirim
+                                          </Badge>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
                           )}
                         </div>
                       </div>
                     </div>
                   )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </nav>

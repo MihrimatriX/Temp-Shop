@@ -16,25 +16,28 @@ interface ReviewListProps {
   productId: number;
   productName?: string;
   className?: string;
+  reviews?: Review[];
 }
 
 export function ReviewList({
   productId,
   productName,
   className,
+  reviews: propReviews,
 }: ReviewListProps) {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<Review[]>(propReviews || []);
   const [summary, setSummary] = useState<ProductReviewSummary | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!propReviews);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchReviews = async () => {
     try {
       setRefreshing(true);
+      const reviewService = new ReviewService();
       const [reviewsResponse, summaryResponse] = await Promise.all([
-        ReviewService.getProductReviews(productId),
-        ReviewService.getProductReviewSummary(productId),
+        reviewService.getProductReviews(productId),
+        reviewService.getProductReviewSummary(productId),
       ]);
 
       if (reviewsResponse.success) {
@@ -54,8 +57,10 @@ export function ReviewList({
   };
 
   useEffect(() => {
-    fetchReviews();
-  }, [productId]);
+    if (!propReviews) {
+      fetchReviews();
+    }
+  }, [productId, propReviews]);
 
   const handleReviewSubmitted = () => {
     setShowReviewForm(false);
@@ -72,14 +77,9 @@ export function ReviewList({
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Review Summary */}
-        <div className="lg:col-span-1">
-          {summary && <ReviewSummary summary={summary} />}
-        </div>
-
+      <div className="space-y-6">
         {/* Reviews and Form */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -150,95 +150,6 @@ export function ReviewList({
               </CardContent>
             </Card>
           )}
-        </div>
-
-        {/* Recommended Products */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-4">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <span className="text-purple-600">✨</span>
-                Önerilen Ürünler
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Mock recommended products */}
-              {[
-                {
-                  id: 1,
-                  name: "Samsung Galaxy S24",
-                  price: 15999,
-                  image: "https://picsum.photos/200/200?random=201",
-                  rating: 4.5,
-                },
-                {
-                  id: 2,
-                  name: "iPhone 15 Pro",
-                  price: 18999,
-                  image: "https://picsum.photos/200/200?random=202",
-                  rating: 4.8,
-                },
-                {
-                  id: 3,
-                  name: "MacBook Air M3",
-                  price: 24999,
-                  image: "https://picsum.photos/200/200?random=203",
-                  rating: 4.7,
-                },
-                {
-                  id: 4,
-                  name: "iPad Pro 12.9",
-                  price: 17999,
-                  image: "https://picsum.photos/200/200?random=204",
-                  rating: 4.6,
-                },
-              ].map((product) => (
-                <div
-                  key={product.id}
-                  className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-                >
-                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-sm text-gray-900 truncate">
-                      {product.name}
-                    </h4>
-                    <div className="flex items-center gap-1 mt-1">
-                      <div className="flex">
-                        {Array.from({ length: 5 }, (_, i) => (
-                          <span
-                            key={i}
-                            className={
-                              i < Math.floor(product.rating)
-                                ? "text-yellow-400"
-                                : "text-gray-300"
-                            }
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-500 ml-1">
-                        {product.rating}
-                      </span>
-                    </div>
-                    <p className="text-sm font-semibold text-purple-600 mt-1">
-                      {product.price.toLocaleString("tr-TR")} ₺
-                    </p>
-                  </div>
-                </div>
-              ))}
-
-              <Button variant="outline" className="w-full mt-4">
-                Tümünü Gör
-              </Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>

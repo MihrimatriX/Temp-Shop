@@ -59,6 +59,9 @@ export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
             ] as number;
             const percentage = getRatingPercentage(count);
 
+            // Only show ratings that have at least 1 review
+            if (count === 0) return null;
+
             return (
               <div key={rating} className="flex items-center gap-3">
                 <div className="flex items-center gap-1 w-16">
@@ -75,7 +78,7 @@ export function ReviewSummary({ summary, className }: ReviewSummaryProps) {
                     {count}
                   </span>
                   <span className="text-xs text-gray-500 w-12">
-                    {percentage.toFixed(0)}%
+                    {percentage > 0 ? `${percentage.toFixed(0)}%` : ''}
                   </span>
                 </div>
               </div>

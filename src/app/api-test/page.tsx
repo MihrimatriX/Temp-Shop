@@ -92,7 +92,8 @@ export default function ApiTestPage() {
       // İlk ürünün ID'sini kullan
       if (products.length > 0) {
         const productId = products[0].id;
-        const response = await ReviewService.getProductReviews(productId);
+        const reviewService = new ReviewService();
+        const response = await reviewService.getProductReviews(productId);
         if (response.success) {
           setReviews(response.data || []);
         } else {
@@ -115,7 +116,8 @@ export default function ApiTestPage() {
       // İlk ürünün ID'sini kullan
       if (products.length > 0) {
         const productId = products[0].id;
-        const response = await ReviewService.getProductReviewSummary(productId);
+        const reviewService = new ReviewService();
+        const response = await reviewService.getProductReviewSummary(productId);
         if (response.success) {
           setReviewSummary(response.data || null);
         } else {

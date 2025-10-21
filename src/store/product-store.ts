@@ -1,17 +1,15 @@
 import { create } from "zustand";
-import { Product, ProductFilters } from "@/types";
+import { Product, ProductFilters, Category } from "@/types";
 
 interface ProductStore {
   products: Product[];
-  categories: Array<{ id: number; categoryName: string; isActive: boolean }>;
+  categories: Category[];
   filters: ProductFilters;
   loading: boolean;
   error: string | null;
 
   setProducts: (products: Product[]) => void;
-  setCategories: (
-    categories: Array<{ id: number; categoryName: string; isActive: boolean }>
-  ) => void;
+  setCategories: (categories: Category[]) => void;
   setFilters: (filters: ProductFilters) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;

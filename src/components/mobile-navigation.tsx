@@ -11,6 +11,7 @@ import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
 import { SubCategoryService } from "@/services/subcategory-service";
 import { SubCategory } from "@/types";
+import { getMegaMenuData, popularCategories } from "@/data/mega-menu-data";
 import {
   Menu,
   Search,
@@ -94,18 +95,7 @@ export function MobileNavigation({
     setIsOpen(false);
   };
 
-  const categories = [
-    { name: "Elektronik", href: "/categories/elektronik", icon: Package },
-    { name: "Moda", href: "/categories/moda", icon: Tag },
-    { name: "Ev & Yaşam", href: "/categories/ev-yasam", icon: Home },
-    { name: "Spor & Outdoor", href: "/categories/spor", icon: Award },
-    { name: "Anne & Bebek", href: "/categories/anne-bebek", icon: Users },
-    { name: "Kozmetik & Bakım", href: "/categories/kozmetik", icon: Star },
-    { name: "Süpermarket", href: "/categories/süpermarket", icon: Package },
-    { name: "Kitap & Müzik", href: "/categories/kitap", icon: Globe },
-    { name: "Oto & Bahçe", href: "/categories/oto", icon: Truck },
-    { name: "Kırtasiye & Ofis", href: "/categories/kirtasiye", icon: Package },
-  ];
+  const categories = popularCategories;
 
   const quickLinks = [
     { name: "Kampanyalar", href: "/campaigns", icon: Tag },
@@ -238,9 +228,10 @@ export function MobileNavigation({
               <div className="space-y-1">
                 {categories.map((category) => {
                   const IconComponent = category.icon;
-                  const categorySubCategories = subCategories.filter(
-                    (sc) => sc.categoryName === category.name
-                  );
+                  const megaMenuData = getMegaMenuData(category.name);
+                  const categorySubCategories = megaMenuData ? 
+                    megaMenuData.columns.flatMap(col => col.items) : 
+                    subCategories.filter((sc) => sc.categoryName === category.name);
                   const isExpanded = expandedCategories.has(category.name);
 
                   return (
@@ -271,14 +262,14 @@ export function MobileNavigation({
                       </div>
                       {isExpanded && categorySubCategories.length > 0 && (
                         <div className="ml-6 space-y-1">
-                          {categorySubCategories.map((subCategory) => (
+                          {categorySubCategories.map((subCategory, index) => (
                             <Link
-                              key={subCategory.id}
-                              href={`/categories/${category.name.toLowerCase()}/${subCategory.subCategoryName.toLowerCase().replace(/\s+/g, "-")}`}
+                              key={subCategory.id || index}
+                              href={subCategory.href || `/categories/${category.name.toLowerCase()}/${subCategory.name?.toLowerCase().replace(/\s+/g, "-")}`}
                               className="block p-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors"
                               onClick={handleLinkClick}
                             >
-                              {subCategory.subCategoryName}
+                              {subCategory.name || subCategory.subCategoryName}
                             </Link>
                           ))}
                         </div>

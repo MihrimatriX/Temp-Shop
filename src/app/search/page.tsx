@@ -266,53 +266,13 @@ function SearchContent() {
                       </span>
                       {(priceRange.min || priceRange.max) && (
                         <Badge variant="secondary">
-                          Fiyat: {priceRange.min || "0"} - {priceRange.max || "∞"} ₺
+                          Fiyat: {priceRange.min || "Min"} - {priceRange.max || "Max"} ₺
                         </Badge>
                       )}
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {products.map((product) => (
-                      <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                        <div className="aspect-square relative">
-                          <img
-                            src={product.imageUrl || "/placeholder-product.jpg"}
-                            alt={product.productName}
-                            className="w-full h-full object-cover"
-                          />
-                          {product.discount && product.discount > 0 && (
-                            <Badge className="absolute top-2 left-2 bg-red-500">
-                              %{product.discount} İndirim
-                            </Badge>
-                          )}
-                        </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-semibold text-lg mb-2 line-clamp-2">
-                            {product.productName}
-                          </h3>
-                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                            {product.description}
-                          </p>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="text-lg font-bold text-primary">
-                                {product.unitPrice.toLocaleString("tr-TR")} ₺
-                              </span>
-                              {product.discount && product.discount > 0 && (
-                                <span className="text-sm text-muted-foreground line-through">
-                                  {Math.round(product.unitPrice / (1 - product.discount / 100)).toLocaleString("tr-TR")} ₺
-                                </span>
-                              )}
-                            </div>
-                            <Badge variant={product.unitInStock > 0 ? "default" : "destructive"}>
-                              {product.unitInStock > 0 ? "Stokta" : "Stokta Yok"}
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+                  <ProductGrid products={products} />
                 </div>
               ) : searchTerm ? (
                 <Card>

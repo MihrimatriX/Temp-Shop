@@ -156,17 +156,17 @@ export function SearchPopup({ isOpen, onClose, searchTerm, onSearchTermChange }:
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
     onSearchTermChange(suggestion.text);
     router.push(`/search?q=${encodeURIComponent(suggestion.text)}`);
-    onClose();
+    // Popup'ı kapatmayalım, kullanıcı manuel olarak kapatabilir
   };
 
   const handleProductClick = (product: Product) => {
     router.push(`/products/${product.id}`);
-    onClose();
+    // Popup'ı kapatmayalım, kullanıcı manuel olarak kapatabilir
   };
 
   const handleTrendingProductClick = (product: TrendingProduct) => {
     router.push(`/products/${product.id}`);
-    onClose();
+    // Popup'ı kapatmayalım, kullanıcı manuel olarak kapatabilir
   };
 
   const handleSearch = (e: React.FormEvent) => {

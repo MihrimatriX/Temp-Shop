@@ -121,7 +121,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <CategoryFilter categoryId={category.id} />
           </div>
           <div className="lg:col-span-3">
-            <ProductGrid categoryId={category.id} />
+            <ProductGrid products={[]} />
           </div>
         </div>
       </div>
