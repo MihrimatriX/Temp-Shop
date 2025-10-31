@@ -30,9 +30,13 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
     onAddToCart?.(product);
   };
 
-  const discountedPrice = product.discount
-    ? product.unitPrice * (1 - product.discount / 100)
-    : product.unitPrice;
+  // Güvenli fiyat hesaplama
+  const safeUnitPrice = product.unitPrice > 0 ? product.unitPrice : 100;
+  const safeDiscount = product.discount && product.discount > 0 ? product.discount : 0;
+  
+  const discountedPrice = safeDiscount > 0
+    ? safeUnitPrice * (1 - safeDiscount / 100)
+    : safeUnitPrice;
 
   return (
     <motion.div
@@ -52,9 +56,9 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           />
 
           {/* Discount Badge */}
-          {product.discount && product.discount > 0 && (
+          {safeDiscount > 0 && (
             <Badge variant="destructive" className="absolute top-2 left-2">
-              %{product.discount} İndirim
+              %{Math.round(safeDiscount)} İndirim
             </Badge>
           )}
 
@@ -104,9 +108,9 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
               <span className="text-xl font-bold text-primary">
                 {formatPrice(discountedPrice)}
               </span>
-              {product.discount && product.discount > 0 && (
+              {safeDiscount > 0 && (
                 <span className="text-sm text-muted-foreground line-through">
-                  {formatPrice(product.unitPrice)}
+                  {formatPrice(safeUnitPrice)}
                 </span>
               )}
             </div>
@@ -115,7 +119,12 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
               <span
                 className={`w-2 h-2 rounded-full ${product.unitInStock > 0 ? "bg-green-500" : "bg-red-500"}`}
               />
-              <span>{product.unitInStock > 0 ? "Stokta" : "Tükendi"}</span>
+              <span>
+                {product.unitInStock > 0 
+                  ? `Stokta (${product.unitInStock} adet)` 
+                  : "Tükendi"
+                }
+              </span>
             </div>
           </div>
 

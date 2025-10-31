@@ -11,7 +11,7 @@ import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
 import { SubCategoryService } from "@/services/subcategory-service";
 import { SubCategory } from "@/types";
-import { getMegaMenuData, popularCategories } from "@/data/mega-menu-data";
+import { getMegaMenuData, popularCategories, allCategoriesData } from "@/data/mega-menu-data";
 import {
   Menu,
   Search,
@@ -60,6 +60,7 @@ export function MobileNavigation({
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+  const [expandedAllCategories, setExpandedAllCategories] = useState<Set<string>>(new Set());
 
   // SubCategory'leri yükle
   useEffect(() => {
@@ -89,6 +90,26 @@ export function MobileNavigation({
       newExpanded.add(categoryName);
     }
     setExpandedCategories(newExpanded);
+  };
+
+  const toggleAllCategory = (categoryId: string) => {
+    const newExpanded = new Set(expandedAllCategories);
+    if (newExpanded.has(categoryId)) {
+      newExpanded.delete(categoryId);
+    } else {
+      newExpanded.add(categoryId);
+    }
+    setExpandedAllCategories(newExpanded);
+  };
+
+  const handleCategoryClick = (categoryName: string, hasSubCategories: boolean) => {
+    if (hasSubCategories) {
+      toggleCategory(categoryName);
+    } else {
+      // Alt kategori yoksa direkt kategori sayfasına git
+      router.push(`/categories/${categoryName.toLowerCase()}`);
+      setIsOpen(false);
+    }
   };
 
   const handleLinkClick = () => {
@@ -222,9 +243,69 @@ export function MobileNavigation({
               </div>
             </div>
 
+            {/* Tüm Kategoriler */}
+            <div className="p-4 border-b">
+              <h3 className="font-semibold text-sm mb-3">Tüm Kategoriler</h3>
+              <div className="space-y-1">
+                {allCategoriesData.categories.map((category) => {
+                  const IconComponent = category.icon;
+                  const isExpanded = expandedAllCategories.has(category.id);
+                  
+                  return (
+                    <div key={category.id}>
+                      <div className="flex items-center">
+                        <button
+                          className="flex-1 flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 transition-colors text-left"
+                          onClick={() => toggleAllCategory(category.id)}
+                        >
+                          <IconComponent className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-sm">{category.name}</span>
+                        </button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="p-1 h-6 w-6"
+                          onClick={() => toggleAllCategory(category.id)}
+                        >
+                          <ChevronRight
+                            className={`w-3 h-3 transition-transform duration-200 ${
+                              isExpanded ? "rotate-90" : ""
+                            }`}
+                          />
+                        </Button>
+                      </div>
+                      {isExpanded && (
+                        <div className="ml-6 space-y-1 animate-in slide-in-from-top-1 duration-200">
+                          {category.subCategories.map((subCategory, index) => (
+                            <div key={index} className="space-y-2">
+                              <h4 className="font-medium text-xs text-orange-600 mt-3 first:mt-0">
+                                {subCategory.title}
+                              </h4>
+                              <div className="grid grid-cols-2 gap-1">
+                                {subCategory.items.map((item, itemIndex) => (
+                                  <Link
+                                    key={itemIndex}
+                                    href={`/categories/${category.id}/${item.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and").replace(/ç/g, "c").replace(/ğ/g, "g").replace(/ı/g, "i").replace(/ö/g, "o").replace(/ş/g, "s").replace(/ü/g, "u")}`}
+                                    className="block p-1 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded transition-colors"
+                                    onClick={handleLinkClick}
+                                  >
+                                    {item}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Categories */}
             <div className="p-4">
-              <h3 className="font-semibold text-sm mb-3">Kategoriler</h3>
+              <h3 className="font-semibold text-sm mb-3">Popüler Kategoriler</h3>
               <div className="space-y-1">
                 {categories.map((category) => {
                   const IconComponent = category.icon;
@@ -237,14 +318,13 @@ export function MobileNavigation({
                   return (
                     <div key={category.name}>
                       <div className="flex items-center">
-                        <Link
-                          href={category.href}
-                          className="flex-1 flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 transition-colors"
-                          onClick={handleLinkClick}
+                        <button
+                          className="flex-1 flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 transition-colors text-left"
+                          onClick={() => handleCategoryClick(category.name, categorySubCategories.length > 0)}
                         >
                           <IconComponent className="w-4 h-4 text-muted-foreground" />
                           <span className="text-sm">{category.name}</span>
-                        </Link>
+                        </button>
                         {categorySubCategories.length > 0 && (
                           <Button
                             variant="ghost"
@@ -253,7 +333,7 @@ export function MobileNavigation({
                             onClick={() => toggleCategory(category.name)}
                           >
                             <ChevronRight
-                              className={`w-3 h-3 transition-transform ${
+                              className={`w-3 h-3 transition-transform duration-200 ${
                                 isExpanded ? "rotate-90" : ""
                               }`}
                             />
@@ -261,15 +341,15 @@ export function MobileNavigation({
                         )}
                       </div>
                       {isExpanded && categorySubCategories.length > 0 && (
-                        <div className="ml-6 space-y-1">
+                        <div className="ml-6 space-y-1 animate-in slide-in-from-top-1 duration-200">
                           {categorySubCategories.map((subCategory, index) => (
                             <Link
                               key={subCategory.id || index}
-                              href={subCategory.href || `/categories/${category.name.toLowerCase()}/${subCategory.name?.toLowerCase().replace(/\s+/g, "-")}`}
+                              href={`/categories/${category.name.toLowerCase()}/${('subCategoryName' in subCategory ? subCategory.subCategoryName : subCategory.name)?.toLowerCase().replace(/\s+/g, "-")}`}
                               className="block p-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors"
                               onClick={handleLinkClick}
                             >
-                              {subCategory.name || subCategory.subCategoryName}
+                              {'subCategoryName' in subCategory ? subCategory.subCategoryName : subCategory.name}
                             </Link>
                           ))}
                         </div>

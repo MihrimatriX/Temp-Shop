@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProductStore } from "@/store/product-store";
+import { extendedCategories, extendedSubCategories } from "@/data/mock-data-extended";
 
 interface CategoryFilterProps {
   categoryId?: number;
@@ -11,7 +12,11 @@ interface CategoryFilterProps {
 
 export function CategoryFilter({ categoryId }: CategoryFilterProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const { categories, filters, setFilters } = useProductStore();
+  const { filters, setFilters } = useProductStore();
+  
+  // Mock data'dan kategorileri çek
+  const categories = extendedCategories;
+  const subCategories = extendedSubCategories;
 
   const handleCategorySelect = async (categoryId: number | undefined) => {
     setFilters({
@@ -40,6 +45,9 @@ export function CategoryFilter({ categoryId }: CategoryFilterProps) {
       console.error("Error filtering products:", error);
     }
   };
+
+  // Mevcut kategoriye ait alt kategorileri filtrele
+  const currentSubCategories = subCategories.filter(sub => sub.categoryId === categoryId);
 
   return (
     <div className="space-y-4">
@@ -79,6 +87,34 @@ export function CategoryFilter({ categoryId }: CategoryFilterProps) {
               {category.categoryName}
             </Button>
           ))}
+        </div>
+      )}
+
+      {/* Alt Kategoriler */}
+      {currentSubCategories.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-lg">Alt Kategoriler</h3>
+          </div>
+          <div className="space-y-2">
+            {currentSubCategories.map((subCategory) => (
+              <Button
+                key={subCategory.id}
+                variant="ghost"
+                className="w-full justify-start text-sm"
+                onClick={() => {
+                  // Alt kategori seçimi için filtreleme
+                  setFilters({
+                    ...filters,
+                    subCategoryId: subCategory.id,
+                    pageNumber: 1,
+                  });
+                }}
+              >
+                {subCategory.subCategoryName}
+              </Button>
+            ))}
+          </div>
         </div>
       )}
     </div>

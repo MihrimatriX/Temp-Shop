@@ -58,9 +58,356 @@ export interface MegaMenuData {
   [key: string]: MegaMenuCategory;
 }
 
+export interface AllCategoriesMenu {
+  categories: AllCategoryItem[];
+}
+
+export interface AllCategoryItem {
+  id: string;
+  name: string;
+  icon: any;
+  href: string;
+  subCategories: AllSubCategory[];
+}
+
+export interface AllSubCategory {
+  title: string;
+  items: string[];
+}
+
+// Tüm Kategoriler menü verisi
+export const allCategoriesData: AllCategoriesMenu = {
+  categories: [
+    {
+      id: "women",
+      name: "Kadın",
+      icon: Shirt,
+      href: "/categories/women",
+      subCategories: [
+        {
+          title: "Giyim",
+          items: [
+            "Elbise", "Tişört", "Gömlek", "Kot Pantolon", "Kot Ceket", 
+            "Pantolon", "Mont", "Bluz", "Ceket", "Etek", "Kazak", 
+            "Tesettür", "Büyük Beden", "Trençkot", "Yağmurluk & Rüzgarlık", 
+            "Sweatshirt", "Kaban", "Hırka", "Palto"
+          ]
+        },
+        {
+          title: "Ayakkabı",
+          items: [
+            "Topuklu Ayakkabı", "Sneaker", "Günlük Ayakkabı", "Babet", 
+            "Sandalet", "Bot", "Çizme", "Kar Botu", "Loafer"
+          ]
+        },
+        {
+          title: "Çanta",
+          items: [
+            "Omuz Çantası", "Sırt Çantası", "Bel Çantası", "Okul Çantası", 
+            "Laptop Çantası", "Portföy", "Postacı Çantası", "El Çantası", 
+            "Kanvas Çantası", "Makyaj Çantası", "Abiye Çantası", "Çapraz Çantası", 
+            "Bez Çantası", "Anne Bebek Çantası", "Evrak Çantası", "Tote Çantası", 
+            "Beslenme Çantası", "Kartlık", "Cüzdan", "Kadın Spor Çantası"
+          ]
+        },
+        {
+          title: "Ev & İç Giyim",
+          items: [
+            "Pijama Takımı", "Gecelik", "Sütyen", "İç Çamaşırı Takımları", 
+            "Fantezi Giyim", "Çorap", "Korse", "Külot", "Büstiyer", "Bralet", 
+            "Atlet & Body", "Kombinezon", "Jartiyer"
+          ]
+        },
+        {
+          title: "Kozmetik",
+          items: [
+            "Parfüm", "Göz Makyajı", "Cilt Bakım", "Saç Bakımı", "Makyaj", 
+            "Ağız Bakım", "Cinsel Sağlık", "Vücut Bakım", "Hijyenik Ped", 
+            "Duş Jeli & Kremleri", "Epilasyon Ürünleri", "Ruj", "Dudak Nemlendirici", 
+            "Aydınlatıcı & Highlighter", "Eyeliner", "Ten Makyajı", "Manikür & Pedikür", 
+            "BB & CC Krem", "El Kremi", "Yüz Nemlendirici"
+          ]
+        },
+        {
+          title: "Spor & Outdoor",
+          items: [
+            "Sweatshirt", "Tişört", "Spor Sütyeni", "Tayt", "Eşofman", 
+            "Koşu Ayakkabısı", "Spor Çantası", "Spor Ekipmanları", "Outdoor Ayakkabı", 
+            "Kar Botu", "Outdoor Ekipmanları", "Sporcu Besinleri", "Sporcu Aksesuarları", 
+            "Outdoor Çanta", "Kayak Malzemeleri", "Uyku Tulumu", "Mat", "Dağcılık", 
+            "Kadın Spor Ceket", "Spor Ayakkabı"
+          ]
+        }
+      ]
+    },
+    {
+      id: "men",
+      name: "Erkek",
+      icon: Shirt,
+      href: "/categories/men",
+      subCategories: [
+        {
+          title: "Giyim",
+          items: [
+            "Tişört", "Gömlek", "Pantolon", "Kot Pantolon", "Ceket", 
+            "Mont", "Kaban", "Sweatshirt", "Kazak", "Hırka", "Şort", 
+            "Eşofman", "Takım Elbise", "Yağmurluk", "Polo Tişört"
+          ]
+        },
+        {
+          title: "Ayakkabı",
+          items: [
+            "Sneaker", "Günlük Ayakkabı", "Spor Ayakkabı", "Klasik Ayakkabı", 
+            "Bot", "Terlik", "Sandalet", "Loafer", "Outdoor Ayakkabı"
+          ]
+        },
+        {
+          title: "Çanta & Aksesuar",
+          items: [
+            "Sırt Çantası", "Laptop Çantası", "Evrak Çantası", "Spor Çantası", 
+            "Kemer", "Cüzdan", "Saat", "Güneş Gözlüğü", "Şapka"
+          ]
+        }
+      ]
+    },
+    {
+      id: "baby-kids",
+      name: "Anne & Çocuk",
+      icon: Baby,
+      href: "/categories/baby-kids",
+      subCategories: [
+        {
+          title: "Bebek Giyim",
+          items: [
+            "Bebek Body", "Bebek Tulumu", "Bebek Takımı", "Bebek Pijama", 
+            "Bebek Çorap", "Bebek Eldiven", "Bebek Şapka", "Bebek Patik"
+          ]
+        },
+        {
+          title: "Çocuk Giyim",
+          items: [
+            "Çocuk Tişört", "Çocuk Pantolon", "Çocuk Elbise", "Çocuk Mont", 
+            "Çocuk Ayakkabı", "Çocuk Çorap", "Çocuk İç Giyim"
+          ]
+        },
+        {
+          title: "Bebek Bakım",
+          items: [
+            "Bebek Bezi", "Bebek Maması", "Bebek Şampuanı", "Bebek Kremi", 
+            "Bebek Pudrası", "Bebek Yağı", "Bebek Losyonu"
+          ]
+        }
+      ]
+    },
+    {
+      id: "home-furniture",
+      name: "Ev & Mobilya",
+      icon: Home,
+      href: "/categories/home-furniture",
+      subCategories: [
+        {
+          title: "Mobilya",
+          items: [
+            "Yatak Odası", "Oturma Odası", "Yemek Odası", "Çalışma Odası", 
+            "Genç Odası", "Banyo Mobilyası", "Koridor Mobilyası"
+          ]
+        },
+        {
+          title: "Ev Tekstili",
+          items: [
+            "Yatak Takımı", "Nevresim", "Yorgan", "Yastık", "Battaniye", 
+            "Perde", "Halı", "Kilim", "Masa Örtüsü"
+          ]
+        },
+        {
+          title: "Mutfak",
+          items: [
+            "Mutfak Gereçleri", "Tencere", "Tava", "Tabak", "Bardak", 
+            "Çatal Kaşık", "Mutfak Robotu", "Kahve Makinesi"
+          ]
+        }
+      ]
+    },
+    {
+      id: "supermarket",
+      name: "Süpermarket",
+      icon: Utensils,
+      href: "/categories/supermarket",
+      subCategories: [
+        {
+          title: "Gıda",
+          items: [
+            "Kahvaltılık", "Et & Tavuk", "Süt & Süt Ürünleri", "Meyve & Sebze", 
+            "Bakliyat", "Makarna & Erişte", "Konserve", "Dondurulmuş Gıda"
+          ]
+        },
+        {
+          title: "İçecek",
+          items: [
+            "Su", "Meyve Suyu", "Gazlı İçecek", "Çay", "Kahve", 
+            "Enerji İçeceği", "Alkollü İçecek"
+          ]
+        },
+        {
+          title: "Temizlik",
+          items: [
+            "Çamaşır Deterjanı", "Bulaşık Deterjanı", "Yüzey Temizleyici", 
+            "Tuvalet Kağıdı", "Kağıt Havlu", "Temizlik Bezi"
+          ]
+        }
+      ]
+    },
+    {
+      id: "cosmetics",
+      name: "Kozmetik",
+      icon: Heart,
+      href: "/categories/cosmetics",
+      subCategories: [
+        {
+          title: "Makyaj",
+          items: [
+            "Fondöten", "Kapatıcı", "Ruj", "Göz Kalemi", "Maskara", 
+            "Allık", "Highlighter", "Eyeliner", "Göz Fırçası"
+          ]
+        },
+        {
+          title: "Cilt Bakım",
+          items: [
+            "Temizleyici", "Tonik", "Nemlendirici", "Güneş Kremi", 
+            "Anti-Aging", "Göz Kremi", "Yüz Maskesi", "Serum"
+          ]
+        },
+        {
+          title: "Saç Bakım",
+          items: [
+            "Şampuan", "Saç Kremi", "Saç Maskesi", "Saç Yağı", 
+            "Saç Spreyi", "Saç Jeli", "Saç Boyası"
+          ]
+        }
+      ]
+    },
+    {
+      id: "shoes-bags",
+      name: "Ayakkabı & Çanta",
+      icon: Footprints,
+      href: "/categories/shoes-bags",
+      subCategories: [
+        {
+          title: "Kadın Ayakkabı",
+          items: [
+            "Topuklu", "Babet", "Sneaker", "Bot", "Çizme", 
+            "Sandalet", "Loafer", "Spor Ayakkabı"
+          ]
+        },
+        {
+          title: "Erkek Ayakkabı",
+          items: [
+            "Sneaker", "Klasik", "Bot", "Spor", "Terlik", 
+            "Sandalet", "Loafer", "Outdoor"
+          ]
+        },
+        {
+          title: "Çanta",
+          items: [
+            "El Çantası", "Sırt Çantası", "Laptop Çantası", "Evrak Çantası", 
+            "Spor Çantası", "Bavul", "Valiz", "Küçük Çanta"
+          ]
+        }
+      ]
+    },
+    {
+      id: "electronics",
+      name: "Elektronik",
+      icon: Smartphone,
+      href: "/categories/elektronik",
+      subCategories: [
+        {
+          title: "Telefon & Tablet",
+          items: [
+            "Akıllı Telefon", "Tablet", "Telefon Aksesuar", "Tablet Aksesuar", 
+            "Powerbank", "Şarj Cihazı", "Kulaklık"
+          ]
+        },
+        {
+          title: "Bilgisayar",
+          items: [
+            "Laptop", "Masaüstü", "Monitör", "Klavye", "Mouse", 
+            "Webcam", "Hoparlör", "Kulaklık"
+          ]
+        },
+        {
+          title: "TV & Ses",
+          items: [
+            "Televizyon", "Soundbar", "Hoparlör", "Kulaklık", 
+            "Müzik Sistemi", "Projeksiyon", "Anten"
+          ]
+        }
+      ]
+    },
+    {
+      id: "sports-outdoor",
+      name: "Spor & Outdoor",
+      icon: Dumbbell,
+      href: "/categories/sports-outdoor",
+      subCategories: [
+        {
+          title: "Spor Giyim",
+          items: [
+            "Spor Tişört", "Spor Şort", "Eşofman", "Spor Ayakkabı", 
+            "Spor Çorap", "Spor Çanta", "Spor Eldiven"
+          ]
+        },
+        {
+          title: "Fitness",
+          items: [
+            "Dambıl", "Halter", "Koşu Bandı", "Bisiklet", 
+            "Yoga Matı", "Fitness Topu", "Ağırlık"
+          ]
+        },
+        {
+          title: "Outdoor",
+          items: [
+            "Çadır", "Uyku Tulumu", "Sırt Çantası", "Outdoor Ayakkabı", 
+            "Outdoor Giyim", "Kamp Malzemeleri", "Dağcılık"
+          ]
+        }
+      ]
+    },
+    {
+      id: "books-stationery",
+      name: "Kitap & Kırtasiye",
+      icon: BookOpen,
+      href: "/categories/books-stationery",
+      subCategories: [
+        {
+          title: "Kitap",
+          items: [
+            "Roman", "Bilim Kurgu", "Tarih", "Biyografi", "Çocuk Kitabı", 
+            "Eğitim", "Dil Öğrenimi", "Dergi"
+          ]
+        },
+        {
+          title: "Kırtasiye",
+          items: [
+            "Kalem", "Defter", "Çanta", "Silgi", "Cetvel", 
+            "Makas", "Yapıştırıcı", "Bant"
+          ]
+        },
+        {
+          title: "Ofis",
+          items: [
+            "Dosya", "Klasör", "Zımba", "Delgeç", "Hesap Makinesi", 
+            "Telefon", "Faks", "Yazıcı"
+          ]
+        }
+      ]
+    }
+  ]
+};
+
 // Mega menü veri yapısı
 export const megaMenuData: MegaMenuData = {
-  "Elektronik": {
+  "electronics": {
     columns: [
       {
         title: "Telefon & Aksesuar",
@@ -72,6 +419,8 @@ export const megaMenuData: MegaMenuData = {
           { id: "charger", name: "Şarj Cihazları", href: "/categories/elektronik/sarj-cihazi" },
           { id: "cable", name: "Kablolar", href: "/categories/elektronik/kablo" },
           { id: "powerbank", name: "Powerbank", href: "/categories/elektronik/powerbank", isNew: true },
+          { id: "headphones", name: "Kulaklık", href: "/categories/elektronik/kulaklik" },
+          { id: "speaker", name: "Hoparlör", href: "/categories/elektronik/hoparlor" },
         ]
       },
       {
@@ -124,36 +473,48 @@ export const megaMenuData: MegaMenuData = {
     featured: [
       {
         id: 1,
-        name: "iPhone 15 Pro",
-        price: 45000,
-        originalPrice: 50000,
-        discount: 10,
-        imageUrl: "https://picsum.photos/200/200?random=iphone",
+        name: "iPhone 15 Pro Max",
+        price: 64999,
+        originalPrice: 69999,
+        discount: 7,
+        imageUrl: "https://cdn.hepsiburada.net/s/56/220-220/1102000000000000.jpg",
         rating: 4.8,
         href: "/products/1"
       },
       {
         id: 2,
-        name: "Samsung Galaxy S24",
-        price: 25000,
-        originalPrice: 30000,
-        discount: 17,
-        imageUrl: "https://picsum.photos/200/200?random=samsung",
-        rating: 4.6,
+        name: "Samsung Galaxy S24 Ultra",
+        price: 52999,
+        originalPrice: 57999,
+        discount: 8,
+        imageUrl: "https://cdn.hepsiburada.net/s/55/220-220/1102000000000000.jpg",
+        rating: 4.7,
         href: "/products/2"
       },
       {
         id: 3,
-        name: "MacBook Air M2",
-        price: 35000,
-        imageUrl: "https://picsum.photos/200/200?random=macbook",
+        name: "MacBook Pro M3",
+        price: 42999,
+        originalPrice: 45999,
+        discount: 6,
+        imageUrl: "https://cdn.hepsiburada.net/s/60/220-220/1102000000000000.jpg",
         rating: 4.9,
         href: "/products/3"
+      },
+      {
+        id: 4,
+        name: "Sony WH-1000XM5",
+        price: 8999,
+        originalPrice: 9999,
+        discount: 10,
+        imageUrl: "https://cdn.hepsiburada.net/s/58/220-220/1102000000000000.jpg",
+        rating: 4.6,
+        href: "/products/4"
       }
     ]
   },
 
-  "Moda": {
+  "women": {
     columns: [
       {
         title: "Kadın Giyim",
@@ -242,7 +603,7 @@ export const megaMenuData: MegaMenuData = {
     ]
   },
 
-  "Ev & Yaşam": {
+  "home-furniture": {
     columns: [
       {
         title: "Mobilya",
@@ -326,7 +687,7 @@ export const megaMenuData: MegaMenuData = {
     ]
   },
 
-  "Spor & Outdoor": {
+  "sports-outdoor": {
     columns: [
       {
         title: "Fitness & Spor",
@@ -390,7 +751,7 @@ export const megaMenuData: MegaMenuData = {
     ]
   },
 
-  "Anne & Bebek": {
+  "baby-kids": {
     columns: [
       {
         title: "Bebek Giyim",
@@ -449,7 +810,7 @@ export const megaMenuData: MegaMenuData = {
     ]
   },
 
-  "Kozmetik & Bakım": {
+  "cosmetics": {
     columns: [
       {
         title: "Makyaj",
@@ -510,7 +871,7 @@ export const megaMenuData: MegaMenuData = {
     ]
   },
 
-  "Kitap & Müzik": {
+  "books-stationery": {
     columns: [
       {
         title: "Kitaplar",
@@ -572,7 +933,7 @@ export const megaMenuData: MegaMenuData = {
     ]
   },
 
-  "Oto & Bahçe": {
+  "supermarket": {
     columns: [
       {
         title: "Araç Aksesuarları",
@@ -638,12 +999,12 @@ export const categoryIcons: { [key: string]: any } = {
 
 // Popüler kategoriler
 export const popularCategories = [
-  { name: "Elektronik", href: "/categories/elektronik", icon: Smartphone },
-  { name: "Moda", href: "/categories/moda", icon: Shirt },
-  { name: "Ev & Yaşam", href: "/categories/ev-yasam", icon: Home },
-  { name: "Spor & Outdoor", href: "/categories/spor", icon: Dumbbell },
-  { name: "Anne & Bebek", href: "/categories/anne-bebek", icon: Baby },
-  { name: "Kozmetik & Bakım", href: "/categories/kozmetik", icon: Heart },
+  { name: "electronics", href: "/categories/electronics", icon: Smartphone },
+  { name: "women", href: "/categories/women", icon: Shirt },
+  { name: "home-furniture", href: "/categories/home-furniture", icon: Home },
+  { name: "sports-outdoor", href: "/categories/sports-outdoor", icon: Dumbbell },
+  { name: "baby-kids", href: "/categories/baby-kids", icon: Baby },
+  { name: "cosmetics", href: "/categories/cosmetics", icon: Heart },
 ];
 
 // Mega menü yardımcı fonksiyonları

@@ -16,7 +16,7 @@ import { SearchPopup } from "@/components/search-popup";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import { SubCategoryService } from "@/services/subcategory-service";
 import { SubCategory } from "@/types";
-import { megaMenuData, getMegaMenuData, getCategoryIcon, popularCategories } from "@/data/mega-menu-data";
+import { megaMenuData, getMegaMenuData, getCategoryIcon, popularCategories, allCategoriesData } from "@/data/mega-menu-data";
 import {
   ShoppingCart,
   Search,
@@ -26,6 +26,8 @@ import {
   MapPin,
   Star,
   TrendingUp,
+  ArrowRight,
+  X,
 } from "lucide-react";
 
 export function Navigation() {
@@ -38,6 +40,8 @@ export function Navigation() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
+  const [selectedAllCategory, setSelectedAllCategory] = useState<string | null>(null);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -89,12 +93,43 @@ export function Navigation() {
     }
   };
 
+  const handleCategoryHover = (categoryName: string) => {
+    setHoveredCategory(categoryName);
+    // Hover ile kategoriyi aktif yap
+    if (!activeCategory) {
+      setActiveCategory(categoryName);
+    }
+  };
+
+  const handleCategoryLeave = () => {
+    setHoveredCategory(null);
+    // Hover bittiğinde active category'yi temizle (click ile açılan hariç)
+    setTimeout(() => {
+      if (!hoveredCategory) {
+        setActiveCategory(null);
+      }
+    }, 100);
+  };
+
+  const handleAllCategoriesToggle = () => {
+    setIsAllCategoriesOpen(!isAllCategoriesOpen);
+    if (isAllCategoriesOpen) {
+      setSelectedAllCategory(null);
+    }
+  };
+
+  const handleAllCategorySelect = (categoryId: string) => {
+    setSelectedAllCategory(categoryId);
+  };
+
   // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (megaMenuRef.current && !megaMenuRef.current.contains(event.target as Node)) {
         setActiveCategory(null);
         setHoveredCategory(null);
+        setIsAllCategoriesOpen(false);
+        setSelectedAllCategory(null);
       }
     };
 
@@ -104,12 +139,19 @@ export function Navigation() {
     };
   }, []);
 
+  // Body scroll lock for overlay menu
+  useEffect(() => {
+    if (isAllCategoriesOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [isAllCategoriesOpen]);
+
   const categories = popularCategories;
 
-  // Mega menu data'yı al
-  const getMegaMenuDataForCategory = (categoryName: string) => {
-    return getMegaMenuData(categoryName);
-  };
 
   return (
     <>
@@ -255,130 +297,243 @@ export function Navigation() {
       <nav className="hidden md:block bg-white border-b relative" ref={megaMenuRef}>
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-8 py-3 overflow-x-auto scrollbar-hide">
-            <Button
-              variant="ghost"
-              className="flex items-center gap-2 whitespace-nowrap"
-            >
-              <Menu className="w-4 h-4" />
-              <span>Kategoriler</span>
-            </Button>
+            <div className="relative" ref={megaMenuRef}>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 whitespace-nowrap"
+                onClick={handleAllCategoriesToggle}
+              >
+                <Menu className="w-4 h-4" />
+                <span>Tüm Kategoriler</span>
+                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${
+                  isAllCategoriesOpen ? "rotate-180" : ""
+                }`} />
+              </Button>
+
+              {/* Tüm Kategoriler Mega Menu */}
+              {isAllCategoriesOpen && (
+                <div className="fixed inset-0 z-[100]">
+                  {/* Backdrop */}
+                  <div className="absolute inset-0 bg-black/40" onClick={() => setIsAllCategoriesOpen(false)} />
+                  {/* Popup Panel */}
+                  <div className="absolute left-0 right-0 top-[72px] bottom-0 overflow-y-auto">
+                    <div className="container mx-auto px-4 py-6">
+                      <div className="bg-white rounded-lg shadow-xl border animate-in fade-in duration-200">
+                        {/* Header with close button */}
+                        <div className="flex items-center justify-between p-4 border-b">
+                          <h2 className="text-xl font-semibold text-gray-800">Tüm Kategoriler</h2>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setIsAllCategoriesOpen(false)}
+                            className="h-8 w-8"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <div className="grid grid-cols-6 gap-6 p-6">
+                      {/* Sol Panel - Ana Kategoriler */}
+                          <div className="col-span-2">
+                            <div className="space-y-1">
+                          {allCategoriesData.categories.map((category) => {
+                            const IconComponent = category.icon;
+                            return (
+                              <button
+                                key={category.id}
+                                className={`w-full flex items-center gap-3 p-3 rounded-md text-left transition-all duration-200 ${
+                                  selectedAllCategory === category.id
+                                    ? "bg-purple-50 text-purple-600 border-l-4 border-purple-600"
+                                    : "hover:bg-gray-50 text-gray-700"
+                                }`}
+                                onClick={() => handleAllCategorySelect(category.id)}
+                              >
+                                <IconComponent className="w-5 h-5" />
+                                <span className="font-medium">{category.name}</span>
+                                <ChevronDown className={`w-4 h-4 ml-auto transition-transform duration-200 ${
+                                  selectedAllCategory === category.id ? "rotate-180" : ""
+                                }`} />
+                              </button>
+                            );
+                          })}
+                            </div>
+                          </div>
+
+                      {/* Sağ Panel - Alt Kategoriler */}
+                          <div className="col-span-4">
+                            {selectedAllCategory ? (
+                              <div className="space-y-6">
+                                {allCategoriesData.categories
+                                  .find(cat => cat.id === selectedAllCategory)
+                                  ?.subCategories.map((subCategory, index) => (
+                                    <div key={index}>
+                                      <h3 className="font-bold text-orange-600 text-lg mb-3 pb-2 border-b border-gray-200">
+                                        {subCategory.title}
+                                      </h3>
+                                      <div className="grid grid-cols-3 gap-2">
+                                        {subCategory.items.map((item, itemIndex) => (
+                                          <Link
+                                            key={itemIndex}
+                                            href={`/categories/${selectedAllCategory}/${item.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and").replace(/ç/g, "c").replace(/ğ/g, "g").replace(/ı/g, "i").replace(/ö/g, "o").replace(/ş/g, "s").replace(/ü/g, "u")}`}
+                                            className="text-gray-700 hover:text-purple-600 transition-colors text-sm py-1 px-2 rounded-md hover:bg-purple-50"
+                                          >
+                                            {item}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ))}
+                              </div>
+                            ) : (
+                              <div className="flex items-center justify-center h-64 text-gray-500">
+                                <div className="text-center">
+                                  <Menu className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                                  <p className="text-lg font-medium">Kategori Seçin</p>
+                                  <p className="text-sm">Sol taraftan bir kategori seçerek alt kategorilerini görüntüleyin</p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {categories.map((category) => {
-              const megaMenuData = getMegaMenuDataForCategory(category.name);
+              const megaMenuDataForCategory = getMegaMenuData(category.name);
               const IconComponent = category.icon;
               
               return (
                 <div
                   key={category.name}
                   className="relative"
-                  onMouseEnter={() => {
-                    setHoveredCategory(category.name);
-                    // Eğer başka bir kategori aktifse, hover ile değiştir
-                    if (activeCategory && activeCategory !== category.name) {
-                      setActiveCategory(category.name);
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    // Sadece hover'ı temizle, active category'yi koru
-                    setHoveredCategory(null);
-                  }}
+                  onMouseEnter={() => handleCategoryHover(category.name)}
+                  onMouseLeave={handleCategoryLeave}
                 >
                   <Button
                     variant="ghost"
-                    className={`text-sm whitespace-nowrap flex items-center gap-2 ${
+                    className={`text-sm whitespace-nowrap flex items-center gap-2 transition-all duration-200 ${
                       (hoveredCategory === category.name || activeCategory === category.name)
-                        ? "text-purple-600 border-b-2 border-purple-600"
-                        : ""
+                        ? "text-purple-600 border-b-2 border-purple-600 bg-purple-50"
+                        : "hover:text-purple-600 hover:bg-purple-50"
                     }`}
                     onClick={() => handleCategoryClick(category.name)}
                   >
-                    <IconComponent className="w-4 h-4" />
+                    <IconComponent className={`w-4 h-4 transition-colors duration-200 ${
+                      (hoveredCategory === category.name || activeCategory === category.name)
+                        ? "text-purple-600"
+                        : "text-muted-foreground"
+                    }`} />
                     {category.name}
-                    <ChevronDown className="w-3 h-3" />
+                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${
+                      (hoveredCategory === category.name || activeCategory === category.name)
+                        ? "rotate-180"
+                        : ""
+                    }`} />
                   </Button>
 
                   {/* Mega Menu */}
-                  {(hoveredCategory === category.name || activeCategory === category.name) && megaMenuData && (
-                    <div className="absolute top-full left-0 w-screen bg-white border-t shadow-xl z-50">
-                      <div className="container mx-auto px-4 py-8">
-                        <div className="grid grid-cols-5 gap-8">
-                          {/* Kategori sütunları */}
-                          {megaMenuData.columns.map((column, index) => {
-                            const ColumnIcon = column.icon;
-                            return (
-                              <div key={index} className="space-y-4">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <ColumnIcon className="w-5 h-5 text-purple-600" />
-                                  <h3 className="font-bold text-purple-600 text-lg">
-                                    {column.title}
+                  {(hoveredCategory === category.name || activeCategory === category.name) && megaMenuDataForCategory && (
+                    <div 
+                      className="absolute top-full left-0 w-screen bg-white border-t shadow-xl z-50 animate-in slide-in-from-top-2 duration-200"
+                      onMouseEnter={() => setHoveredCategory(category.name)}
+                      onMouseLeave={handleCategoryLeave}
+                    >
+                      <div className="container mx-auto px-4 py-6">
+                        <div className="grid grid-cols-6 gap-6">
+                          {/* Sol tarafta kategori sütunları */}
+                          <div className="col-span-4">
+                            <div className="grid grid-cols-2 gap-6">
+                              {megaMenuDataForCategory.columns && megaMenuDataForCategory.columns.map((column, index) => {
+                                const ColumnIcon = column.icon;
+                                return (
+                                  <div key={index} className="space-y-3">
+                                    <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                                      <ColumnIcon className="w-5 h-5 text-purple-600" />
+                                      <h3 className="font-bold text-purple-600 text-base">
+                                        {column.title}
+                                      </h3>
+                                    </div>
+                                    <ul className="space-y-2">
+                                      {column.items && column.items.map((item, itemIndex) => (
+                                        <li key={itemIndex}>
+                                          <Link
+                                            href={item.href}
+                                            className="text-gray-700 hover:text-purple-600 transition-all duration-200 text-sm flex items-center gap-2 group py-1 px-2 rounded-md hover:bg-purple-50"
+                                          >
+                                            <span className="flex-1">{item.name}</span>
+                                            {item.isPopular && (
+                                              <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-600">
+                                                Popüler
+                                              </Badge>
+                                            )}
+                                            {item.isNew && (
+                                              <Badge variant="default" className="text-xs bg-green-500 text-white">
+                                                Yeni
+                                              </Badge>
+                                            )}
+                                            {item.isSale && (
+                                              <Badge variant="destructive" className="text-xs">
+                                                İndirim
+                                              </Badge>
+                                            )}
+                                          </Link>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                          
+                          {/* Sağ tarafta öne çıkan ürünler ve kampanyalar */}
+                          <div className="col-span-2 space-y-6">
+                            {/* Öne çıkan ürünler */}
+                            {megaMenuDataForCategory.featured && megaMenuDataForCategory.featured.length > 0 && (
+                              <div className="space-y-4">
+                                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                                  <TrendingUp className="w-5 h-5 text-purple-600" />
+                                  <h3 className="font-bold text-purple-600 text-base">
+                                    Öne Çıkan Ürünler
                                   </h3>
                                 </div>
-                                <ul className="space-y-2">
-                                  {column.items.map((item, itemIndex) => (
-                                    <li key={itemIndex}>
-                                      <Link
-                                        href={item.href}
-                                        className="text-gray-700 hover:text-purple-600 transition-colors text-sm flex items-center gap-2 group"
-                                      >
-                                        {item.name}
-                                        {item.isPopular && (
-                                          <Badge variant="secondary" className="text-xs">
-                                            Popüler
-                                          </Badge>
-                                        )}
-                                        {item.isNew && (
-                                          <Badge variant="default" className="text-xs bg-green-500">
-                                            Yeni
-                                          </Badge>
-                                        )}
-                                        {item.isSale && (
-                                          <Badge variant="destructive" className="text-xs">
-                                            İndirim
-                                          </Badge>
-                                        )}
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            );
-                          })}
-                          
-                          {/* Öne çıkan ürünler sütunu */}
-                          {megaMenuData.featured && megaMenuData.featured.length > 0 && (
-                            <div className="space-y-4">
-                              <div className="flex items-center gap-2 mb-3">
-                                <TrendingUp className="w-5 h-5 text-purple-600" />
-                                <h3 className="font-bold text-purple-600 text-lg">
-                                  Öne Çıkan Ürünler
-                                </h3>
-                              </div>
-                              <div className="space-y-3">
-                                {megaMenuData.featured.map((product) => (
-                                  <Link
-                                    key={product.id}
-                                    href={product.href}
-                                    className="block p-3 border rounded-lg hover:shadow-md transition-shadow group"
-                                  >
-                                    <div className="flex items-center gap-3">
-                                      <img
-                                        src={product.imageUrl}
-                                        alt={product.name}
-                                        className="w-12 h-12 object-cover rounded"
-                                        sizes="48px"
-                                      />
-                                      <div className="flex-1 min-w-0">
-                                        <h4 className="font-medium text-sm text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-2">
-                                          {product.name}
-                                        </h4>
-                                        <div className="flex items-center gap-2 mt-1">
-                                          <div className="flex items-center gap-1">
-                                            <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                                            <span className="text-xs text-gray-600">
-                                              {product.rating}
-                                            </span>
+                                <div className="space-y-3">
+                                  {megaMenuDataForCategory.featured.slice(0, 4).map((product) => (
+                                    <Link
+                                      key={product.id}
+                                      href={product.href}
+                                      className="block p-3 border rounded-lg hover:shadow-md transition-all duration-200 group bg-gray-50 hover:bg-white hover:border-purple-200"
+                                    >
+                                      <div className="flex items-center gap-3">
+                                        <div className="relative">
+                                          <img
+                                            src={product.imageUrl}
+                                            alt={product.name}
+                                            className="w-14 h-14 object-cover rounded-lg"
+                                            sizes="56px"
+                                          />
+                                          {product.discount && (
+                                            <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 py-0.5 rounded">
+                                              %{product.discount}
+                                            </div>
+                                          )}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <h4 className="font-medium text-sm text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-2 mb-1">
+                                            {product.name}
+                                          </h4>
+                                          <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-1">
+                                              <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                              <span className="text-xs text-gray-600">
+                                                {product.rating}
+                                              </span>
+                                            </div>
                                           </div>
-                                          <div className="flex items-center gap-1">
+                                          <div className="flex items-center gap-2 mt-1">
                                             <span className="text-sm font-bold text-purple-600">
                                               {product.price.toLocaleString("tr-TR")} ₺
                                             </span>
@@ -389,18 +544,30 @@ export function Navigation() {
                                             )}
                                           </div>
                                         </div>
-                                        {product.discount && (
-                                          <Badge variant="destructive" className="text-xs mt-1">
-                                            %{product.discount} İndirim
-                                          </Badge>
-                                        )}
                                       </div>
-                                    </div>
-                                  </Link>
-                                ))}
+                                    </Link>
+                                  ))}
+                                </div>
                               </div>
+                            )}
+
+                            {/* Kampanya banner'ı */}
+                            <div className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg p-4 text-white">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                <span className="text-sm font-medium">Özel Kampanya</span>
+                              </div>
+                              <h4 className="font-bold text-lg mb-1">Büyük İndirimler</h4>
+                              <p className="text-sm opacity-90 mb-3">Tüm elektronik ürünlerde %50'ye varan indirimler</p>
+                              <Link 
+                                href="/campaigns"
+                                className="inline-flex items-center gap-1 text-sm font-medium hover:underline"
+                              >
+                                Kampanyaları Gör
+                                <ArrowRight className="w-3 h-3" />
+                              </Link>
                             </div>
-                          )}
+                          </div>
                         </div>
                       </div>
                     </div>

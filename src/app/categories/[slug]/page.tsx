@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/product-grid";
 import { CategoryFilter } from "@/components/category-filter";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { generateExtendedProducts } from "@/data/mock-data-extended";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -14,63 +15,63 @@ interface CategoryPageProps {
 const categories = [
   {
     id: 1,
-    slug: "elektronik",
+    slug: "women",
+    name: "Kadın",
+    description: "Kadın giyim, ayakkabı, çanta ve aksesuar",
+  },
+  {
+    id: 2,
+    slug: "men",
+    name: "Erkek",
+    description: "Erkek giyim, ayakkabı, çanta ve aksesuar",
+  },
+  {
+    id: 3,
+    slug: "baby-kids",
+    name: "Anne & Çocuk",
+    description: "Bebek ve çocuk ürünleri, anne ihtiyaçları",
+  },
+  {
+    id: 4,
+    slug: "electronics",
     name: "Elektronik",
     description: "Telefon, bilgisayar, tablet ve diğer elektronik ürünler",
   },
   {
-    id: 2,
-    slug: "moda",
-    name: "Moda",
-    description: "Giyim, ayakkabı, çanta ve aksesuar",
-  },
-  {
-    id: 3,
-    slug: "ev-yasam",
-    name: "Ev & Yaşam",
-    description: "Ev dekorasyonu, mutfak, banyo ve yaşam ürünleri",
-  },
-  {
-    id: 4,
-    slug: "spor",
-    name: "Spor & Outdoor",
-    description: "Spor giyim, fitness, outdoor ve kamp ürünleri",
-  },
-  {
     id: 5,
-    slug: "anne-bebek",
-    name: "Anne & Bebek",
-    description: "Bebek giyim, oyuncak, bakım ürünleri",
+    slug: "home-furniture",
+    name: "Ev & Mobilya",
+    description: "Mobilya, ev tekstili, mutfak ve dekorasyon ürünleri",
   },
   {
     id: 6,
-    slug: "kozmetik",
-    name: "Kozmetik & Kişisel Bakım",
-    description: "Makyaj, cilt bakımı, parfüm ve kişisel bakım",
+    slug: "supermarket",
+    name: "Süpermarket",
+    description: "Gıda, içecek, temizlik ve kişisel bakım ürünleri",
   },
   {
     id: 7,
-    slug: "süpermarket",
-    name: "Süpermarket",
-    description: "Gıda, temizlik, kişisel bakım ürünleri",
+    slug: "cosmetics",
+    name: "Kozmetik",
+    description: "Makyaj, cilt bakımı, saç bakımı ve parfüm ürünleri",
   },
   {
     id: 8,
-    slug: "kitap",
-    name: "Kitap & Müzik",
-    description: "Kitaplar, müzik, film ve hobi ürünleri",
+    slug: "shoes-bags",
+    name: "Ayakkabı & Çanta",
+    description: "Kadın ve erkek ayakkabı, çanta, bavul ve aksesuar ürünleri",
   },
   {
     id: 9,
-    slug: "oto",
-    name: "Oto & Bahçe",
-    description: "Araç aksesuarları, bahçe malzemeleri",
+    slug: "sports-outdoor",
+    name: "Spor & Outdoor",
+    description: "Spor giyim, fitness ekipmanları, outdoor ürünleri",
   },
   {
     id: 10,
-    slug: "kirtasiye",
-    name: "Kırtasiye & Ofis",
-    description: "Ofis malzemeleri, kırtasiye ürünleri",
+    slug: "books-stationery",
+    name: "Kitap & Kırtasiye",
+    description: "Kitaplar, kırtasiye ürünleri, ofis malzemeleri",
   },
 ];
 
@@ -100,6 +101,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
+  // Mock data'dan ürünleri çek
+  const allProducts = generateExtendedProducts();
+  const categoryProducts = allProducts.filter(product => product.category?.id === category.id);
+
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
@@ -114,6 +119,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{category.name}</h1>
           <p className="text-muted-foreground">{category.description}</p>
+          <p className="text-sm text-gray-600 mt-2">
+            {categoryProducts.length} ürün bulundu
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-4 gap-8">
@@ -121,7 +129,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <CategoryFilter categoryId={category.id} />
           </div>
           <div className="lg:col-span-3">
-            <ProductGrid products={[]} />
+            <ProductGrid products={categoryProducts} />
           </div>
         </div>
       </div>

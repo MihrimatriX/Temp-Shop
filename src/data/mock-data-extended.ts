@@ -11,8 +11,8 @@ import {
 export const extendedCategories: Category[] = [
   {
     id: 1,
-    categoryName: "Elektronik",
-    description: "Telefon, bilgisayar, tablet ve diğer elektronik ürünler",
+    categoryName: "Kadın",
+    description: "Kadın giyim, ayakkabı, çanta ve aksesuar",
     imageUrl: "https://picsum.photos/300/200?random=cat1",
     isActive: true,
     createdAt: new Date(),
@@ -20,8 +20,8 @@ export const extendedCategories: Category[] = [
   },
   {
     id: 2,
-    categoryName: "Moda",
-    description: "Giyim, ayakkabı, çanta ve aksesuar",
+    categoryName: "Erkek",
+    description: "Erkek giyim, ayakkabı, çanta ve aksesuar",
     imageUrl: "https://picsum.photos/300/200?random=cat2",
     isActive: true,
     createdAt: new Date(),
@@ -29,8 +29,8 @@ export const extendedCategories: Category[] = [
   },
   {
     id: 3,
-    categoryName: "Ev & Yaşam",
-    description: "Ev dekorasyonu, mutfak, banyo ve yaşam ürünleri",
+    categoryName: "Anne & Çocuk",
+    description: "Bebek ve çocuk ürünleri, anne ihtiyaçları",
     imageUrl: "https://picsum.photos/300/200?random=cat3",
     isActive: true,
     createdAt: new Date(),
@@ -38,8 +38,8 @@ export const extendedCategories: Category[] = [
   },
   {
     id: 4,
-    categoryName: "Spor & Outdoor",
-    description: "Spor giyim, fitness, outdoor ve kamp ürünleri",
+    categoryName: "Elektronik",
+    description: "Telefon, bilgisayar, tablet ve diğer elektronik ürünler",
     imageUrl: "https://picsum.photos/300/200?random=cat4",
     isActive: true,
     createdAt: new Date(),
@@ -47,8 +47,8 @@ export const extendedCategories: Category[] = [
   },
   {
     id: 5,
-    categoryName: "Anne & Bebek",
-    description: "Bebek giyim, oyuncak, bakım ürünleri",
+    categoryName: "Ev & Mobilya",
+    description: "Mobilya, ev tekstili, mutfak ve dekorasyon ürünleri",
     imageUrl: "https://picsum.photos/300/200?random=cat5",
     isActive: true,
     createdAt: new Date(),
@@ -103,39 +103,43 @@ export const extendedCategories: Category[] = [
 
 // Genişletilmiş SubKategoriler
 export const extendedSubCategories: SubCategory[] = [
-  // Elektronik SubKategorileri
-  { id: 1, subCategoryName: "Telefon & Aksesuar", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 2, subCategoryName: "Bilgisayar & Tablet", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 3, subCategoryName: "TV & Ses Sistemleri", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 4, subCategoryName: "Kamera & Fotoğraf", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 5, subCategoryName: "Oyun & Konsol", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 6, subCategoryName: "Küçük Ev Aletleri", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 7, subCategoryName: "Klima & Isıtma", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 8, subCategoryName: "Güvenlik Sistemleri", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 9, subCategoryName: "Araç Elektroniği", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 10, subCategoryName: "Saat & Aksesuar", categoryId: 1, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  // Kadın SubKategorileri
+  { id: 1, subCategoryName: "Giyim", categoryId: 1, categoryName: "Kadın", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 2, subCategoryName: "Ayakkabı", categoryId: 1, categoryName: "Kadın", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 3, subCategoryName: "Çanta", categoryId: 1, categoryName: "Kadın", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 4, subCategoryName: "Ev & İç Giyim", categoryId: 1, categoryName: "Kadın", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 5, subCategoryName: "Kozmetik", categoryId: 1, categoryName: "Kadın", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 6, subCategoryName: "Spor & Outdoor", categoryId: 1, categoryName: "Kadın", isActive: true, createdAt: new Date(), updatedAt: new Date() },
 
-  // Moda SubKategorileri
-  { id: 11, subCategoryName: "Kadın Giyim", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 12, subCategoryName: "Erkek Giyim", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 13, subCategoryName: "Çocuk Giyim", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 14, subCategoryName: "Ayakkabı", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 15, subCategoryName: "Çanta & Aksesuar", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 16, subCategoryName: "Saat & Mücevher", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 17, subCategoryName: "Gözlük", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 18, subCategoryName: "İç Giyim", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 19, subCategoryName: "Plaj & Havuz", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 20, subCategoryName: "Büyük Beden", categoryId: 2, categoryName: "Moda", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  // Erkek SubKategorileri
+  { id: 11, subCategoryName: "Giyim", categoryId: 2, categoryName: "Erkek", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 12, subCategoryName: "Ayakkabı", categoryId: 2, categoryName: "Erkek", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 13, subCategoryName: "Çanta & Aksesuar", categoryId: 2, categoryName: "Erkek", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+
+  // Ayakkabı & Çanta SubKategorileri
+  { id: 21, subCategoryName: "Kadın Ayakkabı", categoryId: 8, categoryName: "Ayakkabı & Çanta", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 22, subCategoryName: "Erkek Ayakkabı", categoryId: 8, categoryName: "Ayakkabı & Çanta", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 23, subCategoryName: "Çanta", categoryId: 8, categoryName: "Ayakkabı & Çanta", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+
+  // Anne & Çocuk SubKategorileri
+  { id: 31, subCategoryName: "Bebek Giyim", categoryId: 3, categoryName: "Anne & Çocuk", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 32, subCategoryName: "Çocuk Giyim", categoryId: 3, categoryName: "Anne & Çocuk", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 33, subCategoryName: "Bebek Bakım", categoryId: 3, categoryName: "Anne & Çocuk", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+
+  // Elektronik SubKategorileri
+  { id: 41, subCategoryName: "Telefon & Tablet", categoryId: 4, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 42, subCategoryName: "Bilgisayar", categoryId: 4, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 43, subCategoryName: "TV & Ses", categoryId: 4, categoryName: "Elektronik", isActive: true, createdAt: new Date(), updatedAt: new Date() },
 
   // Ev & Yaşam SubKategorileri
-  { id: 21, subCategoryName: "Mobilya", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 22, subCategoryName: "Dekorasyon", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 23, subCategoryName: "Mutfak & Yemek", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 24, subCategoryName: "Banyo", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 25, subCategoryName: "Yatak Odası", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 26, subCategoryName: "Oturma Odası", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 27, subCategoryName: "Çocuk Odası", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
-  { id: 28, subCategoryName: "Bahçe & Balkon", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 51, subCategoryName: "Mobilya", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 52, subCategoryName: "Ev Tekstili", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 53, subCategoryName: "Mutfak", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 54, subCategoryName: "Banyo", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 55, subCategoryName: "Yatak Odası", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 56, subCategoryName: "Oturma Odası", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 57, subCategoryName: "Çocuk Odası", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 58, subCategoryName: "Bahçe & Balkon", categoryId: 5, categoryName: "Ev & Mobilya", isActive: true, createdAt: new Date(), updatedAt: new Date() },
   { id: 29, subCategoryName: "Temizlik", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
   { id: 30, subCategoryName: "Ev Tekstili", categoryId: 3, categoryName: "Ev & Yaşam", isActive: true, createdAt: new Date(), updatedAt: new Date() },
 
@@ -503,27 +507,70 @@ export const generateExtendedProducts = (): Product[] => {
     "Standing Desk", "Monitor Arm", "Webcam Logitech C920", "Microphone Blue Yeti", "Audio Interface Focusrite"
   ];
 
-  // Moda ürünleri (40 ürün)
+  // Moda ürünleri (80 ürün)
   const fashionProducts = [
+    // Kadın Giyim
+    "Zara Yazlık Elbise", "H&M Bluz", "Mango Pantolon", "Pull & Bear Tişört", "Bershka Etek",
+    "Stradivarius Ceket", "Massimo Dutti Gömlek", "COS Kazak", "Arket Mont", "Weekday Jean",
+    "Monki Hoodie", "& Other Stories Blazer", "COS Elbise", "Arket Tişört", "Weekday Pantolon",
+    "Monki Etek", "& Other Stories Kazak", "COS Ceket", "Arket Bluz", "Weekday Hoodie",
+    
+    // Erkek Giyim
     "Levi's 501 Jeans", "Nike Air Max", "Adidas Ultraboost", "Zara Blazer", "H&M T-Shirt",
     "Uniqlo Hoodie", "Converse Chuck Taylor", "Vans Old Skool", "Timberland Boots", "Dr. Martens",
-    "Ray-Ban Aviator", "Oakley Sunglasses", "Rolex Submariner", "Apple Watch Band", "Fossil Watch",
+    "Lacoste Polo", "Ralph Lauren Gömlek", "Tommy Hilfiger Tişört", "Calvin Klein Boxer", "Hugo Boss Ceket",
+    "Armani Gömlek", "Versace Tişört", "Gucci Pantolon", "Prada Ceket", "Burberry Mont",
+    
+    // Kadın Ayakkabı
+    "Nike Air Force 1 Kadın", "Adidas Stan Smith Kadın", "Converse All Star Kadın", "Vans Slip-On Kadın", "Puma Suede Kadın",
+    "New Balance 574 Kadın", "Reebok Classic Kadın", "Fila Disruptor Kadın", "Skechers Go Walk Kadın", "Keds Champion Kadın",
+    "Topuklu Ayakkabı Siyah", "Babet Ayakkabı Beyaz", "Sneaker Kadın Pembe", "Bot Kadın Kahverengi", "Çizme Kadın Siyah",
+    "Sandalet Kadın Altın", "Loafer Kadın Siyah", "Spor Ayakkabı Kadın Mavi", "Platform Ayakkabı Kadın", "Oxford Kadın Siyah",
+    
+    // Erkek Ayakkabı
+    "Nike Air Force 1 Erkek", "Adidas Stan Smith Erkek", "Converse All Star Erkek", "Vans Slip-On Erkek", "Puma Suede Erkek",
+    "New Balance 574 Erkek", "Reebok Classic Erkek", "Fila Disruptor Erkek", "Skechers Go Walk Erkek", "Keds Champion Erkek",
+    "Timberland 6 Inch", "Dr. Martens 1460", "Clarks Desert Boot", "Cole Haan Oxford", "Johnston & Murphy",
+    "Salomon Trail Runner", "Merrell Hiking Boot", "Keen Sandal", "Teva Original", "Chaco Z/Cloud",
+    "Sneaker Erkek Siyah", "Klasik Ayakkabı Erkek Kahverengi", "Spor Ayakkabı Erkek Beyaz", "Bot Erkek Siyah", "Terlik Erkek Mavi",
+    
+    // Çanta
+    "El Çantası Siyah", "Sırt Çantası Mavi", "Bel Çantası Kahverengi", "Omuz Çantası Beyaz", "Crossbody Çanta Siyah",
+    "Laptop Çantası Siyah", "Spor Çantası Kırmızı", "Valiz Siyah", "Bavul Kahverengi", "Çanta Seti Çok Renkli",
+    "Mini Çanta Pembe", "Büyük Çanta Siyah", "Deri Çanta Kahverengi", "Kumaş Çanta Mavi", "Plastik Çanta Şeffaf",
     "Coach Handbag", "Louis Vuitton Bag", "Gucci Belt", "Hermes Scarf", "Chanel Perfume",
+    "Michael Kors Çanta", "Kate Spade Cüzdan", "Tory Burch Ayakkabı", "Marc Jacobs Parfüm", "Tom Ford Parfüm",
     "Dior Lipstick", "MAC Foundation", "Urban Decay Palette", "Too Faced Mascara", "Fenty Beauty",
+    
+    // Spor Giyim
     "Lululemon Leggings", "Nike Sports Bra", "Adidas Tracksuit", "Under Armour Shirt", "Puma Sneakers",
     "New Balance 990", "Asics Gel-Kayano", "Brooks Ghost", "Hoka One One", "Salomon Trail",
-    "Patagonia Jacket", "North Face Backpack", "Columbia Fleece", "Arc'teryx Shell", "Marmot Sleeping Bag"
+    "Patagonia Jacket", "North Face Backpack", "Columbia Fleece", "Arc'teryx Shell", "Marmot Sleeping Bag",
+    "Lululemon Align", "Nike Dri-FIT", "Adidas Climacool", "Under Armour HeatGear", "Puma Velocity"
   ];
 
   // Ev & Yaşam ürünleri (35 ürün)
   const homeProducts = [
+    // Mobilya
     "IKEA Billy Bookcase", "West Elm Sofa", "Crate & Barrel Dining Table", "Pottery Barn Bed", "Restoration Hardware Chair",
-    "Wayfair Coffee Table", "Article Sectional", "AllModern Rug", "CB2 Lamp", "Design Within Reach Desk",
-    "Herman Miller Aeron", "Steelcase Leap", "Vitra Eames Chair", "Knoll Barcelona", "Cassina LC4",
-    "B&B Italia Sofa", "Poltrona Frau Armchair", "Kartell Ghost Chair", "Magis Spun Chair", "Flos Arco Lamp",
-    "Artemide Tolomeo", "Kartell Bourgie", "Alessi Juicy Salif", "Alessi 9093", "Bodum French Press",
-    "Le Creuset Dutch Oven", "All-Clad Pan Set", "KitchenAid Mixer", "Breville Espresso", "Dyson Vacuum",
-    "Shark Robot Vacuum", "Roomba i7", "Philips Air Purifier", "Honeywell Humidifier", "De'Longhi Heater"
+    "Wayfair Coffee Table", "Article Sectional", "CB2 Lamp", "Design Within Reach Desk", "Herman Miller Aeron",
+    "Steelcase Leap", "Vitra Eames Chair", "Knoll Barcelona", "Cassina LC4", "B&B Italia Sofa",
+    "Poltrona Frau Armchair", "Kartell Ghost Chair", "Magis Spun Chair", "Flos Arco Lamp", "Artemide Tolomeo",
+    
+    // Ev Tekstili
+    "Yatak Takımı Pamuklu", "Nevresim Takımı", "Yorgan Kışlık", "Yastık Ortopedik", "Battaniye Yünlü",
+    "Perde Koyu Renk", "Halı Yün", "Kilim El Dokuma", "Masa Örtüsü", "Havlu Banyo",
+    "Bornoz Pamuklu", "Terlik Ev", "Yatak Koruyucu", "Yastık Kılıfı", "Çarşaf Takımı",
+    "Yorgan Kılıfı", "Battaniye Çocuk", "Perde Tül", "Halı Salon", "Kilim Oturma Odası",
+    
+    // Mutfak
+    "Le Creuset Dutch Oven", "All-Clad Pan Set", "KitchenAid Mixer", "Breville Espresso", "Bodum French Press",
+    "Alessi Juicy Salif", "Alessi 9093", "Tencere Seti", "Tava Seti", "Tabak Takımı",
+    "Bardak Seti", "Çatal Kaşık Takımı", "Mutfak Robotu", "Kahve Makinesi", "Blender",
+    
+    // Temizlik & Ev Aletleri
+    "Dyson Vacuum", "Shark Robot Vacuum", "Roomba i7", "Philips Air Purifier", "Honeywell Humidifier",
+    "De'Longhi Heater", "Süpürge Robot", "Hava Temizleyici", "Nemlendirici", "Isıtıcı"
   ];
 
   // Spor ürünleri (30 ürün)
@@ -553,36 +600,133 @@ export const generateExtendedProducts = (): Product[] => {
     "Chanel Coco Mademoiselle", "Marc Jacobs Daisy", "Viktor & Rolf Flowerbomb", "Yves Saint Laurent Black Opium", "Lancôme La Vie Est Belle"
   ];
 
+  // Kadın ürünleri (100 ürün)
+  const kadinProducts = [
+    // Kadın Giyim
+    "Zara Yazlık Elbise", "H&M Bluz", "Mango Pantolon", "Pull & Bear Tişört", "Bershka Etek",
+    "Stradivarius Ceket", "Massimo Dutti Gömlek", "COS Kazak", "Arket Mont", "Weekday Jean",
+    "Monki Hoodie", "& Other Stories Blazer", "COS Elbise", "Arket Tişört", "Weekday Pantolon",
+    "Monki Etek", "& Other Stories Kazak", "COS Ceket", "Arket Bluz", "Weekday Hoodie",
+    "Zara Kot Ceket", "H&M Sweatshirt", "Mango Trençkot", "Pull & Bear Şort", "Bershka Bluz",
+    "Stradivarius Elbise", "Massimo Dutti Pantolon", "COS Tişört", "Arket Etek", "Weekday Ceket",
+    
+    // Kadın Ayakkabı
+    "Nike Air Force 1", "Adidas Stan Smith", "Converse All Star", "Vans Slip-On", "Puma Suede",
+    "New Balance 574", "Reebok Classic", "Fila Disruptor", "Skechers Go Walk", "Keds Champion",
+    "Timberland 6 Inch", "Dr. Martens 1460", "Clarks Desert Boot", "Cole Haan Oxford", "Johnston & Murphy",
+    "Salomon Trail Runner", "Merrell Hiking Boot", "Keen Sandal", "Teva Original", "Chaco Z/Cloud",
+    "Nike Air Max", "Adidas Ultraboost", "Converse Chuck Taylor", "Vans Old Skool", "Puma RS-X",
+    
+    // Kadın Çanta
+    "Coach Handbag", "Louis Vuitton Bag", "Gucci Belt", "Hermes Scarf", "Chanel Perfume",
+    "Michael Kors Çanta", "Kate Spade Cüzdan", "Tory Burch Ayakkabı", "Marc Jacobs Parfüm", "Tom Ford Parfüm",
+    "Dior Lipstick", "MAC Foundation", "Urban Decay Palette", "Too Faced Mascara", "Fenty Beauty",
+    "Coach Crossbody", "Louis Vuitton Speedy", "Gucci Marmont", "Hermes Birkin", "Chanel Flap",
+    "Michael Kors Jet Set", "Kate Spade Cameron", "Tory Burch Fleming", "Marc Jacobs Snapshot", "Tom Ford Oud",
+    
+    // Kadın Kozmetik
+    "Estée Lauder Double Wear", "MAC Studio Fix", "Fenty Beauty Pro Filt'r", "NARS Radiant Creamy", "Too Faced Born This Way",
+    "Urban Decay Naked Palette", "Anastasia Beverly Hills", "Huda Beauty Desert Dusk", "Morphe 35O Palette", "ColourPop Yes Please",
+    "Charlotte Tilbury Pillow Talk", "Pat McGrath Labs", "Tom Ford Lip Color", "YSL Rouge Volupté", "Dior Addict Lipstick",
+    "Chanel Coco Mademoiselle", "Marc Jacobs Daisy", "Viktor & Rolf Flowerbomb", "Yves Saint Laurent Black Opium", "Lancôme La Vie Est Belle",
+    "MAC Ruby Woo", "NARS Orgasm", "Urban Decay All Nighter", "Too Faced Better Than Sex", "Fenty Beauty Gloss Bomb",
+    
+    // Kadın Spor
+    "Lululemon Leggings", "Nike Sports Bra", "Adidas Tracksuit", "Under Armour Shirt", "Puma Sneakers",
+    "New Balance 990", "Asics Gel-Kayano", "Brooks Ghost", "Hoka One One", "Salomon Trail",
+    "Patagonia Jacket", "North Face Backpack", "Columbia Fleece", "Arc'teryx Shell", "Marmot Sleeping Bag",
+    "Lululemon Align", "Nike Dri-FIT", "Adidas Climacool", "Under Armour HeatGear", "Puma Velocity"
+  ];
+
+  // Erkek ürünleri (60 ürün)
+  const erkekProducts = [
+    // Erkek Giyim
+    "Levi's 501 Jeans", "Nike Air Max", "Adidas Ultraboost", "Zara Blazer", "H&M T-Shirt",
+    "Uniqlo Hoodie", "Converse Chuck Taylor", "Vans Old Skool", "Timberland Boots", "Dr. Martens",
+    "Lacoste Polo", "Ralph Lauren Gömlek", "Tommy Hilfiger Tişört", "Calvin Klein Boxer", "Hugo Boss Ceket",
+    "Armani Gömlek", "Versace Tişört", "Gucci Pantolon", "Prada Ceket", "Burberry Mont",
+    "Nike Dri-FIT", "Adidas Climacool", "Under Armour HeatGear", "Puma Velocity", "New Balance 990",
+    
+    // Erkek Ayakkabı
+    "Nike Air Force 1", "Adidas Stan Smith", "Converse All Star", "Vans Slip-On", "Puma Suede",
+    "New Balance 574", "Reebok Classic", "Fila Disruptor", "Skechers Go Walk", "Keds Champion",
+    "Timberland 6 Inch", "Dr. Martens 1460", "Clarks Desert Boot", "Cole Haan Oxford", "Johnston & Murphy",
+    "Salomon Trail Runner", "Merrell Hiking Boot", "Keen Sandal", "Teva Original", "Chaco Z/Cloud",
+    
+    // Erkek Aksesuar
+    "Ray-Ban Aviator", "Oakley Sunglasses", "Rolex Submariner", "Apple Watch Band", "Fossil Watch",
+    "Coach Handbag", "Louis Vuitton Bag", "Gucci Belt", "Hermes Scarf", "Chanel Perfume",
+    "Michael Kors Çanta", "Kate Spade Cüzdan", "Tory Burch Ayakkabı", "Marc Jacobs Parfüm", "Tom Ford Parfüm"
+  ];
+
+  // Anne & Çocuk ürünleri (40 ürün)
+  const anneCocukProducts = [
+    // Bebek Giyim
+    "Graco 4Ever Car Seat", "Chicco KeyFit 30", "Britax Boulevard", "Cybex Sirona S", "Maxi-Cosi Pria 85",
+    "Uppababy Vista Stroller", "Baby Jogger City Mini", "Bugaboo Cameleon3", "Stokke Xplory", "Nuna Mixx",
+    "Fisher-Price Rock 'n Play", "4moms Mamaroo", "BabyBjorn Bouncer", "Skip Hop Activity Center", "Bright Starts Playard",
+    "Graco Pack 'n Play", "Summer Infant Pop 'n Jump", "Evenflo ExerSaucer", "VTech Sit-to-Stand", "LeapFrog Learning Table",
+    
+    // Çocuk Giyim
+    "Gerber Baby Food", "Earth's Best Organic", "Happy Baby Pouches", "Plum Organics", "Beech-Nut Naturals",
+    "Carter's Onesie", "Gap Kids T-Shirt", "Old Navy Jeans", "Children's Place Dress", "OshKosh B'gosh",
+    "Hanna Andersson Pajamas", "Mini Boden Shirt", "Janie and Jack Blouse", "Gymboree Pants", "Crazy 8 Shorts",
+    
+    // Bebek Bakım
+    "Pampers Diapers", "Huggies Wipes", "Johnson's Baby Shampoo", "Aveeno Baby Lotion", "Burt's Bees Baby",
+    "Mustela Baby Oil", "Weleda Calendula", "Earth Mama Angel Baby", "California Baby", "Babyganics"
+  ];
+
   // Tüm ürün listelerini birleştir
   const allProducts = [
-    ...electronicsProducts.map((name, index) => ({ 
+    ...kadinProducts.map((name, index) => ({ 
       name, 
       categoryId: 1, 
-      basePrice: Math.floor(Math.random() * 50000) + 1000 // 1000-51000 arası
+      basePrice: Math.floor(Math.random() * 2000) + 50 // 50-2050 arası
     })),
-    ...fashionProducts.map((name, index) => ({ 
+    ...erkekProducts.map((name, index) => ({ 
       name, 
       categoryId: 2, 
       basePrice: Math.floor(Math.random() * 2000) + 50 // 50-2050 arası
     })),
-    ...homeProducts.map((name, index) => ({ 
+    ...anneCocukProducts.map((name, index) => ({ 
       name, 
       categoryId: 3, 
-      basePrice: Math.floor(Math.random() * 5000) + 200 // 200-5200 arası
+      basePrice: Math.floor(Math.random() * 1000) + 80 // 80-1080 arası
     })),
-    ...sportsProducts.map((name, index) => ({ 
+    ...electronicsProducts.map((name, index) => ({ 
       name, 
       categoryId: 4, 
-      basePrice: Math.floor(Math.random() * 3000) + 100 // 100-3100 arası
+      basePrice: Math.floor(Math.random() * 50000) + 1000 // 1000-51000 arası
     })),
-    ...babyProducts.map((name, index) => ({ 
+    ...homeProducts.map((name, index) => ({ 
       name, 
       categoryId: 5, 
-      basePrice: Math.floor(Math.random() * 1000) + 80 // 80-1080 arası
+      basePrice: Math.floor(Math.random() * 5000) + 200 // 200-5200 arası
     })),
     ...beautyProducts.map((name, index) => ({ 
       name, 
       categoryId: 6, 
+      basePrice: Math.floor(Math.random() * 500) + 30 // 30-530 arası
+    })),
+    ...fashionProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 7, 
+      basePrice: Math.floor(Math.random() * 2000) + 50 // 50-2050 arası
+    })),
+    ...sportsProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 8, 
+      basePrice: Math.floor(Math.random() * 3000) + 100 // 100-3100 arası
+    })),
+    ...babyProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 9, 
+      basePrice: Math.floor(Math.random() * 1000) + 80 // 80-1080 arası
+    })),
+    ...beautyProducts.map((name, index) => ({ 
+      name, 
+      categoryId: 10, 
       basePrice: Math.floor(Math.random() * 500) + 30 // 30-530 arası
     })),
   ];
@@ -592,17 +736,26 @@ export const generateExtendedProducts = (): Product[] => {
     const category = categories.find(c => c.id === product.categoryId);
     const subCategory = subCategories.find(sc => sc.categoryId === product.categoryId);
     
+    // Fiyat kontrolü - 0 olmaması için
+    const finalPrice = product.basePrice > 0 ? product.basePrice : Math.floor(Math.random() * 1000) + 100;
+    
+    // Stok kontrolü - 0 olmaması için
+    const finalStock = Math.max(1, Math.floor(Math.random() * 100) + 10);
+    
+    // İndirim kontrolü - 0 olmaması için
+    const finalDiscount = Math.random() > 0.7 ? Math.max(5, Math.floor(Math.random() * 30) + 5) : 0;
+    
     products.push({
       id: index + 1,
       productName: product.name,
-      unitPrice: product.basePrice,
-      unitInStock: Math.floor(Math.random() * 100) + 10,
+      unitPrice: finalPrice,
+      unitInStock: finalStock,
       quantityPerUnit: "1 adet",
       category: category,
       subCategory: subCategory,
       description: `${product.name} - Yüksek kaliteli ürün. Detaylı açıklama ve özellikler.`,
       imageUrl: `https://picsum.photos/600/400?random=${index + 1}`,
-      discount: Math.random() > 0.7 ? Math.floor(Math.random() * 30) + 5 : 0,
+      discount: finalDiscount,
       isActive: true,
       createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000),
       updatedAt: new Date(),
@@ -712,4 +865,37 @@ export const generateExtendedReviewSummaries = (products: Product[], reviews: Re
       rating5Count: ratingCounts[5],
     };
   });
+};
+
+// Helper functions for category and product filtering
+export const getCategoryByName = (categoryName: string) => {
+  return extendedCategories.find(category => category.categoryName === categoryName);
+};
+
+export const getSubCategoryByName = (subCategoryName: string, categoryName: string) => {
+  return extendedSubCategories.find(subCategory => 
+    subCategory.subCategoryName === subCategoryName && 
+    subCategory.categoryName === categoryName
+  );
+};
+
+export const getProductsByCategory = (categoryName: string) => {
+  const category = getCategoryByName(categoryName);
+  if (!category) return [];
+  
+  const allProducts = generateExtendedProducts();
+  return allProducts.filter(product => product.category?.id === category.id);
+};
+
+export const getProductsByCategoryAndSubCategory = (categoryName: string, subCategoryName: string) => {
+  const category = getCategoryByName(categoryName);
+  const subCategory = getSubCategoryByName(subCategoryName, categoryName);
+  
+  if (!category || !subCategory) return [];
+  
+  const allProducts = generateExtendedProducts();
+  return allProducts.filter(product => 
+    product.category?.id === category.id &&
+    product.subCategory?.id === subCategory.id
+  );
 };
