@@ -1,0 +1,27 @@
+{
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "css.lint.unknownAtRules": "ignore",
+  "stylelint.enable": true,
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "less"
+  ],
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "css.customData": [
+    ".vscode/css_custom_data.json"
+  ],
+  "tailwindCSS.includeLanguages": {
+    "css": "css"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "@apply\\s+([^;}]+)",
+      "([^;}]+)"
+    ]
+  ]
+}
