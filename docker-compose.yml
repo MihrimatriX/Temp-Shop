@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2364:3000"
+    environment:
+      - NODE_ENV=production
+    # Örnek: .env dosyanızı bağlamak için
+    # env_file:
+    #   - .env
